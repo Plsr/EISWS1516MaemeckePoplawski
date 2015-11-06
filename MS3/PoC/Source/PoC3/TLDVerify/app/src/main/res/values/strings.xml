@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TLDVerify</string>
+    <string name="email_hint">Insert eMail Adress</string>
+</resources>

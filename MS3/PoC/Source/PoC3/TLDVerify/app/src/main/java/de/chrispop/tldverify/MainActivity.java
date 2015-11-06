@@ -35,9 +35,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
+                // No submit button, check if submit on keyboard is pressed
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
                     userMail = (String) editText.getText().toString();
+
+                    // Debug
                     System.out.println(editText.getText().toString());
+
                     getJSON();
                     handled = true;
                 }

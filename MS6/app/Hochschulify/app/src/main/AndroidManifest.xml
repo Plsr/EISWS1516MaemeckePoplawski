@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity"
-            android:label="Registrieren">
+            android:label="Registrieren"
+            android:parentActivityName=".StartupActivity">
         </activity>
     </application>
 

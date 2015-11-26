@@ -14,7 +14,6 @@ public class StartupActivity extends AppCompatActivity {
     }
 
     public void startRegister(View view) {
-        //TODO: In emulator this causes a skip of 100-300 Frames, check behaviour on real device
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }

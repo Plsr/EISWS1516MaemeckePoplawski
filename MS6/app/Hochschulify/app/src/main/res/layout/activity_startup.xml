@@ -6,6 +6,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".StartupActivity">
 
+
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,61 +18,80 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <EditText
-        android:layout_width="wrap_content"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/loginMail_input_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/loginMail"
-        android:layout_below="@+id/loginHeadlineTextView"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentEnd="true">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/loginMail"
+            android:layout_below="@+id/loginHeadlineTextView"
+
+            android:hint="@string/loginMail_hint" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/loginPassword_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
         android:layout_alignParentEnd="true"
-        android:hint="@string/loginMail_hint" />
+        android:layout_below="@+id/loginMail_input_layout"
+        android:layout_alignEnd="@+id/loginMail_input_layout">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/loginPassword"
-        android:layout_below="@+id/loginMail"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="25dp"
-        android:layout_alignEnd="@+id/loginMail"
-        android:hint="@string/loginPassword_hint" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/loginPassword"
+            android:layout_marginTop="25dp"
+            android:hint="@string/loginPassword_hint" />
+    </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login_headline"
-        android:id="@+id/buttonLogin"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/loginPassword"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/loginPassword"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/colorWhite"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/registerTextView_text"
-        android:id="@+id/registerTextView"
-        android:layout_below="@+id/buttonLogin"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="70dp" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_headline"
+            android:id="@+id/buttonLogin"
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/loginPassword_input_layout"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/loginPassword_input_layout"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/registerButton_Text"
-        android:id="@+id/registerButton"
-        android:layout_below="@+id/registerTextView"
-        android:layout_marginTop="25dp"
-        android:layout_alignEnd="@+id/buttonLogin"
-        android:background="@color/colorAccent"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/registerTextView_text"
+            android:id="@+id/registerTextView"
+            android:layout_below="@+id/buttonLogin"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="70dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registerButton_Text"
+            android:id="@+id/registerButton"
+            android:layout_below="@+id/registerTextView"
+            android:layout_marginTop="25dp"
+            android:layout_alignEnd="@+id/buttonLogin"
+            android:background="@color/colorAccent"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="true" />
+
+
+
 </RelativeLayout>

@@ -15,9 +15,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"
+        <activity
+            android:name=".RegisterActivity"
             android:label="Registrieren"
-            android:parentActivityName=".StartupActivity">
+            android:parentActivityName=".StartupActivity" >
+        </activity>
+        <activity android:name=".HomeActivity" >
         </activity>
     </application>
 

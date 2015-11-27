@@ -10,6 +10,8 @@ import android.widget.EditText;
 
 public class StartupActivity extends AppCompatActivity {
 
+    //TODO: Add Toolbar
+
     EditText identification;
     EditText password;
 
@@ -46,8 +48,8 @@ public class StartupActivity extends AppCompatActivity {
                 passwordLayout.setError(getString(R.string.err_msg_password));
         }
         else {
-            //TODO: Go to home view
-            System.out.println("Yo");
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
         }
 
 

@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">Hochschulify</string>
     <string name="login_headline">Login</string>
-    <string name="loginMail_hint">eMail oder Benutzername</string>
+    <string name="loginIdentification_hint">eMail oder Benutzername</string>
     <string name="inputPassword_hint">Passwort</string>
     <string name="registerTextView_text">Du hast noch keinen Account? Jetzt registrieren.</string>
     <string name="registerButton_Text">Registrieren</string>
     <string name="registerMail_hint">eMail Adresse</string>
     <string name="registerUsername_hint">Benutzername</string>
+    
+    <string name="err_msg_identification">Falsche eMail oder Username</string>
+    <string name="err_msg_password">Falsches Passwort</string>
 </resources>

@@ -2,7 +2,9 @@
     <string name="app_name">Hochschulify</string>
     <string name="login_headline">Login</string>
     <string name="loginMail_hint">eMail oder Benutzername</string>
-    <string name="loginPassword_hint">Passwort</string>
+    <string name="inputPassword_hint">Passwort</string>
     <string name="registerTextView_text">Du hast noch keinen Account? Jetzt registrieren.</string>
     <string name="registerButton_Text">Registrieren</string>
+    <string name="registerMail_hint">eMail Adresse</string>
+    <string name="registerUsername_hint">Benutzername</string>
 </resources>

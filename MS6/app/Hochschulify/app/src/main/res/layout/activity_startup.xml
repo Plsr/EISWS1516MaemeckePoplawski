@@ -54,7 +54,7 @@
             android:ems="10"
             android:id="@+id/loginPassword"
             android:layout_marginTop="25dp"
-            android:hint="@string/loginPassword_hint" />
+            android:hint="@string/inputPassword_hint" />
     </android.support.design.widget.TextInputLayout>
 
 

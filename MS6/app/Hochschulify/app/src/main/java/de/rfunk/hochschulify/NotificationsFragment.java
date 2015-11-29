@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -63,8 +64,21 @@ public class NotificationsFragment extends android.support.v4.app.Fragment {
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, listContent);
             listView.setAdapter(arrayAdapter);
+            listView.setClickable(true);
+
+            //Click listener for single rows
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick (AdapterView<?> arg0, View arg1, int position, long arg3) {
+                    //TODO: Move to matching Thread
+                    System.out.println("Click listener Worked");
+                }
+            });
         }
     }
+
+
+
 
     /**
      * This method builds the notification strings to populate the ListView.

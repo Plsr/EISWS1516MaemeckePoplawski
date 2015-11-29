@@ -18,4 +18,6 @@
     <string name="thread_comments">7 Kommentare</string>
     <string name="thread_entfernen">Entfernen</string>
     <string name="thread_rating">89%</string>
+    <string name="course_name">Medieninformatik</string>
+    <string name="uni_name">TH Köln</string>
 </resources>

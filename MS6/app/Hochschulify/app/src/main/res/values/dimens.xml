@@ -5,5 +5,5 @@
     <dimen name="activity_padding">16dp</dimen>
 
     <!-- Font settings -->
-    <dimen name="card_headline_font_size">16dp</dimen>
+    <dimen name="card_headline_font_size">16sp</dimen>
 </resources>

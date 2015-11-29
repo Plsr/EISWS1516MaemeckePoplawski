@@ -15,5 +15,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="recent_search_headline">Zuletzt gesucht</string>
     <string name="thread_title">Der Titel eines Threads</string>
-    <string name="thread_meta">Some Meta</string>
+    <string name="thread_comments">7 Kommentare</string>
+    <string name="thread_entfernen">Entfernen</string>
+    <string name="thread_rating">89%</string>
 </resources>

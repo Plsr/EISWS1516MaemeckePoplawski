@@ -56,6 +56,25 @@ public class NotificationsFragment extends android.support.v4.app.Fragment {
         listView.setAdapter(arrayAdapter);
     }
 
+    /**
+     * This method builds the notification strings to populate the ListView.
+     * Takes a String containing the Thread the Notification is about as an argument
+     * and combines thi with the template to generate a readable notification message.
+     *
+     * @param specific Thread the Notification is about
+     * @return Built String or null if there is no valid string as an argument
+     */
+    private String buildNotificationString(String specific) {
+        String notificationString;
+        
+        if (specific != null) {
+           notificationString = NOTIFICATION_TEMPLATE + specific;
+           return notificationString;
+        } else {
+            return null;
+        }
+    }
+
 
 
 }

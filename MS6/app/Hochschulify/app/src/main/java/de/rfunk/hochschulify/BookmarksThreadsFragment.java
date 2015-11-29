@@ -3,7 +3,6 @@ package de.rfunk.hochschulify;
 
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,10 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BookmarksFragment extends android.support.v4.app.Fragment {
+public class BookmarksThreadsFragment extends android.support.v4.app.Fragment {
 
 
-    public BookmarksFragment() {
+    public BookmarksThreadsFragment() {
         // Required empty public constructor
     }
 
@@ -29,7 +28,7 @@ public class BookmarksFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bookmarks, container, false);
+        return inflater.inflate(R.layout.fragment_bookmarks_threads, container, false);
     }
 
 

@@ -22,6 +22,12 @@ public class NotificationsFragment extends android.support.v4.app.Fragment {
 
     private ListView listView;
     private static String NOTIFICATION_TEMPLATE = "Neuer Kommentar zu ";
+    private String[] threadNames = {"Was ist ein Monofach-Bachelor, was ist ein Zwei-Fächer-Bachelor?",
+                                    "Was ist eine Fakultät?",
+                                    "Welche Fächer sind zulassungsfrei und was bedeutet das konkret für mich?",
+                                    "Bis wann muss ich mich bewerben?",
+                                    "Wie hoch sind die Semesterbeiträge an der Universität Göttingen?",
+                                    "Gibt es eine Einführungsveranstaltung für die StudienanfängerInnen?"};
 
     public NotificationsFragment() {
         // Required empty public constructor
@@ -45,12 +51,10 @@ public class NotificationsFragment extends android.support.v4.app.Fragment {
 
         listView = (ListView)getView().findViewById(R.id.listView);
         List<String> listContent = new ArrayList<>();
-        listContent.add("nrw.de");
-        listContent.add("dekra-hochschule-berlin");
-        listContent.add("Medieninformatik");
-        listContent.add("businessschool-berlin-potsdam");
-        listContent.add("BWL");
-        listContent.add("Deutsch TH Köln");
+
+        for (String thread:threadNames) {
+            listContent.add(buildNotificationString(thread));
+        }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, listContent);
         listView.setAdapter(arrayAdapter);
@@ -65,11 +69,8 @@ public class NotificationsFragment extends android.support.v4.app.Fragment {
      * @return Built String or null if there is no valid string as an argument
      */
     private String buildNotificationString(String specific) {
-        String notificationString;
-        
         if (specific != null) {
-           notificationString = NOTIFICATION_TEMPLATE + specific;
-           return notificationString;
+           return  NOTIFICATION_TEMPLATE + specific;
         } else {
             return null;
         }

@@ -41,8 +41,8 @@ public class HomeActivity extends AppCompatActivity  {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new SearchFragment(), "Suche");
         adapter.addFragment(new BookmarksThreadsFragment(), "Threads");
-        adapter.addFragment(new NotificationsFragment(), "Notifications");
         adapter.addFragment(new BookmarksCoursesFragment(), "Studiengänge");
+        adapter.addFragment(new NotificationsFragment(), "Notifications");
         viewPager.setAdapter(adapter);
     }
 

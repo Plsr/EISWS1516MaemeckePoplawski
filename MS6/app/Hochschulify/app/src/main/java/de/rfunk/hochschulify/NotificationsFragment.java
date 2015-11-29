@@ -1,6 +1,7 @@
 package de.rfunk.hochschulify;
 
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +21,11 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class NotificationsFragment extends android.support.v4.app.Fragment {
+    //TODO: Access Single Rows and mark them as unread
 
-    private ListView listView;
     private static String NOTIFICATION_TEMPLATE = "Neuer Kommentar zu ";
+
+    //This is pretty ugly and only in here for the Prototype UI
     private String[] threadNames = {"Was ist ein Monofach-Bachelor, was ist ein Zwei-Fächer-Bachelor?",
                                     "Was ist eine Fakultät?",
                                     "Welche Fächer sind zulassungsfrei und was bedeutet das konkret für mich?",
@@ -49,15 +53,17 @@ public class NotificationsFragment extends android.support.v4.app.Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        listView = (ListView)getView().findViewById(R.id.listView);
-        List<String> listContent = new ArrayList<>();
+        if(getView() != null && getView().findViewById(R.id.listView) != null) {
+            ListView listView = (ListView) getView().findViewById(R.id.listView);
+            List<String> listContent = new ArrayList<>();
 
-        for (String thread:threadNames) {
-            listContent.add(buildNotificationString(thread));
+            for (String thread : threadNames) {
+                listContent.add(buildNotificationString(thread));
+            }
+
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, listContent);
+            listView.setAdapter(arrayAdapter);
         }
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, listContent);
-        listView.setAdapter(arrayAdapter);
     }
 
     /**

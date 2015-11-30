@@ -1,5 +1,7 @@
 package de.rfunk.hochschulify;
 
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -88,12 +90,12 @@ public class HomeActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_profile:
-                //TODO: Go to Profile view
-                System.out.println("Going to Profile view.");
+                Intent intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.action_threads:
-                //TODO: Go to written Threads view
-                System.out.println("Going to Threads Overview");
+                Intent threadsIntent = new Intent(this, WrittenThreadsActivity.class);
+                startActivity(threadsIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

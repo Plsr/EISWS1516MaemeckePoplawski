@@ -9,12 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity  {
+public class HomeActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -80,6 +81,23 @@ public class HomeActivity extends AppCompatActivity  {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_profile:
+                //TODO: Go to Profile view
+                System.out.println("Going to Profile view.");
+                return true;
+            case R.id.action_threads:
+                //TODO: Go to written Threads view
+                System.out.println("Going to Threads Overview");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

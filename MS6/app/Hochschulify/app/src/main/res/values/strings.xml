@@ -24,4 +24,23 @@
 
     <string name="action_profile">Profil</string>
     <string name="action_thread">Meine Beiträge</string>
+
+    <string name="username_label">Username</string>
+    <string name="username">chrispop</string>
+    <string name="eMail_label">eMail Adresse</string>
+    <string name="eMail">chris@51seven.de</string>
+    <string name="password_label">Passwort</string>
+    <string name="profile_type_headline">Profilart</string>
+    <string name="profile_type">Studieninteressierter</string>
+
+    <string name="profile_delete">Profil Löschen</string>
+    <string name="save">Speichern</string>
+
+    <string-array name="profile_types">
+        <item>Studieninteressierter</item>
+        <item>Mitarbeiter</item>
+        <item>Alumni</item>
+        <item>Student</item>
+    </string-array>
+
 </resources>

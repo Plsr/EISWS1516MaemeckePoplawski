@@ -6,4 +6,5 @@
 
     <!-- Font settings -->
     <dimen name="card_headline_font_size">16sp</dimen>
+    <dimen name="label_font_size">10sp</dimen>
 </resources>

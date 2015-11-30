@@ -23,7 +23,8 @@
             android:name=".HomeActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".WrittenThreadsActivity"></activity>
+        <activity android:name=".WrittenThreadsActivity" />
+        <activity android:name=".ProfileEditActivity"></activity>
     </application>
 
 </manifest>

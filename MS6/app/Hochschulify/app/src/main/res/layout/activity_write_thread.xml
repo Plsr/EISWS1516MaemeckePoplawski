@@ -30,13 +30,23 @@
 
     <EditText
         android:id="@+id/thread_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textImeMultiLine"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_below="@id/type_spinner"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="vertical"
+        android:maxLines="4"
+        android:lines="4"
         android:layout_marginLeft="@dimen/activity_padding"
+        android:layout_marginTop="@dimen/activity_padding"
         android:layout_marginRight="@dimen/activity_padding"
-        android:layout_marginTop="@dimen/activity_padding"/>
+        android:background="@color/colorWhite"
+        android:text="Write something"
+        android:padding="8dp"
+        />
+
 
 
 </RelativeLayout>

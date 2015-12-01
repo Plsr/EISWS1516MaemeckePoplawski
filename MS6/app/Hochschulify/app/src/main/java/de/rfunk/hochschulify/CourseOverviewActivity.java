@@ -25,5 +25,13 @@ public class CourseOverviewActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        findViewById(R.id.button_new).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent writeIntent = new Intent(CourseOverviewActivity.this, WriteThreadActivity.class);
+                startActivity(writeIntent);
+            }
+        });
     }
 }

@@ -14,13 +14,6 @@
     <include layout="@layout/thread_card" android:id="@+id/card4"/>
     <include layout="@layout/thread_card" android:id="@+id/card5"/>
 
-    <!-- Just a hack to get to the course view, delete later -->
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go To Course"
-        android:id="@+id/button3"
-        android:layout_gravity="center_horizontal"
-        android:onClick="goToCourse"/>
+
 
 </LinearLayout>

@@ -7,5 +7,5 @@
         android:title="Save"
         android:id="@+id/action_save"
         app:showAsAction="always"
-        android:icon="@android:drawable/ic_menu_save" />
+        android:icon="@drawable/check" />
 </menu>

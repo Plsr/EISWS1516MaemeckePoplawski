@@ -25,7 +25,8 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".WrittenThreadsActivity" />
         <activity android:name=".ProfileEditActivity" />
-        <activity android:name=".CourseOverviewActivity"></activity>
+        <activity android:name=".CourseOverviewActivity" />
+        <activity android:name=".SearchActivity"></activity>
     </application>
 
 </manifest>

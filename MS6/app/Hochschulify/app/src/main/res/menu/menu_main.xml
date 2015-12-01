@@ -16,4 +16,10 @@
         android:title="@string/action_thread"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="100"
+        android:title="Suche"
+        app:showAsAction="never" />
+
 </menu>

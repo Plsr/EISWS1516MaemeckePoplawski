@@ -97,6 +97,10 @@ public class HomeActivity extends AppCompatActivity {
                 Intent threadsIntent = new Intent(this, WrittenThreadsActivity.class);
                 startActivity(threadsIntent);
                 return true;
+            case R.id.action_search:
+                Intent searchIntent = new Intent(this, SearchActivity.class);
+                startActivity(searchIntent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

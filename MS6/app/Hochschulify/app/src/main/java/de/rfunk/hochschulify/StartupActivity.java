@@ -34,6 +34,7 @@ public class StartupActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     /**
      * Checks the input fields of the login for correctness.
      * For now, it just checks if one of the values equals "falsch" and displays the error label then,

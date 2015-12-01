@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 
 import java.util.ArrayList;
@@ -103,6 +104,11 @@ public class HomeActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void goToCourse(View view) {
+        Intent intent = new Intent(this, CourseOverviewActivity.class);
+        startActivity(intent);
     }
 
 }

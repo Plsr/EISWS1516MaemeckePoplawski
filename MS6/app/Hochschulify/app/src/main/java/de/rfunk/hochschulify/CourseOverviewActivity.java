@@ -3,6 +3,7 @@ package de.rfunk.hochschulify;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 public class CourseOverviewActivity extends AppCompatActivity {
 
@@ -15,5 +16,12 @@ public class CourseOverviewActivity extends AppCompatActivity {
         toolbar.setTitle("Medieninformatik");
         toolbar.setSubtitle("TH Köln");
         setSupportActionBar(toolbar);
+
+        findViewById(R.id.card1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Yay?");
+            }
+        });
     }
 }

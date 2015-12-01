@@ -43,4 +43,10 @@
         <item>Student</item>
     </string-array>
 
+    <string name="thread_author">Autor: Bob Ross</string>
+    <string name="thread_excerpt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec enim
+        mauris, varius et luctus sed, pharetra eget magna. Praesent hendrerit leo in tellus dapibus posuere.
+        Ut at dolor non augue egestas convallis ut non quam. Cras aliquam, arcu non dictum tempor,
+        nibh diam ultricies arcu...</string>
+
 </resources>

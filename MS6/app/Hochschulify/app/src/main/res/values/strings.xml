@@ -49,4 +49,16 @@
         Ut at dolor non augue egestas convallis ut non quam. Cras aliquam, arcu non dictum tempor,
         nibh diam ultricies arcu...</string>
 
+    <string name="thread_content">How you run your app depends on two things: whether you have a real
+        device running Android and whether youre using Android Studio. This lesson shows you how to
+        install and run your app on a real device and on the Android emulator, and in both cases with
+        either Android Studio or the command line tools.Open a command-line and navigate to the root of
+        your project directory. Use Gradle to build your project in debug mode, invoke the assembleDebug
+        build task using the Gradle wrapper script (gradlew assembleRelease). This creates your debug
+        .apk file inside the module build/ directory, named MyFirstApp-debug.apk.</string>
+
+    <string name="answer">Antworten</string>
+    <string name="comment">How you run your app depends on two things: whether you have a real
+        device running Android and whether youre using Android Studio.</string>
+
 </resources>

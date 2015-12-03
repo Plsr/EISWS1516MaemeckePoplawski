@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -72,6 +73,9 @@ public class StartupActivity extends AppCompatActivity {
         //TODO: Display error if a field is empty
 
         if(!Utils.isEmptyString(identificationString) && !Utils.isEmptyString(passwordString)) {
+            // If one of the fields was empty before, remove the errors
+            identificationLayout.setErrorEnabled(false);
+            passwordLayout.setErrorEnabled(false);
 
             //TODO: Check if identification and password are valid
 
@@ -90,6 +94,31 @@ public class StartupActivity extends AppCompatActivity {
             startActivity(homeIntent);
         }
 
+        // If the identification field is empty, display an error
+        if(Utils.isEmptyString(identificationString)) {
+            String errorString = getString(R.string.err_identification_empty);
+            displayErrorLabelOnTextInputLayout(identificationLayout, errorString);
+        }
+
+        // If the password field is empty, display an error
+        if(Utils.isEmptyString(passwordString)) {
+            String errorString = getString(R.string.err_password_empty);
+            displayErrorLabelOnTextInputLayout(passwordLayout, errorString);
+        }
+
+    }
+
+    /**
+     * Sets an error label with a provided error message for a TextInputLayout and gives the field focus
+     *
+     * @param layout The Layout on which the error shall be displayed
+     * @param errorMessage The error message to be displayed
+     */
+    private void displayErrorLabelOnTextInputLayout (TextInputLayout layout, String errorMessage) {
+        layout.setError(errorMessage);
+        if(layout.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 
 

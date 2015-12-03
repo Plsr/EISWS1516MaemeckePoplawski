@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".StartupActivity">
 
@@ -10,9 +12,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:layout_marginTop="16dp"
+        android:paddingLeft="@dimen/activity_padding"
+        android:paddingRight="@dimen/activity_padding"
+        android:layout_marginTop="@dimen/activity_margin"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/login_headline"
         android:id="@+id/loginHeadlineTextView"
@@ -23,8 +25,8 @@
         android:id="@+id/loginIdentification_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:paddingLeft="@dimen/activity_padding"
+        android:paddingRight="@dimen/activity_padding"
         android:layout_alignParentStart="true"
         android:layout_marginTop="20dp"
         android:layout_alignParentEnd="true"
@@ -43,8 +45,8 @@
         android:id="@+id/loginPassword_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:paddingLeft="@dimen/activity_padding"
+        android:paddingRight="@dimen/activity_padding"
         android:layout_alignParentStart="true"
         android:layout_marginTop="20dp"
         android:layout_alignParentEnd="true"
@@ -57,30 +59,28 @@
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/loginPassword"
-            android:layout_marginTop="25dp"
             android:hint="@string/inputPassword_hint" />
     </android.support.design.widget.TextInputLayout>
 
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginLeft="@dimen/activity_margin"
+            android:layout_marginRight="@dimen/activity_margin"
             android:text="@string/login_headline"
             android:id="@+id/button_login"
             android:layout_marginTop="25dp"
             android:layout_below="@+id/loginPassword_input_layout"
             android:layout_alignParentStart="true"
-            android:layout_alignEnd="@+id/loginPassword_input_layout"
             android:background="@color/colorPrimary"
             android:textColor="@color/colorWhite" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:paddingLeft="@dimen/activity_padding"
+            android:paddingRight="@dimen/activity_padding"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/registerTextView_text"
             android:id="@+id/registerTextView"
@@ -89,17 +89,15 @@
             android:layout_marginTop="70dp" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginLeft="@dimen/activity_margin"
+            android:layout_marginRight="@dimen/activity_margin"
             android:text="@string/registerButton_Text"
             android:id="@+id/button_register"
             android:layout_below="@+id/registerTextView"
-            android:layout_marginTop="25dp"
-            android:layout_alignEnd="@+id/button_login"
+            android:layout_marginTop="@dimen/activity_margin"
             android:background="@color/colorAccent"
-            android:layout_alignParentEnd="false"
             android:layout_alignParentStart="true" />
 
 

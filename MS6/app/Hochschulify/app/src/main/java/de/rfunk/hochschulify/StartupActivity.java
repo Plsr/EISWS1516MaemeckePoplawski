@@ -52,10 +52,11 @@ public class StartupActivity extends AppCompatActivity {
 
 
     /**
-     * Checks the input fields of the login for correctness.
-     * For now, it just checks if one of the values equals "falsch" and displays the error label then,
-     * for demonstration purposes.
-     * TODO: Update Docs
+     * Performs the login of a user if all data is entered correctly.
+     *
+     * Checks if all fields are populated and displays errors otherwise.
+     * If both fields are populated, checks if the user credentials are valid and saves them to the shared preferences.
+     * Afterwards, starts the HomeActivity.
      *
      * @param view current view
      */
@@ -70,8 +71,7 @@ public class StartupActivity extends AppCompatActivity {
         String identificationString = identification.getText().toString();
         String passwordString = password.getText().toString();
 
-        //TODO: Display error if a field is empty
-
+        // If both fields are populated, begin validation
         if(!Utils.isEmptyString(identificationString) && !Utils.isEmptyString(passwordString)) {
             // If one of the fields was empty before, remove the errors
             identificationLayout.setErrorEnabled(false);

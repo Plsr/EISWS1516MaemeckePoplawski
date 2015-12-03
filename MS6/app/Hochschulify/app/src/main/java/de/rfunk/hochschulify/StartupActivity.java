@@ -5,14 +5,11 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
-import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class StartupActivity extends AppCompatActivity {
-
-    //TODO: Add Toolbar
 
     Toolbar toolbar;
     EditText identification;
@@ -23,15 +20,33 @@ public class StartupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startup);
 
+        // Setting up the Toolbar
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(false);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
-    }
 
-    public void startRegister(View view) {
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(false);
+            getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
+        }
+
+        // Setting up the OnClick listeners
+        Button loginBtn = (Button) findViewById(R.id.button_login);
+        Button registerBtn = (Button) findViewById(R.id.button_register);
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                performLogin(v);
+            }
+        });
+
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent registerIntent = new Intent(v.getContext(), RegisterActivity.class);
+                startActivity(registerIntent);
+            }
+        });
     }
 
 

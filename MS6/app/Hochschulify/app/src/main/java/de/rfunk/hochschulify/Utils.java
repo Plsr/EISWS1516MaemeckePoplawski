@@ -30,7 +30,7 @@ public class Utils {
      * @return true if save was successful, false otherwise
      */
     public static boolean saveToSharedPrefs (Context context, String key, String value) {
-        if(stringNotEmpty(key) && stringNotEmpty(value)) {
+        if(!isEmptyString(key) && !isEmptyString(value)) {
             SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
             final SharedPreferences.Editor editor = sharedPrefs.edit();
             editor.putString(key, value);
@@ -90,9 +90,9 @@ public class Utils {
      * Checks if the given String is null and checks it with the .isEmpty() function.
      *
      * @param string The String to test
-     * @return true if String is not empty
+     * @return true if String is empty
      */
-    public static boolean stringNotEmpty(String string) {
-        return string != null && !string.isEmpty();
+    public static boolean isEmptyString(String string) {
+        return string == null || string.isEmpty();
     }
 }

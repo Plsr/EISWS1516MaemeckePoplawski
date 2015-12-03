@@ -69,7 +69,9 @@ public class StartupActivity extends AppCompatActivity {
         String identificationString = identification.getText().toString();
         String passwordString = password.getText().toString();
 
-        if(Utils.stringNotEmpty(identificationString) && Utils.stringNotEmpty(passwordString)) {
+        //TODO: Display error if a field is empty
+
+        if(!Utils.isEmptyString(identificationString) && !Utils.isEmptyString(passwordString)) {
 
             //TODO: Check if identification and password are valid
 

@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class StartupActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     EditText identification;
@@ -95,7 +95,7 @@ public class StartupActivity extends AppCompatActivity {
             Utils.saveToSharedPrefs(this, Utils.LOGIN_USERNAME_KEY, identificationString);
             Utils.saveToSharedPrefs(this, Utils.LOGIN_PASSWORD_KEY, passwordString);
 
-            Intent homeIntent = new Intent(StartupActivity.this, HomeActivity.class);
+            Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(homeIntent);
         }
 

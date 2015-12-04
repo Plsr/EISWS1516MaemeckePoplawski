@@ -8,13 +8,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StartupActivity">
+        <activity android:name=".LoginActivity">
 
         </activity>
         <activity
             android:name=".RegisterActivity"
             android:label="Registrieren"
-            android:parentActivityName=".StartupActivity" />
+            android:parentActivityName=".LoginActivity" />
         <activity
             android:name=".HomeActivity"
             android:windowSoftInputMode="adjustPan" />

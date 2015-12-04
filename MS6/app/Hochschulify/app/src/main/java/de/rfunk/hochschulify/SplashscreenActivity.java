@@ -39,7 +39,7 @@ public class SplashscreenActivity extends AppCompatActivity {
                     // TODO: Determine which activity to show based on credentials
                 }
 
-                Intent intent = new Intent(SplashscreenActivity.this, StartupActivity.class);
+                Intent intent = new Intent(SplashscreenActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         }, 3000);

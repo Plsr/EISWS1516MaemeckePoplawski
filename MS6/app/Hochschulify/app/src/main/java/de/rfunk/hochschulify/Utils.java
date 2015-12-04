@@ -3,6 +3,7 @@ package de.rfunk.hochschulify;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Patterns;
 
 /**
  * Class with general helper methods.
@@ -116,5 +117,20 @@ public class Utils {
      */
     public static boolean isEmptyString(String string) {
         return string == null || string.isEmpty();
+    }
+
+    /**
+     * Checks if a given CharSequence is valid email Syntax.
+     * NOTE: Only checks the Syntax, does NOT check the service for validation.
+     *
+     * Code was taken from Stack Overflow
+     *
+     * @see <a href="http://stackoverflow.com/a/9225678/4181679">Stack Overflow Thread</a>
+     *
+     * @param email eMail to be checked
+     * @return true if syntax matches email syntax
+     */
+    public static boolean isValidEmailSyntax(CharSequence email) {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 }

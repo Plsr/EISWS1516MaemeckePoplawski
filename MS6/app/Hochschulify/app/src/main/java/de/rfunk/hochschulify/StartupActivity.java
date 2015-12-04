@@ -77,6 +77,11 @@ public class StartupActivity extends AppCompatActivity {
             identificationLayout.setErrorEnabled(false);
             passwordLayout.setErrorEnabled(false);
 
+            // Check if identificationString is valid email syntax
+            if(!Utils.isValidEmailSyntax(identificationString)) {
+                // TODO: Only check for Usernames on validation
+            }
+
             //TODO: Check if identification and password are valid
 
             // Clearing shared Preferences for testing reasons

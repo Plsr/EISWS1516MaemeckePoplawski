@@ -68,6 +68,28 @@ public class Utils {
     }
 
     /**
+     * Checks if there are values for a given Array of Strings.
+     * Only returns true if all given keys do have a value.
+     *
+     * NOTE: Empty values are considered as non-existent by this method.
+     *
+     * @param context Context of the calling method
+     * @param keys Array of keys to be checked
+     * @return  true if there are valid values for all keys
+     */
+    public static boolean credentialsInSharedMem(Context context, String[] keys) {
+        boolean checker = true;
+        String defaultValue = "__DEFAULT__";
+        for (String key : keys) {
+            String prefVal = getFromSharedPrefs(context, key, defaultValue);
+            if(isEmptyString(prefVal) || prefVal.equals(defaultValue)) {
+                checker = false;
+            }
+        }
+        return checker;
+    }
+
+    /**
      * Clears all keys and values from default shared preferences
      *
      * NOTE: This method was written for development and testing purposes only. Never use this

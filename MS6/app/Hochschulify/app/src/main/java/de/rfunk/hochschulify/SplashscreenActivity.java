@@ -8,7 +8,8 @@ import android.os.Bundle;
 
 public class SplashscreenActivity extends AppCompatActivity {
 
-    // TODO: Disable possibility to use back button to return to this screen.
+    private static final String DEFAULT_VALUE = "__DEFAULT__";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,9 +20,25 @@ public class SplashscreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // TODO: Check if user has credentials saved in shared preferences
-                // TODO: Check if credentials still valid
-                // TODO: Determine which activity to show based on credentials
+                String[] keys = {Utils.LOGIN_PASSWORD_KEY, Utils.LOGIN_USERNAME_KEY};
+
+                // Check if there are values in the shared preferences for all requested keys.
+                if(Utils.credentialsInSharedMem(SplashscreenActivity.this, keys)){
+                    // DEBUG
+                    System.out.println("Shared Preferences found");
+
+                    // Get the values of the requested keys.
+                    String loginCredentials = Utils.getFromSharedPrefs(SplashscreenActivity.this, Utils.LOGIN_USERNAME_KEY, DEFAULT_VALUE);
+                    String passwordCredentials = Utils.getFromSharedPrefs(SplashscreenActivity.this, Utils.LOGIN_PASSWORD_KEY, DEFAULT_VALUE);
+
+                    //DEBUG
+                    System.out.println(loginCredentials);
+                    System.out.println(passwordCredentials);
+
+                    // TODO: Check if credentials still valid
+                    // TODO: Determine which activity to show based on credentials
+                }
+
                 Intent intent = new Intent(SplashscreenActivity.this, StartupActivity.class);
                 startActivity(intent);
             }

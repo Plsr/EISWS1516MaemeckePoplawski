@@ -22,7 +22,10 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  auth_token: String
+  auth_token: {
+    type: String,
+    select: false
+  }
 });
 
 // Register the UserSchema as a model called "User"

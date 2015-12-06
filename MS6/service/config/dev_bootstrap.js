@@ -15,7 +15,7 @@ module.exports = () => {
   User
     // Check if default user exists
     .findOne({ email: defaultUser.email })
-    .select("+email +password")
+    .select("+email +password +auth_token")
     .exec()
     .then((dummyUser) => {
       if (dummyUser) return dummyUser;

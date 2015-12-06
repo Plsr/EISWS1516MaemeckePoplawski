@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import {
-  userGet
+  userGet, userAuthCreate, userAuth
 } from "../controllers";
 
 const router = Router();
@@ -9,6 +9,9 @@ const router = Router();
 router.get("/", (req, res, next) => {
   res.json({ hello: "world" });
 });
+
+// Not in REST scope, needed for authentication
+router.post("/auth", userAuthCreate);
 
 router.get("/users/:userid", userGet);
 

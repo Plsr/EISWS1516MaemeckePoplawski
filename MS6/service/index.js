@@ -29,7 +29,11 @@ db()
     require("./config/dev_bootstrap")
   )
   .catch((e) => {
-    console.log("[!] Coudln't start. Is your mongod running?".red);
+    console.log("[!] Error while starting: %s".red, e);
     console.log(e);
+    if ("message" in e && e.message.match(/^(connect ECONNREFUSED)/)) {
+      console.log("[i] Seems like your mongo daemon isn't running.".blue);
+      console.log("    Are you sure there's a `mongod` running on your machine?.".blue);
+    }
     process.exit(0);
   });

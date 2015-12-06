@@ -157,9 +157,6 @@ export function userOptionalAuth(req, res, next) {
 
 // Update some data of a user, e.g. email, password and name
 export function userUpdate(req, res, next) {
-  let body = req.body,
-    user = req.auth_user;
-
   if (req.params.userid != req.auth_user._id) {
     return next(new HTTPError(403, "Can't update another user. You can only update yourself."));
   }
@@ -170,6 +167,11 @@ export function userUpdate(req, res, next) {
 
   let errors = req.validationErrors();
   if (errors) return next(new ValidationError(errors));
+
+  req.sanitizeBody("name").trim();
+
+  let body = req.body,
+    user = req.auth_user;
 
   // Override new transmitted data, fall back to the current data for
   // non-transmitted data
@@ -192,6 +194,57 @@ export function userUpdate(req, res, next) {
     .then(
       updatedUser => {
         return res.json(updatedUser);
+      },
+      err => {
+        return next(err);
+      }
+    );
+}
+
+
+export function userCreate(req, res, next) {
+
+  // Validate request
+  req.checkBody("name")
+    .notEmpty().withMessage("Name is required");
+  req.checkBody("password")
+    .notEmpty().withMessage("Password is required");
+  req.checkBody("email")
+    .notEmpty().withMessage("Password is required")
+    .isEmail().withMessage("Email has to be a valid email address");
+  req.checkBody("type")
+    .notEmpty().withMessage("Type is required")
+    .isIn(["INTERESSENT", "STUDENT", "ALUMNI"]).withMessage("Type has to be INTERESSENT, STUDENT or ALUMNI.");
+
+  let errors = req.validationErrors();
+  if (errors) return next(new ValidationError(errors));
+
+  req.sanitizeBody("name").trim();
+
+  let user = new User({
+    name: req.body.name,
+    email: req.body.email,
+    type: req.body.type,
+    password: req.body.password
+  });
+
+  // Save user, get the filtered document from the databse and send it back
+  // to the user.
+  user.save()
+    .then(
+      savedUser => {
+        return User.findOne({ _id: savedUser._id }).select("+email")
+          .then(
+            newUser => (newUser),
+            err => { throw err; }
+          );
+      },
+      err => { throw err; }
+    )
+    .then(
+      newUser => {
+        res.status(201); // 201 Created
+        return res.json(newUser);
       },
       err => {
         return next(err);

@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 
+// TODO: email should be unique and potential erros in userCreate and userUpdate
+// should be catched
+
 const UserSchema = new mongoose.Schema({
   name: String,
   email: {

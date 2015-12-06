@@ -10,6 +10,6 @@ router.get("/", (req, res, next) => {
   res.json({ hello: "world" });
 });
 
-router.get("/users/:id", userGet);
+router.get("/users/:userid", userGet);
 
 export default router;

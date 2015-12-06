@@ -7,5 +7,8 @@ export function error404(req, res, next) {
 export function error(err, req, res, next) {
   let status = err.status || 500;
   res.status(status);
-  res.json({ "status": status, "error": err });
+
+  // We don't want to output an error-stack, if there is one
+  delete err.stack;
+  res.json(err);
 }

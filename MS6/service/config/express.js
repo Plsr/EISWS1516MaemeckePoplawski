@@ -1,6 +1,7 @@
 import express from "express";
 import logger from "morgan";
 import bodyParser from "body-parser";
+import expressValidator from "express-validator";
 
 import api from "../routes/api";
 import { error404, error } from "../controllers";
@@ -11,6 +12,10 @@ const app = express();
 // ---
 // HTTP Request Logger
 app.use(logger("dev"));
+
+// express-validator can validate and sanitize the request
+// see https://github.com/ctavan/express-validator
+app.use(expressValidator());
 
 // Body Parser: We only need to parse application/json
 app.use(bodyParser.json());

@@ -15,18 +15,30 @@ module.exports = () => {
   User
     // Check if default user exists
     .findOne({ email: defaultUser.email })
+    .select("+email +password")
     .exec()
     .then((dummyUser) => {
       if (dummyUser) return dummyUser;
 
       // Create default user, if he doesn't exist
       return defaultUser.save()
-        .then(() => { console.log("[✓] Created dummy user".green); })
-        .then(() => (defaultUser));
+        .then(
+          user => {
+            console.log("[✓] Created dummy user".green);
+            return user;
+          },
+          err => { throw err; }
+        )
     })
-    .then((userInDb) => {
-      console.log("[i] Dummy user:\n%s".blue, userInDb);
-    });
+    .then(
+      userInDb => {
+        console.log("[i] Dummy user:\n%s".blue, userInDb);
+      },
+      err => {
+        console.log("[!] Error while saving dummy user".red);
+        console.log(err);
+      }
+    );
 
   return;
 }

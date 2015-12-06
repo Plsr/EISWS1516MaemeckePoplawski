@@ -4,11 +4,14 @@ const UserSchema = new mongoose.Schema({
   name: String,
   email: {
     type: String,
-    required: true
+    required: true,
+    select: false // Prevents password from accidentially being shown.
+                  // You can add it with User.find().select("+password")
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    select: false
   },
   type: {
     type: String,

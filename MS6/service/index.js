@@ -1,17 +1,18 @@
 import colors from "colors";
 
-// Expose the configuration global, that can come handy
+// Expose the configuration global. This can come handy in some situations.
 import config from "./config/env/DEV";
 global.__config = config;
 
 // Using require instead of `import ... from ...` here, because imports will be
-// executed before everything else – but we need to attach our __config first
+// executed before anything else – but we need to attach our __config first
 // in the global scope.
 const db = require("./config/database");
 
+// Running on port 3000, unless there's a PORT specified
 const port = process.env.PORT || 3000;
 
-// Connect to the database
+// Connect to the database before doing anything else
 db()
   .then(() => {
     console.log("[✓] Database connected".green);
@@ -33,7 +34,7 @@ db()
     console.log(e);
     if ("message" in e && e.message.match(/^(connect ECONNREFUSED)/)) {
       console.log("[i] Seems like your mongo daemon isn't running.".blue);
-      console.log("    Are you sure there's a `mongod` running on your machine?.".blue);
+      console.log("    Try running `mongod` first.".blue);
     }
     process.exit(0);
   });

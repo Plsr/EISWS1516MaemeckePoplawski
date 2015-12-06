@@ -6,7 +6,7 @@ const User = mongoose.model("User");
 
 // Get a user by its id
 export function userGet(req, res, next) {
-  
+
   // Validate request
   req.checkParams("userid", "Malformed userid")
     .notEmpty().withMessage("userid is required")
@@ -14,7 +14,15 @@ export function userGet(req, res, next) {
   let errors = req.validationErrors();
   if (errors) return next(new ValidationError(errors));
 
+  // If the user is authenticated and thus requesting itself,
+  // it can see his email address
+  let select = "";
+  if ("auth_user" in req && req.auth_user._id == req.params.userid) {
+    select = "+email";
+  }
+
   User.findOne({ _id: req.params.userid })
+    .select(select)
     .exec()
     .then(
       // Resolve callback
@@ -119,7 +127,7 @@ export function userAuth(req, res, next) {
         if (!user) throw new HTTPError(403, "Invalid authentication");
 
         req.auth_user = user;
-        // Conitnue with the next callback
+        // Continue with the next callback
         return next();
       },
       err => { throw err; }
@@ -129,6 +137,63 @@ export function userAuth(req, res, next) {
       err => {
         // If there was an error (server or client), we'll continue with the
         // error handling
+        return next(err);
+      }
+    );
+}
+
+
+// Call userAuth, but only when the user want's to authenticate.
+// This can be used to display more or less data depending on the users
+// authorization
+export function userOptionalAuth(req, res, next) {
+  if (req.headers["x-auth-user"] || req.headers["x-auth-token"]) {
+    return userAuth(req, res, next);
+  }
+
+  return next();
+}
+
+
+// Update some data of a user, e.g. email, password and name
+export function userUpdate(req, res, next) {
+  let body = req.body,
+    user = req.auth_user;
+
+  if (req.params.userid != req.auth_user._id) {
+    return next(new HTTPError(403, "Can't update another user. You can only update yourself."));
+  }
+
+  // Validate request
+  req.checkBody("email").optional()
+    .isEmail().withMessage("Email has to be a valid email address");
+
+  let errors = req.validationErrors();
+  if (errors) return next(new ValidationError(errors));
+
+  // Override new transmitted data, fall back to the current data for
+  // non-transmitted data
+  user.name = body.name || user.name;
+  user.password = body.password || user.password;
+  user.email = body.email || user.email;
+
+  // Save the user and output it
+  user.save()
+    .then(
+      savedUser => {
+        return User.findOne({ _id: user._id }).select("+email")
+          .then(
+            outputUser => (outputUser),
+            err => { throw err; }
+          );
+      },
+      err => { throw err; }
+    )
+    .then(
+      updatedUser => {
+        return res.json(updatedUser);
+      },
+      err => {
         return next(err);
       }
     );

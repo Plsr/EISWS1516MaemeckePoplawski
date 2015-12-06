@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import {
-  userGet, userAuthCreate, userAuth
+  userGet, userAuthCreate, userAuth, userOptionalAuth, userUpdate
 } from "../controllers";
 
 const router = Router();
@@ -13,6 +13,7 @@ router.get("/", (req, res, next) => {
 // Not in REST scope, needed for authentication
 router.post("/auth", userAuthCreate);
 
-router.get("/users/:userid", userGet);
+router.get("/users/:userid", userOptionalAuth, userGet);
+router.put("/users/:userid", userAuth, userUpdate);
 
 export default router;

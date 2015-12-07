@@ -38,15 +38,24 @@ public class RegisterActivity extends AppCompatActivity {
                 Map<String, TextView> textViewMap = getTextViews();
                 Map<String, TextInputLayout> inputLayoutMap = getTextInputLayouts();
 
+                //TODO: Write a function for this
                 for(Map.Entry<String, TextView> entry : textViewMap.entrySet()) {
+                    String identifier = entry.getKey();
                     String textViewContent = entry.getValue().getText().toString();
+                    TextInputLayout layout = inputLayoutMap.get(identifier);
                     if(Utils.isEmptyString(textViewContent)) {
-                        String identifier = entry.getKey();
-                        TextInputLayout layout = inputLayoutMap.get(identifier);
+                        // TODO: Write constant in strings.xml
                         String errMessageEmpty = "Feld darf nicht leer sein";
                         displayErrorLabelOnTextInputLayout(layout, errMessageEmpty);
                     }
+                    if(identifier.equals(EMAILINPUTID)){
+                        if(!Utils.isValidEmailSyntax(textViewContent)){
+                            String errorMessageSyntax = "Bitte gültig email Adresse eingeben";
+                            displayErrorLabelOnTextInputLayout(layout, errorMessageSyntax);
+                        }
+                    }
                 }
+
 
 
 

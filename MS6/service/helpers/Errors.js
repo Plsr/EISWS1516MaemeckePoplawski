@@ -3,7 +3,8 @@ export class HTTPError extends Error {
   constructor(error) {
     super();
     let _error = {};
-    // Be able to
+    // Use argument[0] as HTTP Code and argument[1] as message OR
+    // send one object with { status, msg }
     if (arguments.length === 2 &&
       typeof arguments[1] === "string" &&
       typeof arguments[0] === "number") {
@@ -25,7 +26,7 @@ export class ValidationError extends Error {
     this.status = 400;
     this.message = "Request is not valid. See details for more informations.";
 
-    // Print error details
+    // Print validation details
     this.details = {};
     errors.forEach(error => {
       this.details[error.param] = {

@@ -1,8 +1,7 @@
 import colors from "colors";
 
 // Expose the configuration global. This can come handy in some situations.
-import config from "./config/env/DEV";
-global.__config = config;
+global.__config = require("./config/env/DEV");
 
 // Using require instead of `import ... from ...` here, because imports will be
 // executed before anything else – but we need to attach our __config first

@@ -271,7 +271,7 @@ export function userDelete(req, res, next) {
     .exec()
     .then(
       deletedDoc => {
-        return res.status(204).end();
+        return res.status(204).end(); // 204 No Content
       },
       err => {
         return next(err);

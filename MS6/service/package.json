@@ -1,0 +1,38 @@
+{
+  "name": "hochschulify-service",
+  "version": "0.0.1",
+  "description": "Service for Hochschulify",
+  "main": "index.js",
+  "scripts": {
+    "start": "node babel-start.js",
+    "watch": "./node_modules/nodemon/bin/nodemon.js --exec npm start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "contributors": [
+    {
+      "name": "Christian Poplawski",
+      "email": "christianpoplawski@gmail.com"
+    },
+    {
+      "name": "Timo Mämecke",
+      "email": "timo@maemecke.com"
+    }
+  ],
+  "license": "UNLICENSED",
+  "dependencies": {
+    "babel-core": "^6.3.13",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-register": "^6.3.13",
+    "body-parser": "^1.14.1",
+    "colors": "^1.1.2",
+    "express": "^4.13.3",
+    "express-validator": "^2.18.0",
+    "mongoose": "^4.2.9",
+    "morgan": "^1.6.1",
+    "randomstring": "^1.1.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.8.1"
+  }
+}

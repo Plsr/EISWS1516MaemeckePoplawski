@@ -251,3 +251,31 @@ export function userCreate(req, res, next) {
       }
     );
 }
+
+
+// Delete a user
+export function userDelete(req, res, next) {
+
+  // Validate request
+  req.checkBody("userid", "Malformed userid")
+    .notEmpty().withMessage("userid is required")
+    .isMongoId();
+  let errors = req.validationErrors();
+  if (errors) return next(new ValidationError(errors));
+
+  if (req.params.userid != req.auth_user._id) {
+    return next(new HTTPError(403, "Can't delete another user. You can only delete yourself."));
+  }
+
+  User.findOneAndRemove({ _id: req.auth_user._id })
+    .exec()
+    .then(
+      deletedDoc => {
+        return res.status(204).end();
+      },
+      err => {
+        return next(err);
+      }
+    );
+
+}

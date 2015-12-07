@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import {
   userGet, userAuthCreate, userAuth, userOptionalAuth, userUpdate,
-  userCreate
+  userCreate, userDelete
 } from "../controllers";
 
 const router = Router();
@@ -14,8 +14,10 @@ router.get("/", (req, res, next) => {
 // Not in REST scope, needed for authentication
 router.post("/auth", userAuthCreate);
 
+// User Routes
 router.post("/users", userCreate);
 router.get("/users/:userid", userOptionalAuth, userGet);
 router.put("/users/:userid", userAuth, userUpdate);
+router.delete("/users/:userid", userAuth, userDelete);
 
 export default router;

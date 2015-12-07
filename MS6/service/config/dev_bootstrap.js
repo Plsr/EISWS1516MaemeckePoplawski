@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import colors from "colors";
+import randomstring from "randomstring";
 
 const User = mongoose.model("User");
 
@@ -8,7 +9,8 @@ const defaultUser = new User({
   email: "test@test.de",
   password: "test",
   type: "STUDENT",
-  name: "Max Mustermann"
+  name: "Max Mustermann",
+  auth_token: randomstring.generate()
 });
 
 module.exports = () => {

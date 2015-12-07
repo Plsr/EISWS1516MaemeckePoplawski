@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
-            android:id="@+id/registerMail"
+            android:id="@+id/input_email"
             android:hint="chris@51seven.de" />
     </android.support.design.widget.TextInputLayout>
 
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
-            android:id="@+id/registerUsername"
+            android:id="@+id/input_username"
             android:hint="chrispop" />
     </android.support.design.widget.TextInputLayout>
 
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
-            android:id="@+id/registerPassword"
+            android:id="@+id/input_password"
             android:hint="••••••••" />
     </android.support.design.widget.TextInputLayout>
 

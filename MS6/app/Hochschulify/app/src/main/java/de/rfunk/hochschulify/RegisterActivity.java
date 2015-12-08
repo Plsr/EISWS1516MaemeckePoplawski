@@ -65,6 +65,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Gets the TextViews in the Register form. Does NOT automatically detect all TextViews
+     * in the Activity but needs to be updated by hand.
+     * Returns the TextViews in a HashMap with static identifiers. These Identifiers are used Class-wide.
+     *
+     * @return HashMap with identifier key and TextView value pairs
+     */
     public Map<String, TextView> getTextViews() {
         // Get all textviews
         TextView emailView = (TextView) findViewById(R.id.input_email);
@@ -80,6 +87,13 @@ public class RegisterActivity extends AppCompatActivity {
         return textViewMap;
     }
 
+    /**
+     * Gets the TextInputLayouts in the Register form. Does NOT automatically detect all TextInputLayouts
+     * in the Activity but needs to be updated by hand.
+     * Returns the TextInputLayoputs in a HashMap with static identifiers. These Identifiers are used Class-wide.
+     *
+     * @return HashMap with identifier key and TextInputLayout value pairs
+     */
     public Map<String, TextInputLayout> getTextInputLayouts() {
         // Get all TextInputLayouts
         TextInputLayout emailInputLayout = (TextInputLayout) findViewById(R.id.layout_email);
@@ -94,6 +108,14 @@ public class RegisterActivity extends AppCompatActivity {
         return inputLayoutmap;
     }
 
+    /**
+     * Unsets all error labels of TextInputLayouts in a given Hashmap.
+     * If there is not an error label displayed at a label handed to this function,
+     * notjing changes. There are now error thrown.
+     *
+     * @param layouts Hashmap with String and TextInputLayout key-value-pairs to
+     *                be removed from error labels.
+     */
     public void unsetAllErrorLabels(Map<String, TextInputLayout> layouts) {
         for(Map.Entry<String, TextInputLayout> entry: layouts.entrySet()) {
             entry.getValue().setErrorEnabled(false);

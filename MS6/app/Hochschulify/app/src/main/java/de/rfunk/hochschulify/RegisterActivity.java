@@ -52,11 +52,21 @@ public class RegisterActivity extends AppCompatActivity {
                         displayErrorLabelOnTextInputLayout(layout, errMessageEmpty);
                     }
                     if (identifier.equals(EMAILINPUTID)) {
-                        if (!Utils.isValidEmailSyntax(textViewContent)) {
+                        if (!Utils.isValidEmailSyntax(textViewContent) && !Utils.isEmptyString(textViewContent)) {
                             String errorMessageSyntax = "Bitte gültig email Adresse eingeben";
                             displayErrorLabelOnTextInputLayout(layout, errorMessageSyntax);
                         }
                     }
+                    if (identifier.equals(USERNAMEINPUTID)) {
+                        // TODO: Which restrictions does the username have?
+                    }
+                    if (identifier.equals(PASSWORDINPUTID)) {
+                       if (textViewContent.length() < 6 && !Utils.isEmptyString(textViewContent)) {
+                           String errPasswdLength = "Passwort muss mindestens 6 Zeichen lang sein";
+                           displayErrorLabelOnTextInputLayout(layout, errPasswdLength);
+                       }
+                    }
+
                 }
 
 

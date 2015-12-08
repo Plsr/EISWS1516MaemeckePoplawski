@@ -38,26 +38,26 @@ public class RegisterActivity extends AppCompatActivity {
                 Map<String, TextView> textViewMap = getTextViews();
                 Map<String, TextInputLayout> inputLayoutMap = getTextInputLayouts();
 
+                // Remove all Error labels
+                unsetAllErrorLabels(inputLayoutMap);
+
                 //TODO: Write a function for this
-                for(Map.Entry<String, TextView> entry : textViewMap.entrySet()) {
+                for (Map.Entry<String, TextView> entry : textViewMap.entrySet()) {
                     String identifier = entry.getKey();
                     String textViewContent = entry.getValue().getText().toString();
                     TextInputLayout layout = inputLayoutMap.get(identifier);
-                    if(Utils.isEmptyString(textViewContent)) {
+                    if (Utils.isEmptyString(textViewContent)) {
                         // TODO: Write constant in strings.xml
                         String errMessageEmpty = "Feld darf nicht leer sein";
                         displayErrorLabelOnTextInputLayout(layout, errMessageEmpty);
                     }
-                    if(identifier.equals(EMAILINPUTID)){
-                        if(!Utils.isValidEmailSyntax(textViewContent)){
+                    if (identifier.equals(EMAILINPUTID)) {
+                        if (!Utils.isValidEmailSyntax(textViewContent)) {
                             String errorMessageSyntax = "Bitte gültig email Adresse eingeben";
                             displayErrorLabelOnTextInputLayout(layout, errorMessageSyntax);
                         }
                     }
                 }
-
-
-
 
 
             }
@@ -92,6 +92,12 @@ public class RegisterActivity extends AppCompatActivity {
         inputLayoutmap.put(USERNAMEINPUTID, usernameInputLayout);
         inputLayoutmap.put(PASSWORDINPUTID, passwordInputLayout);
         return inputLayoutmap;
+    }
+
+    public void unsetAllErrorLabels(Map<String, TextInputLayout> layouts) {
+        for(Map.Entry<String, TextInputLayout> entry: layouts.entrySet()) {
+            entry.getValue().setErrorEnabled(false);
+        }
     }
 
     /**

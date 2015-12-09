@@ -12,6 +12,9 @@ import android.util.Patterns;
  */
 public class Utils {
 
+    // Server URL, stored here for global usage
+    public static final String SERVER_URL = "http://10.0.2.2:3000";
+
     //TODO: Remove Password, only store login token
     public static final String LOGIN_USERNAME_KEY = "__USERNAME__";
     public static final String LOGIN_PASSWORD_KEY = "__PASSWORD__";

@@ -60,7 +60,6 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                     if (identifier.equals(USERNAMEINPUTID)) {
-                        // TODO: Which restrictions does the username have?
                         String regex = "[A-Za-z0-9//.//_//-]+";
                         Pattern pattern = Pattern.compile(regex);
                         Matcher matcher = pattern.matcher(textViewContent);

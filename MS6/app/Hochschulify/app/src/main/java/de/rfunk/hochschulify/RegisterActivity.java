@@ -12,6 +12,8 @@ import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -59,6 +61,17 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     if (identifier.equals(USERNAMEINPUTID)) {
                         // TODO: Which restrictions does the username have?
+                        String regex = "[A-Za-z0-9//.//_//-]+";
+                        Pattern pattern = Pattern.compile(regex);
+                        Matcher matcher = pattern.matcher(textViewContent);
+                        if(textViewContent.length() > 12 && !Utils.isEmptyString(textViewContent)) {
+                            String errUsernameLength = "Name darf max. 12 Zeichen lang sein.";
+                            displayErrorLabelOnTextInputLayout(layout, errUsernameLength);
+                        }
+                        else if(!matcher.matches()) {
+                            String forbiddenChar = "Nur Buchstaben, Zahlen und . - _ erlaubt";
+                            displayErrorLabelOnTextInputLayout(layout, forbiddenChar);
+                        }
                     }
                     if (identifier.equals(PASSWORDINPUTID)) {
                        if (textViewContent.length() < 6 && !Utils.isEmptyString(textViewContent)) {

@@ -20,7 +20,7 @@ public class SplashscreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                String[] keys = {Utils.LOGIN_PASSWORD_KEY, Utils.LOGIN_USERNAME_KEY};
+                String[] keys = {Utils.LOGIN_AUTHTOKEN_KEY, Utils.LOGIN_USERNAME_KEY};
 
                 // Check if there are values in the shared preferences for all requested keys.
                 if(Utils.credentialsInSharedMem(SplashscreenActivity.this, keys)){
@@ -29,17 +29,17 @@ public class SplashscreenActivity extends AppCompatActivity {
 
                     // Get the values of the requested keys.
                     String loginCredentials = Utils.getFromSharedPrefs(SplashscreenActivity.this, Utils.LOGIN_USERNAME_KEY, DEFAULT_VALUE);
-                    String passwordCredentials = Utils.getFromSharedPrefs(SplashscreenActivity.this, Utils.LOGIN_PASSWORD_KEY, DEFAULT_VALUE);
+                    String authToken = Utils.getFromSharedPrefs(SplashscreenActivity.this, Utils.LOGIN_AUTHTOKEN_KEY, DEFAULT_VALUE);
 
                     //DEBUG
                     System.out.println(loginCredentials);
-                    System.out.println(passwordCredentials);
+                    System.out.println(authToken);
 
                     // TODO: Check if credentials still valid
                     // TODO: Determine which activity to show based on credentials
                 }
 
-                Intent intent = new Intent(SplashscreenActivity.this, LoginActivity.class);
+                Intent intent = new Intent(SplashscreenActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         }, 3000);

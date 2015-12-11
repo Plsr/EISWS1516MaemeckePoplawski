@@ -8,8 +8,13 @@ const EntrySchema = new mongoose.Schema({
     enum: ["ERFAHRUNG", "ALUMNIBERICHT", "ANDERS"],
     required: true
   },
-  recommendation: Boolean,
-  user: {
+	poscount: {
+		type: Number
+	}
+	negcount {
+		type: Number
+	}
+	user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   },
@@ -23,6 +28,10 @@ const EntrySchema = new mongoose.Schema({
       ref: "Entry"
     }
   ]
+	parententry: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Entry"		
+	}
 });
 
 // Register the EntrySchema as a model called "Entry"

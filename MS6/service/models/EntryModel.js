@@ -8,12 +8,7 @@ const EntrySchema = new mongoose.Schema({
     enum: ["ERFAHRUNG", "ALUMNIBERICHT", "ANDERS"],
     required: true
   },
-	poscount: {
-		type: Number
-	}
-	negcount {
-		type: Number
-	}
+	recommendation: Boolean,
 	user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"

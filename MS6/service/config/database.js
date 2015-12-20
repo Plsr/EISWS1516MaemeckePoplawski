@@ -12,7 +12,7 @@ function connect() {
 }
 
 
-module.exports = function db(text) {
+module.exports = () => {
   return new Promise((resolve, reject) => {
     console.log("[i] Bootstrapping models...".blue);
 

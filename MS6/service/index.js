@@ -24,10 +24,10 @@ db()
     console.log("[✓] Server listening on port %d".green, port);
     return;
   })
-  .then(
+  .then(() => {
     // Bootstrap development data (such as test user, ...)
-    require("./config/dev_bootstrap")
-  )
+    require("./config/dev_bootstrap")();
+  })
   .catch((e) => {
     console.log("[!] Error while starting: %s".red, e);
     console.log(e);

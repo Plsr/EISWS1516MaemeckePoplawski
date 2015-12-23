@@ -22,10 +22,10 @@ const EntrySchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Entry"
     }
-  ]
+  ],
 	parententry: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: "Entry"		
+		ref: "Entry"
 	}
 });
 

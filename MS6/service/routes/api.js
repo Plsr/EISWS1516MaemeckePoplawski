@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import {
   userGet, userAuthCreate, userAuth, userOptionalAuth, userUpdate,
-  userCreate, userDelete
+  userCreate, userDelete, entryCreate
 } from "../controllers";
 
 const router = Router();
@@ -20,7 +20,7 @@ router.put("/users/:userid", userAuth, userUpdate);
 router.delete("/users/:userid", userAuth, userDelete);
 
 // Entry Routes
-// router.post("/entries", userAuth, entryCreate);
+router.post("/entries", userAuth, entryCreate);
 // router.get("/entries/:entryid", entryGet);
 // router.put("/entries/:entryid", userAuth, entryUpdate);
 // router.delete("/entries/:entryid", userAuth, entryDelete);

@@ -23,8 +23,7 @@ export function entryCreate(req, res, next) {
     .notEmpty().withMessage("Course is required")
     .isMongoId();
   req.checkBody("parententry")
-    .notEmpty().withMessage("Parententry is required")
-    .isMongoId();
+    .optional().isMongoId();
 
   let errors = req.validationErrors();
   if (errors) return next(new ValidationError(errors));

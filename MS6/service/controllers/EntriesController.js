@@ -28,8 +28,37 @@ export function entryCreate(req, res, next) {
   let errors = req.validationErrors();
   if (errors) return next(new ValidationError(errors));
 
-  return res.end();
+  req.sanitizeBody("title").trim();
 
+  let entry = new Entry({
+    title: req.body.title,
+    text: req.body.text,
+    type: req.body.type,
+    user: req.body.user,
+    course: req.body.course,
+    parentenry: req.body.parententry // Is optional, what happens if it's not there? undefined?
+  });
 
-
+  // Save entry, get the filtered document from the databse and send it back
+  // to the user.
+  entry.save()
+    .then(
+      savedEntry => {
+        return Entry.findOne({ _id: savedEntry._id }).select()
+          .then(
+            newEntry => (newEntry),
+            err => { throw err; }
+          );
+      },
+      err => { throw err; }
+    )
+    .then(
+      newEntry => {
+        res.status(201); // 201 Created
+        return res.json(newEntry);
+      },
+      err => {
+        return next(err);
+      }
+    );
 }

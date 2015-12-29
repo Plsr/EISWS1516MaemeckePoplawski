@@ -62,7 +62,7 @@ module.exports = () => {
 
   Course
       .findOne({ name: defaultCourse.name })
-      .select("+name")
+      .select()
       .exec()
       .then((dummyCourse) => {
         if (dummyCourse) return dummyCourse;
@@ -88,7 +88,7 @@ module.exports = () => {
 
   Entry
     .findOne({ title: defaultEntry.title })
-    .select("+title +text +type")
+    .select()
     .exec()
     .then((dummyEntry) => {
       if(dummyEntry) return dummyEntry;

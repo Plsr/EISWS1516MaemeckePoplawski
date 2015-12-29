@@ -4,6 +4,7 @@ import randomstring from "randomstring";
 
 const User = mongoose.model("User");
 const Course = mongoose.model("Course");
+const Entry = mongoose.model("Entry");
 
 // A pre-created user in our database
 const defaultUser = new User({
@@ -17,9 +18,18 @@ const defaultUser = new User({
 // A pre-created course in our database
 const defaultCourse = new Course({
   name: "Default Course"
-  // TODO: University is left blank intentionally at this point,
-  //       fill later.
-})
+  // University is left blank intentionally at this point since it depends
+  // on another model and is not needed for testing at this point.
+});
+
+// A pre-created entry in our database
+const defaultEntry = new Entry({
+  title: "Default Entry",
+  text: "Default body text. kthxbye.",
+  type: "ANDERS"
+  // All other values are left blank intentionally since they depend
+  // on other models and are not essential for testing right now.
+});
 
 module.exports = () => {
   User
@@ -75,6 +85,32 @@ module.exports = () => {
           console.log(err);
         }
       );
+
+  Entry
+    .findOne({ title: defaultEntry.title })
+    .select("+title +text +type")
+    .exec()
+    .then((dummyEntry) => {
+      if(dummyEntry) return dummyEntry;
+
+      return defaultEntry.save()
+      .then(
+        entry => {
+          console.log("[✓] Created dummy entry".green);
+          return entry;
+        },
+        err => { throw err; }
+      )
+    })
+    .then (
+      entryInDb => {
+        console.log("[i] Dummy entry:\n%s".blue, entryInDb);
+      },
+      err => {
+        console.log("[!] Error while saving dummy entry".red);
+        console.log(err);
+      }
+    );
 
   return;
 }

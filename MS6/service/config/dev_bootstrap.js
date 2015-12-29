@@ -3,6 +3,7 @@ import colors from "colors";
 import randomstring from "randomstring";
 
 const User = mongoose.model("User");
+const Course = mongoose.model("Course");
 
 // A pre-created user in our database
 const defaultUser = new User({
@@ -12,6 +13,13 @@ const defaultUser = new User({
   name: "Max Mustermann",
   auth_token: randomstring.generate()
 });
+
+// A pre-created course in our database
+const defaultCourse = new Course({
+  name: "Default Course"
+  // TODO: University is left blank intentionally at this point,
+  //       fill later.
+})
 
 module.exports = () => {
   User
@@ -41,6 +49,32 @@ module.exports = () => {
         console.log(err);
       }
     );
+
+  Course
+      .findOne({ name: defaultCourse.name })
+      .select("+name")
+      .exec()
+      .then((dummyCourse) => {
+        if (dummyCourse) return dummyCourse;
+
+        return defaultCourse.save()
+          .then(
+            course => {
+              console.log("[✓] Created dummy course".green);
+              return course;
+            },
+            err => { throw err; }
+          )
+      })
+      .then(
+        courseInDb => {
+          console.log("[i] Dummy course:\n%s".blue, courseInDb);
+        },
+        err => {
+          console.log("[!] Error while saving dummy course".red);
+          console.log(err);
+        }
+      );
 
   return;
 }

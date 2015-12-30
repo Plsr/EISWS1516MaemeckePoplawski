@@ -48,6 +48,8 @@ public class SingleThreadActivity extends AppCompatActivity {
     }
 
     public void getMainEntry(String entryID) throws JSONException {
+        // Set up request
+        // Thread ID is sent in the URL, no body required
         JSONObject reqBody = new JSONObject();
         String url = SERVER_URL + ENTRY_PATH + "/" + entryID;
 
@@ -55,8 +57,22 @@ public class SingleThreadActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    // Pares response from service
                     String title = response.get("title").toString();
+                    String text =  response.get("text").toString();
+                    String type = response.get("type").toString();
+                    String user = response.get("user").toString();
+                    String course = response.get("course").toString(); // Is this needed here?
+                    String parententry = response.get("parententry").toString();
+                    // TODO: Deal with subentries
+
+                    // DEBUG
                     System.out.println(title);
+                    System.out.println(text);
+                    System.out.println(type);
+                    System.out.println(user);
+                    System.out.println(course);
+                    System.out.println(parententry);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

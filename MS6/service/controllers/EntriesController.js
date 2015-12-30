@@ -62,3 +62,38 @@ export function entryCreate(req, res, next) {
       }
     );
 }
+
+export function entryGet(req, res, next) {
+  // Validate request
+  req.checkParams("entryid")
+    .notEmpty().withMessage("Entry ID is required")
+    .isMongoId();
+
+  let errors = req.validationErrors();
+  if (errors)  return next(new ValidationError(errors));
+
+  // Find entry by given id
+  Entry.findOne({ _id: req.params.entryid })
+    .select()
+    .exec()
+    .then(
+      entry => {
+        // Entry not found
+        if(!entry)
+          throw new HTTPError(404, `Entry with ID ${req.params.entryid} not found`);
+
+        // Return entry
+        res.json(entry);
+      },
+      err => {
+        throw err;
+      }
+    )
+    // Just for error handling in promise
+    .then (
+      undefined,
+      err => {
+        return next(err);
+      }
+    )
+}

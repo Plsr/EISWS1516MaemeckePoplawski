@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import {
   userGet, userAuthCreate, userAuth, userOptionalAuth, userUpdate,
-  userCreate, userDelete, entryCreate
+  userCreate, userDelete, entryCreate, entryGet
 } from "../controllers";
 
 const router = Router();
@@ -21,7 +21,7 @@ router.delete("/users/:userid", userAuth, userDelete);
 
 // Entry Routes
 router.post("/entries", userAuth, entryCreate);
-// router.get("/entries/:entryid", entryGet);
+router.get("/entries/:entryid", entryGet);
 // router.put("/entries/:entryid", userAuth, entryUpdate);
 // router.delete("/entries/:entryid", userAuth, entryDelete);
 

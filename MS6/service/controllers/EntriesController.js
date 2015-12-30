@@ -30,13 +30,19 @@ export function entryCreate(req, res, next) {
 
   req.sanitizeBody("title").trim();
 
+  // Check if there is a parententry given
+  // if not, set it to null to make the clients life easier
+  var parent = req.body.parententry;
+  if(parent == undefined)
+    parent = null;
+
   let entry = new Entry({
     title: req.body.title,
     text: req.body.text,
     type: req.body.type,
     user: req.body.user,
     course: req.body.course,
-    parentenry: req.body.parententry // Is optional, what happens if it's not there? undefined?
+    parententry: parent // Is optional, what happens if it's not there? undefined?
   });
 
   // Save entry, get the filtered document from the databse and send it back

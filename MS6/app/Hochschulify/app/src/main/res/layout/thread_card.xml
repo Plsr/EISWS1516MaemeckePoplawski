@@ -33,7 +33,7 @@
                 android:id="@+id/thread_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/card_headline_font_size"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/colorBlack"
                 android:text="@string/thread_title"/>

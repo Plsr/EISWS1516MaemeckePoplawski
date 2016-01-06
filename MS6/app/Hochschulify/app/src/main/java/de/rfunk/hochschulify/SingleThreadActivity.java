@@ -20,8 +20,11 @@ import org.json.JSONObject;
 
 public class SingleThreadActivity extends AppCompatActivity {
 
+    // Static ThreadID for development build
+    // This ID will change on DB reset, remember to change it accordingly
     public static final String THREAD_ID = "5683b16de86eec0932e37fac";
 
+    // Setting up service data
     public static final String SERVER_URL = Utils.SERVER_URL;
     public static final String ENTRY_PATH = Utils.ENTRY_PATH;
     public static final String USER_PATH = Utils.USER_PATH;
@@ -30,11 +33,7 @@ public class SingleThreadActivity extends AppCompatActivity {
     TextView threadTitle;
     TextView threadBody;
     TextView threadAuthor;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +64,6 @@ public class SingleThreadActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     /**
@@ -75,7 +71,7 @@ public class SingleThreadActivity extends AppCompatActivity {
      * Sets values in TextViews after the request has finished.
      *
      * TODO: Error handling
-     * TODO: Set Author Field
+     * TODO: Comments count
      *
      * @param entryID ID of the Thread to be requested at service
      * @param title   TextView that shall be filled with the title of the thread
@@ -165,8 +161,6 @@ public class SingleThreadActivity extends AppCompatActivity {
                     e.printStackTrace();
 
                 }
-
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -174,6 +168,7 @@ public class SingleThreadActivity extends AppCompatActivity {
                 // TODO: Error handling
             }
         });
+        
         // Add Request to queue
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(req);

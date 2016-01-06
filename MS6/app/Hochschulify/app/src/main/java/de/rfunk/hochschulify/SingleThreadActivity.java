@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,10 +24,20 @@ public class SingleThreadActivity extends AppCompatActivity {
     public static final String SERVER_URL = Utils.SERVER_URL;
     public static final String ENTRY_PATH = Utils.ENTRY_PATH;
 
+    // Declare views to be filled with data
+    TextView threadTitle;
+    TextView threadContent;
+    TextView threadAuthor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_thread);
+
+        // Assign concrete views to variables
+        threadTitle =  (TextView) findViewById(R.id.thread_title);
+        threadContent =  (TextView) findViewById(R.id.thread_content);
+        threadAuthor =  (TextView) findViewById(R.id.author);
 
         try {
             getMainEntry(THREAD_ID);
@@ -46,6 +57,7 @@ public class SingleThreadActivity extends AppCompatActivity {
             }
         });
     }
+
 
     public void getMainEntry(String entryID) throws JSONException {
         // Set up request
@@ -73,6 +85,9 @@ public class SingleThreadActivity extends AppCompatActivity {
                     System.out.println(user);
                     System.out.println(course);
                     System.out.println(parententry);
+
+                    threadTitle.setText(title);
+                    threadContent.setText(text);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -80,7 +95,7 @@ public class SingleThreadActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                // TODO: Error handling
             }
         });
 
@@ -88,4 +103,5 @@ public class SingleThreadActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(req);
     }
+
 }

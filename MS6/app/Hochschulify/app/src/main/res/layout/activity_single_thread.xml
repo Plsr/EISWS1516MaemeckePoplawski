@@ -42,7 +42,7 @@
                     android:text="@string/thread_title"/>
 
                 <TextView
-                    android:id="@+id/thread_content"
+                    android:id="@+id/thread_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_padding"
                     android:layout_alignParentLeft="true"
-                    android:layout_below="@id/thread_content"
+                    android:layout_below="@id/thread_body"
                     android:text="@string/answer"/>
 
                 <TextView
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_padding"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@id/thread_content"
+                    android:layout_below="@id/thread_body"
                     android:text="@string/thread_author"/>
 
             </RelativeLayout>

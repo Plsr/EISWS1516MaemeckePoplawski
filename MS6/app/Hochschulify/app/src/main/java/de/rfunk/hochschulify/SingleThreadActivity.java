@@ -26,7 +26,7 @@ public class SingleThreadActivity extends AppCompatActivity {
 
     // Declare views to be filled with data
     TextView threadTitle;
-    TextView threadContent;
+    TextView threadBody;
     TextView threadAuthor;
 
     @Override
@@ -36,15 +36,17 @@ public class SingleThreadActivity extends AppCompatActivity {
 
         // Assign concrete views to variables
         threadTitle =  (TextView) findViewById(R.id.thread_title);
-        threadContent =  (TextView) findViewById(R.id.thread_content);
+        threadBody =  (TextView) findViewById(R.id.thread_body);
         threadAuthor =  (TextView) findViewById(R.id.author);
 
         try {
-            getMainEntry(THREAD_ID);
+            setEntry(THREAD_ID, threadTitle, threadBody);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        // TODO: Implement Back Arrow
+        // TODO: Set title
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Ein Thread");
         setSupportActionBar(toolbar);
@@ -58,11 +60,21 @@ public class SingleThreadActivity extends AppCompatActivity {
         });
     }
 
-
-    public void getMainEntry(String entryID) throws JSONException {
+    /**
+     * Gets the content of a given thread from the service by ThreadID.
+     * Sets values in TextViews after the request has finished.
+     *
+     * TODO: Error handling
+     *
+     * @param entryID ID of the Thread to be requested at service
+     * @param title TextView that shall be filled with the title of the thread
+     * @param body  TextView that shall be filled with the body of the thread
+     * @throws JSONException
+     */
+    public void setEntry(String entryID, final TextView title, final TextView body) throws JSONException {
         // Set up request
         // Thread ID is sent in the URL, no body required
-        JSONObject reqBody = new JSONObject();
+        final JSONObject reqBody = new JSONObject();
         String url = SERVER_URL + ENTRY_PATH + "/" + entryID;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, reqBody, new Response.Listener<JSONObject>() {
@@ -70,24 +82,24 @@ public class SingleThreadActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     // Pares response from service
-                    String title = response.get("title").toString();
-                    String text =  response.get("text").toString();
-                    String type = response.get("type").toString();
-                    String user = response.get("user").toString();
-                    String course = response.get("course").toString(); // Is this needed here?
-                    String parententry = response.get("parententry").toString();
+                    String rTitle = response.get("title").toString();
+                    String rText =  response.get("text").toString();
+                    String rType = response.get("type").toString();
+                    String rUser = response.get("user").toString();
+                    String rCourse = response.get("course").toString(); // Is this needed here?
+                    String rParententry = response.get("parententry").toString();
                     // TODO: Deal with subentries
 
                     // DEBUG
-                    System.out.println(title);
-                    System.out.println(text);
-                    System.out.println(type);
-                    System.out.println(user);
-                    System.out.println(course);
-                    System.out.println(parententry);
+                    System.out.println(rTitle);
+                    System.out.println(rText);
+                    System.out.println(rType);
+                    System.out.println(rUser);
+                    System.out.println(rCourse);
+                    System.out.println(rParententry);
 
-                    threadTitle.setText(title);
-                    threadContent.setText(text);
+                    title.setText(rTitle);
+                    body.setText(rText);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -102,6 +114,10 @@ public class SingleThreadActivity extends AppCompatActivity {
         // Add Request to queue
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(req);
+    }
+
+    public void setThreadAuthor(String userId, TextView authorTextView) {
+
     }
 
 }

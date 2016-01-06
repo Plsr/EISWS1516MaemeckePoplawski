@@ -168,7 +168,7 @@ public class SingleThreadActivity extends AppCompatActivity {
                 // TODO: Error handling
             }
         });
-        
+
         // Add Request to queue
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(req);

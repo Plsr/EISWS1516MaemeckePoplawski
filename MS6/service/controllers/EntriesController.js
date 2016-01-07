@@ -79,7 +79,10 @@ export function entryGet(req, res, next) {
   if (errors)  return next(new ValidationError(errors));
 
   // Find entry by given id
-  Entry.findOne({ _id: req.params.entryid })
+  Entry.findOne({ _id: req.params.entryid }, (err, docs) => {
+    // TODO: Populate subentries
+    console.log(docs);
+  })
     .populate('user')
     .select()
     .exec()
@@ -103,4 +106,21 @@ export function entryGet(req, res, next) {
         return next(err);
       }
     )
+}
+
+export function entryUpdate(req, res, next) {
+  if (req.body.user != req.auth_user._id) {
+    return next(new HTTPError(403, "Can't update post you din't write yourself."));
+  }
+
+  // Validate request
+  req.checkParams("entryid")
+    .notEmpty().withMessage("Entry ID is required")
+    .isMongoId();
+
+  let body = req.body;
+  let updatedEntry = new Entry();
+
+
+  return req.end;
 }

@@ -92,9 +92,10 @@ public class SingleThreadActivity extends AppCompatActivity {
                     String rTitle = response.get("title").toString();
                     String rText = response.get("text").toString();
                     String rType = response.get("type").toString();
-                    String rUser = response.get("user").toString();
                     String rCourse = response.get("course").toString(); // Is this needed here?
                     String rParententry = response.get("parententry").toString();
+                    JSONObject rUser = (JSONObject) response.get("user");
+                    String rUserName = rUser.get("name").toString();
                     // TODO: Deal with subentries
 
                     // DEBUG
@@ -108,58 +109,9 @@ public class SingleThreadActivity extends AppCompatActivity {
                     // TODO: Check if empty
                     title.setText(rTitle);
                     body.setText(rText);
-                    setEntryAuthor(rUser, author);
+                    author.setText(rUserName);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // TODO: Error handling
-            }
-        });
-
-        // Add Request to queue
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(req);
-    }
-
-    /**
-     * Gets the content of a given thread from the service by ThreadID.
-     * Sets values in TextViews after the request has finished.
-     *
-     * TODO: Error handling
-     * TODO: Display Username or email?
-     *
-     * @param userId            ID of the User to be requested at service
-     * @param authorTextView    TextView that shall be filled with the username of the thread
-     * @throws JSONException
-     */
-    public void setEntryAuthor(String userId, final TextView authorTextView) throws JSONException{
-        final JSONObject reqBody = new JSONObject();
-        String url = SERVER_URL + USER_PATH + "/" + userId;
-
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, reqBody, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    String rId = response.get("_id").toString();
-                    String rType = response.get("type").toString();
-                    String rName = response.get("name").toString();
-                    Boolean rVerified = response.getBoolean("verified"); //TODO: does this work?
-
-                    // DEBUG
-                    System.out.println(rId);
-                    System.out.println(rType);
-                    System.out.println(rName);
-                    System.out.println(rVerified);
-
-
-                    authorTextView.setText(rName);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-
                 }
             }
         }, new Response.ErrorListener() {

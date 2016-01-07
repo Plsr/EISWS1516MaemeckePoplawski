@@ -46,7 +46,7 @@ export function courseGet(req, res, next) {
     .populate({
       path: "entries", // populate entries into course
       select: "-text -course -__v -subentries",
-      populate: { // A sub-document populate.     // (•_•)
+      populate: { // populate user in course      // (•_•)
         path: "user",                             // ( •_•)>⌐■-■
         select: "-__v"                            // (⌐■_■)
       }                                           // YEEEEAAAHHH

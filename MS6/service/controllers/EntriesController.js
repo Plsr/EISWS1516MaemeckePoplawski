@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import randomstring from "randomstring";
 import { ValidationError, HTTPError } from "../helpers/Errors";
 
 const Entry = mongoose.model("Entry");

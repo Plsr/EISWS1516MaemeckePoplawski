@@ -95,6 +95,7 @@ export function entryCreate(req, res, next) {
     );
 }
 
+
 export function entryGet(req, res, next) {
   // Validate request
   req.checkParams("entryid")
@@ -135,20 +136,21 @@ export function entryGet(req, res, next) {
 }
 
 export function entryUpdate(req, res, next) {
-  if (req.body.user != req.auth_user._id) {
-    return next(new HTTPError(403, "Can't update post you din't write yourself."));
-  }
-
   // Validate request
   req.checkParams("entryid")
-    .notEmpty().withMessage("Entry ID is required")
-    .isMongoId();
+    .notEmpty().isMongoId().withMessage("Entry is required and has to be an ObjectId");
 
-  let body = req.body;
-  let updatedEntry = new Entry();
+  let errors = req.validationErrors();
+  if (errors) return next(new ValidationError(errors));
 
+  let updatedEntry = req.body;
 
-  return req.end;
+  // Find to-be-updated entry, check if user has permission and
+  // override the content with the updated information
+  Entry.findOneAndUpdate({ _id: req.params.entryid }, { $set: updatedEntry }, { 'new': true }, (err, entry) => {
+    if(err) { throw err; }
+    return res.status(200).json(entry);
+  });
 }
 
 

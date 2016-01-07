@@ -45,7 +45,11 @@ export function courseGet(req, res, next) {
     })
     .populate({
       path: "entries", // populate entries into course
-      select: "-text -course -__v -subentries"
+      select: "-text -course -__v -subentries",
+      populate: { // A sub-document populate.     // (•_•)
+        path: "user",                             // ( •_•)>⌐■-■
+        select: "-__v"                            // (⌐■_■)
+      }                                           // YEEEEAAAHHH
     })
     .exec()
     .then(
@@ -58,6 +62,7 @@ export function courseGet(req, res, next) {
         _course.entries.forEach(entry => {
           // make ref-url to entry
           entry.ref = `${req.protocol}://${req.get("host")}/entries/${entry._id}`
+          entry.user.ref = `${req.protocol}://${req.get("host")}/users/${entry.user._id}`
         });
         return res.json(_course);
       }

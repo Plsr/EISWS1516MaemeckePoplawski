@@ -70,6 +70,7 @@ public class SingleThreadActivity extends AppCompatActivity {
             });
         }
 
+        // TODO: Change to "Antwort schreiben" Button
         findViewById(R.id.card_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

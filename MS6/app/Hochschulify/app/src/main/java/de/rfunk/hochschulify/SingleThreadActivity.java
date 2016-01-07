@@ -51,11 +51,24 @@ public class SingleThreadActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // TODO: Implement Back Arrow
-        // TODO: Set title
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Ein Thread");
-        setSupportActionBar(toolbar);
+
+        // Set up toolbar
+        if(toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+            // Set onClickListener for Back Button
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        }
 
         findViewById(R.id.card_view).setOnClickListener(new View.OnClickListener() {
             @Override

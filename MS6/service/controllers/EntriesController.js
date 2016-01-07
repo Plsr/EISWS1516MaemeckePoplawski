@@ -17,9 +17,6 @@ export function entryCreate(req, res, next) {
   req.checkBody("type")
     .notEmpty().withMessage("Post Type is required")
     .isIn(postTypes).withMessage("Post Type not valid");
-  req.checkBody("user")
-    .notEmpty().withMessage("User is required")
-    .isMongoId();
   req.checkBody("course")
     .notEmpty().withMessage("Course is required")
     .isMongoId();
@@ -41,7 +38,7 @@ export function entryCreate(req, res, next) {
     title: req.body.title,
     text: req.body.text,
     type: req.body.type,
-    user: req.body.user,
+    user: req.auth_user._id,
     course: req.body.course,
     parententry: parent // Is optional, what happens if it's not there? undefined?
   });

@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import randomstring from "randomstring";
 import { ValidationError, HTTPError } from "../helpers/Errors";
 
 const Entry = mongoose.model("Entry");
+const Course = mongoose.model("Course");
 
 export function entryCreate(req, res, next) {
   // Allowed post types
@@ -16,9 +16,6 @@ export function entryCreate(req, res, next) {
   req.checkBody("type")
     .notEmpty().withMessage("Post Type is required")
     .isIn(postTypes).withMessage("Post Type not valid");
-  req.checkBody("user")
-    .notEmpty().withMessage("User is required")
-    .isMongoId();
   req.checkBody("course")
     .notEmpty().withMessage("Course is required")
     .isMongoId();
@@ -40,7 +37,7 @@ export function entryCreate(req, res, next) {
     title: req.body.title,
     text: req.body.text,
     type: req.body.type,
-    user: req.body.user,
+    user: req.auth_user._id,
     course: req.body.course,
     parententry: parent // Is optional, what happens if it's not there? undefined?
   });
@@ -50,13 +47,42 @@ export function entryCreate(req, res, next) {
   entry.save()
     .then(
       savedEntry => {
-        return Entry.findOne({ _id: savedEntry._id }).select()
+        return Entry.findOne({ _id: savedEntry._id }).exec()
           .then(
             newEntry => (newEntry),
             err => { throw err; }
           );
       },
       err => { throw err; }
+    )
+    .then(
+      newEntry => {
+        // If there is no parentEntry, push the EntryID into the course entries
+        if (!parent) {
+          return Course.findOne({ _id: req.body.course })
+            .exec()
+            .then(
+              _course => {
+                _course.entries.push(newEntry);
+                _course.save();
+                return newEntry;
+              },
+              err => { throw err; }
+            )
+        }
+
+        // If there is a parent, push the EntryID into the parent entry
+        return Entry.findOne({ _id: parent })
+          .exec()
+          .then(
+            _parent => {
+              _parent.subentries.push(newEntry);
+              _parent.save();
+              return newEntry;
+            },
+            err => { throw err; }
+          )
+      }
     )
     .then(
       newEntry => {
@@ -79,12 +105,12 @@ export function entryGet(req, res, next) {
   if (errors)  return next(new ValidationError(errors));
 
   // Find entry by given id
-  Entry.findOne({ _id: req.params.entryid }, (err, docs) => {
-    // TODO: Populate subentries
-    console.log(docs);
-  })
-    .populate('user')
-    .select()
+  Entry.findOne({ _id: req.params.entryid })
+    .populate({
+      path: "user",
+      select: "-__v"
+    })
+    .select("-__v")
     .exec()
     .then(
       entry => {
@@ -123,4 +149,41 @@ export function entryUpdate(req, res, next) {
 
 
   return req.end;
+}
+
+
+export function entryDelete(req, res, next) {
+  // Validate request
+  req.checkParams("entryid")
+    .notEmpty().isMongoId().withMessage("Entry is required and has to be an ObjectId");
+
+  let errors = req.validationErrors();
+  if (errors) return next(new ValidationError(errors));
+
+  let deletedEntry = {
+    title: "deleted",
+    text: "deleted",
+    user: null
+  }
+
+  // Find to-be-deleted entry, check if user has permission and
+  // override the content with the deletedEntry informations
+  Entry.findOne({ _id: req.params.entryid })
+    .exec()
+    .then(
+      _entry => {
+        // `+ ""` converts ObjectId into string for comparison
+        if (_entry.user + "" !== req.auth_user._id + "")
+          throw new HTTPError(403, "You are not allowed to delete this entry.");
+
+        return Entry.update(
+          { _id: req.params.entryid },
+          { $set: deletedEntry })
+          .exec()
+      }
+    )
+    .then(
+      () => (res.status(204).end()), // Delete was successful
+      err => (next(err))
+    );
 }

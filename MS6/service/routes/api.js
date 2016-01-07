@@ -2,7 +2,8 @@ import { Router } from "express";
 
 import {
   userGet, userAuthCreate, userAuth, userOptionalAuth, userUpdate,
-  userCreate, userDelete, entryCreate, entryGet, entryUpdate
+  userCreate, userDelete, entryCreate, entryGet, entryDelete, entryUpdate,
+  courseList, courseGet
 } from "../controllers";
 
 const router = Router();
@@ -23,11 +24,11 @@ router.delete("/users/:userid", userAuth, userDelete);
 router.post("/entries", userAuth, entryCreate);
 router.get("/entries/:entryid", entryGet);
 router.put("/entries/:entryid", userAuth, entryUpdate);
-// router.delete("/entries/:entryid", userAuth, entryDelete);
+router.delete("/entries/:entryid", userAuth, entryDelete);
 
 // Course Routes
-// router.get("/courses", courseList);
-// router.get("/courses/:courseid", courseGet);
+router.get("/courses", courseList);
+router.get("/courses/:courseid", courseGet);
 
 // Verification Routes
 // router.post("/verification", userAuth, verificationCreate);

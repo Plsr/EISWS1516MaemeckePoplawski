@@ -5,6 +5,7 @@ import randomstring from "randomstring";
 const User = mongoose.model("User");
 const Course = mongoose.model("Course");
 const Entry = mongoose.model("Entry");
+const University = mongoose.model("University");
 
 // A pre-created user in our database
 const defaultUser = new User({
@@ -18,8 +19,17 @@ const defaultUser = new User({
 // A pre-created course in our database
 const defaultCourse = new Course({
   name: "Default Course"
-  // University is left blank intentionally at this point since it depends
-  // on another model and is not needed for testing at this point.
+  // University will be filled in while creating
+});
+
+// A pre-created university in our daabase
+const defaultUniversity = new University({
+  name: "TH Köln",
+  position: {
+    lat: 51.023474,
+    long: 7.564873
+  }
+  // Courses will be filled in while creating
 });
 
 // A pre-created entry in our database
@@ -45,6 +55,7 @@ module.exports = () => {
         .then(
           user => {
             console.log("[✓] Created dummy user".green);
+            defaultUser._id = user._id;
             return user;
           },
           err => { throw err; }
@@ -60,17 +71,46 @@ module.exports = () => {
       }
     );
 
+  University
+    .findOne({ name: defaultUniversity.name })
+    .exec()
+    .then((dummyUni) => {
+      if (dummyUni) return dummyUni;
+
+      return defaultUniversity.save()
+        .then(
+          uni => {
+            console.log("[✓] Created dummy university".green);
+            defaultUniversity._id = uni._id;
+            return uni;
+          },
+          err => { throw err; }
+        )
+    })
+    .then(
+      courseInDb => {
+        console.log("[i] Dummy university:\n%s".blue, courseInDb);
+      },
+      err => {
+        console.log("[!] Error while saving dummy uni".red);
+        console.log(err);
+      }
+    );
+
   Course
       .findOne({ name: defaultCourse.name })
-      .select()
       .exec()
       .then((dummyCourse) => {
         if (dummyCourse) return dummyCourse;
 
+        defaultCourse.university = defaultUniversity._id;
         return defaultCourse.save()
           .then(
             course => {
               console.log("[✓] Created dummy course".green);
+              // Push course in university
+              defaultUniversity.courses.push(course);
+              defaultUniversity.save();
               return course;
             },
             err => { throw err; }
@@ -93,10 +133,15 @@ module.exports = () => {
     .then((dummyEntry) => {
       if(dummyEntry) return dummyEntry;
 
+      defaultEntry.user = defaultUser._id;
+
       return defaultEntry.save()
       .then(
         entry => {
           console.log("[✓] Created dummy entry".green);
+          // push entry in course
+          defaultCourse.entries.push(entry);
+          defaultCourse.save();
           return entry;
         },
         err => { throw err; }

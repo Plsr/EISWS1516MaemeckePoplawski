@@ -3,6 +3,7 @@ import randomstring from "randomstring";
 import { ValidationError, HTTPError } from "../helpers/Errors";
 
 const Entry = mongoose.model("Entry");
+const Course = mongoose.model("Course");
 
 export function entryCreate(req, res, next) {
   // Allowed post types
@@ -50,13 +51,42 @@ export function entryCreate(req, res, next) {
   entry.save()
     .then(
       savedEntry => {
-        return Entry.findOne({ _id: savedEntry._id }).select()
+        return Entry.findOne({ _id: savedEntry._id }).exec()
           .then(
             newEntry => (newEntry),
             err => { throw err; }
           );
       },
       err => { throw err; }
+    )
+    .then(
+      newEntry => {
+        // If there is no parentEntry, push the EntryID into the course entries
+        if (!parent) {
+          return Course.findOne({ _id: req.body.course })
+            .exec()
+            .then(
+              _course => {
+                _course.entries.push(newEntry);
+                _course.save();
+                return newEntry;
+              },
+              err => { throw err; }
+            )
+        }
+
+        // If there is a parent, push the EntryID into the parent entry
+        return Entry.findOne({ _id: parent })
+          .exec()
+          .then(
+            _parent => {
+              _parent.subentries.push(newEntry);
+              _parent.save();
+              return newEntry;
+            },
+            err => { throw err; }
+          )
+      }
     )
     .then(
       newEntry => {

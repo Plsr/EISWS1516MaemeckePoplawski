@@ -106,10 +106,15 @@ public class SingleThreadActivity extends AppCompatActivity {
                     System.out.println(rCourse);
                     System.out.println(rParententry);
 
-                    // TODO: Check if empty
-                    title.setText(rTitle);
-                    body.setText(rText);
-                    author.setText(rUserName);
+                    // Check if all Strings have content
+                    // If one of them is corrupted, nothing at all will be displayed
+                    if(!(Utils.isEmptyString(rTitle) && Utils.isEmptyString(rText) && Utils.isEmptyString(rUserName))) {
+                        title.setText(rTitle);
+                        body.setText(rText);
+                        author.setText(rUserName);
+                    } else {
+                        // TODO: Offer a method to retry the action.
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

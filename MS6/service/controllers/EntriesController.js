@@ -80,6 +80,7 @@ export function entryGet(req, res, next) {
 
   // Find entry by given id
   Entry.findOne({ _id: req.params.entryid })
+    .populate('user')
     .select()
     .exec()
     .then(

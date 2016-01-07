@@ -131,3 +131,39 @@ export function entryGet(req, res, next) {
       }
     )
 }
+
+export function entryDelete(req, res, next) {
+  // Validate request
+  req.checkParams("entryid")
+    .notEmpty().isMongoId().withMessage("Entry is required");
+
+  let errors = req.validationErrors();
+  if (errors) return next(new ValidationError(errors));
+
+  let deletedEntry = {
+    title: "deleted",
+    text: "deleted",
+    user: null
+  }
+
+  // Find to-be-deleted entry, check if user has permission and
+  // override the content with the deletedEntry informations
+  Entry.findOne({ _id: req.params.entryid })
+    .exec()
+    .then(
+      _entry => {
+        // `+ ""` converts ObjectId into string for comparison
+        if (_entry.user + "" !== req.auth_user._id + "")
+          throw new HTTPError(403, "You are not allowed to delete this entry.");
+
+        return Entry.update(
+          { _id: req.params.entryid },
+          { $set: deletedEntry })
+          .exec()
+      }
+    )
+    .then(
+      () => (res.status(204).end()), // Delete was successful
+      err => (next(err))
+    );
+}

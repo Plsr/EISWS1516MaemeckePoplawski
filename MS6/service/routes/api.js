@@ -2,7 +2,8 @@ import { Router } from "express";
 
 import {
   userGet, userAuthCreate, userAuth, userOptionalAuth, userUpdate,
-  userCreate, userDelete, entryCreate, entryGet, entryDelete
+  userCreate, userDelete, entryCreate, entryGet, entryDelete,
+  courseList
 } from "../controllers";
 
 const router = Router();
@@ -26,7 +27,7 @@ router.get("/entries/:entryid", entryGet);
 router.delete("/entries/:entryid", userAuth, entryDelete);
 
 // Course Routes
-// router.get("/courses", courseList);
+router.get("/courses", courseList);
 // router.get("/courses/:courseid", courseGet);
 
 // Verification Routes

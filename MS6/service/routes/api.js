@@ -3,7 +3,7 @@ import { Router } from "express";
 import {
   userGet, userAuthCreate, userAuth, userOptionalAuth, userUpdate,
   userCreate, userDelete, entryCreate, entryGet, entryDelete,
-  courseList
+  courseList, courseGet
 } from "../controllers";
 
 const router = Router();
@@ -28,7 +28,7 @@ router.delete("/entries/:entryid", userAuth, entryDelete);
 
 // Course Routes
 router.get("/courses", courseList);
-// router.get("/courses/:courseid", courseGet);
+router.get("/courses/:courseid", courseGet);
 
 // Verification Routes
 // router.post("/verification", userAuth, verificationCreate);

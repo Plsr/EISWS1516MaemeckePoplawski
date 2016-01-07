@@ -55,6 +55,7 @@ module.exports = () => {
         .then(
           user => {
             console.log("[✓] Created dummy user".green);
+            defaultUser._id = user._id;
             return user;
           },
           err => { throw err; }
@@ -132,10 +133,15 @@ module.exports = () => {
     .then((dummyEntry) => {
       if(dummyEntry) return dummyEntry;
 
+      defaultEntry.user = defaultUser._id;
+
       return defaultEntry.save()
       .then(
         entry => {
           console.log("[✓] Created dummy entry".green);
+          // push entry in course
+          defaultCourse.entries.push(entry);
+          defaultCourse.save();
           return entry;
         },
         err => { throw err; }

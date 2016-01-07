@@ -106,8 +106,11 @@ export function entryGet(req, res, next) {
 
   // Find entry by given id
   Entry.findOne({ _id: req.params.entryid })
-    .populate('user')
-    .select()
+    .populate({
+      path: "user",
+      select: "-__v"
+    })
+    .select("-__v")
     .exec()
     .then(
       entry => {
@@ -134,7 +137,7 @@ export function entryGet(req, res, next) {
 export function entryDelete(req, res, next) {
   // Validate request
   req.checkParams("entryid")
-    .notEmpty().isMongoId().withMessage("Entry is required");
+    .notEmpty().isMongoId().withMessage("Entry is required and has to be an ObjectId");
 
   let errors = req.validationErrors();
   if (errors) return next(new ValidationError(errors));

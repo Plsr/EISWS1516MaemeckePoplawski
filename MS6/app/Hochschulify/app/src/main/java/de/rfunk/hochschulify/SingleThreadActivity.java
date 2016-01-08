@@ -27,7 +27,6 @@ public class SingleThreadActivity extends AppCompatActivity {
     // Setting up service data
     public static final String SERVER_URL = Utils.SERVER_URL;
     public static final String ENTRY_PATH = Utils.ENTRY_PATH;
-    public static final String USER_PATH = Utils.USER_PATH;
 
     // Declare views to be filled with data
     TextView threadTitle;
@@ -70,11 +69,13 @@ public class SingleThreadActivity extends AppCompatActivity {
             });
         }
 
-        // TODO: Change to "Antwort schreiben" Button
-        findViewById(R.id.card_view).setOnClickListener(new View.OnClickListener() {
+        // OnClickListener for "Antwort schreiben" Button
+        // Sends the ID of the current thread to new Activity
+        findViewById(R.id.button_answer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SingleThreadActivity.this, WriteCommentActivity.class);
+                intent.putExtra("parentEntry", THREAD_ID);
                 startActivity(intent);
             }
         });

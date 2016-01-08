@@ -12,8 +12,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,16 +20,20 @@ public class SingleThreadActivity extends AppCompatActivity {
 
     // Static ThreadID for development build
     // This ID will change on DB reset, remember to change it accordingly
-    public static final String THREAD_ID = "5683b16de86eec0932e37fac";
+    public static final String THREAD_ID = "568ea39fd34ca81b07219f55";
 
     // Setting up service data
     public static final String SERVER_URL = Utils.SERVER_URL;
     public static final String ENTRY_PATH = Utils.ENTRY_PATH;
 
     // Declare views to be filled with data
-    TextView threadTitle;
-    TextView threadBody;
-    TextView threadAuthor;
+    TextView threadTitleView;
+    TextView threadBodyView;
+    TextView threadAuthorView;
+
+    String threadAuthor;
+
+
 
 
     @Override
@@ -40,12 +42,12 @@ public class SingleThreadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_single_thread);
 
         // Assign concrete views to variables
-        threadTitle = (TextView) findViewById(R.id.thread_title);
-        threadBody = (TextView) findViewById(R.id.thread_body);
-        threadAuthor = (TextView) findViewById(R.id.author);
+        threadTitleView = (TextView) findViewById(R.id.thread_title);
+        threadBodyView = (TextView) findViewById(R.id.thread_body);
+        threadAuthorView = (TextView) findViewById(R.id.author);
 
         try {
-            setEntry(THREAD_ID, threadTitle, threadBody, threadAuthor);
+            setEntry(THREAD_ID, threadTitleView, threadBodyView, threadAuthorView);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -76,6 +78,7 @@ public class SingleThreadActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SingleThreadActivity.this, WriteCommentActivity.class);
                 intent.putExtra("parentEntry", THREAD_ID);
+                intent.putExtra("parentAuthor", threadAuthor);
                 startActivity(intent);
             }
         });
@@ -127,6 +130,7 @@ public class SingleThreadActivity extends AppCompatActivity {
                         title.setText(rTitle);
                         body.setText(rText);
                         author.setText(rUserName);
+                        threadAuthor = rUserName;
                     } else {
                         // TODO: Offer a method to retry the action.
                     }

@@ -73,3 +73,39 @@ export function verificationCreate(req, res, next) {
     );
 
 }
+
+// Check if the verification is valid and verify the user by updating him
+// as verified.
+export function verificationGet(req, res, next) {
+
+  Verification.findOne({ code: req.params.code })
+    .exec()
+    .then(
+      veri => {
+        if (!veri) throw new HTTPError(404, "Verification not found");
+        if (veri.user + "" !== req.auth_user._id + "") {
+          throw new HTTPError(403,
+            "Verification not valid. It's not your verification.");
+        }
+
+        // Since everything is OK here, we can delete the verification and
+        // move on.
+        return Verification.findOne({ _id: veri._id }).remove().exec();
+      }
+    )
+    .then(
+      // Update the user as verified
+      veri => {
+        req.auth_user.verified = true;
+        return User.findOneAndUpdate(
+          { _id: req.auth_user._id },
+          { $set: { verified: true } },
+          { new: true }
+        );
+      }
+    )
+    .then(
+      user => (res.json(user)),
+      err => (next(err))
+    );
+}

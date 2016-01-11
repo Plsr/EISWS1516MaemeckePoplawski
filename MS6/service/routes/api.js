@@ -3,7 +3,7 @@ import { Router } from "express";
 import {
   userGet, userAuthCreate, userAuth, userOptionalAuth, userUpdate,
   userCreate, userDelete, entryCreate, entryGet, entryDelete, entryUpdate,
-  courseList, courseGet, verificationCreate
+  courseList, courseGet, verificationCreate, verificationGet
 } from "../controllers";
 
 const router = Router();
@@ -32,7 +32,7 @@ router.get("/courses/:courseid", courseGet);
 
 // Verification Routes
 router.post("/verification", userAuth, verificationCreate);
-// router.get("/verification/:code", userAuth, verificationGet);
+router.get("/verification/:code", userAuth, verificationGet);
 
 // TLD Routes
 // router.get("/tlds", tldList);

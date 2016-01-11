@@ -112,6 +112,26 @@ export function entryGet(req, res, next) {
       select: "-__v"
     })
     .select("-__v")
+    .populate({ // Populate the subentries chain 5 sublevels deep
+      path: "subentries",
+      select: "-__v",
+      populate: {
+        path: "subentries",
+        select: "-__v",
+        populate: {
+          path: "subentries",
+          select: "-__v",
+          populate: {
+            path: "subentries",
+            select: "-__v",
+            populate: {
+              path: "subentries",
+              select: "-__v"
+            }
+          }
+        }
+      }
+    })
     .exec()
     .then(
       entry => {

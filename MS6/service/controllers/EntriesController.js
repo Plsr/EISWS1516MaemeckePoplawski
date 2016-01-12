@@ -108,10 +108,23 @@ export function entryGet(req, res, next) {
   // Find entry by given id
   Entry.findOne({ _id: req.params.entryid })
     .populate({
-      path: "user",
-      select: "-__v"
+      path: "user"
     })
-    .select("-__v")
+    .populate({ // Populate the subentries chain 5 sublevels deep
+      path: "subentries",
+      populate: {
+        path: "subentries",
+        populate: {
+          path: "subentries",
+          populate: {
+            path: "subentries",
+            populate: {
+              path: "subentries",
+            }
+          }
+        }
+      }
+    })
     .exec()
     .then(
       entry => {
@@ -120,7 +133,7 @@ export function entryGet(req, res, next) {
           throw new HTTPError(404, `Entry with ID ${req.params.entryid} not found`);
 
         // Return entry
-        res.json(entry);
+        return res.json(entry);
       },
       err => {
         throw err;

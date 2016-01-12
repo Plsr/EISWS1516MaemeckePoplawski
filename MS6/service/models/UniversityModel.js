@@ -20,5 +20,12 @@ const UniversitySchema = new mongoose.Schema({
   ]
 });
 
+UniversitySchema.set("toJSON", {
+  versionKey: false, // auto select("-__v")
+});
+UniversitySchema.set("toObject", {
+  versionKey: false, // auto select("-__v")
+});
+
 // Register the UniversitySchema as a model called "University"
 mongoose.model("University", UniversitySchema);

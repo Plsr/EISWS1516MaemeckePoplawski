@@ -6,18 +6,27 @@ package de.rfunk.hochschulify.pojo;
 public class Entry {
     private String mTitle;
     private String mText;
-    private String mAuthor;
+    private User mAuthor;
     private int mSubCount;
     private String mLink;
     private String mId;
 
-    public Entry(String title, String text, String author, int subCount, String link, String id) {
+    public Entry(String title, String text, User author, int subCount, String link, String id) {
         mTitle = title;
         mText = text;
         mAuthor = author;
         mSubCount = subCount;
         mLink = link;
         mId = id;
+    }
+
+    public Entry() {
+        mTitle = "";
+        mText = "";
+        mAuthor = new User();
+        mSubCount = 0;
+        mLink = "";
+        mId = "";
     }
 
     public String getId() {
@@ -44,11 +53,11 @@ public class Entry {
         mText = text;
     }
 
-    public String getAuthor() {
+    public User getAuthor() {
         return mAuthor;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(User author) {
         mAuthor = author;
     }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.android.volley.Request;
@@ -20,6 +21,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import de.rfunk.hochschulify.R;
 import de.rfunk.hochschulify.adapters.CourseOverviewAdapter;
+import de.rfunk.hochschulify.pojo.Course;
+import de.rfunk.hochschulify.pojo.University;
+import de.rfunk.hochschulify.pojo.User;
+import de.rfunk.hochschulify.utils.Parse;
+import de.rfunk.hochschulify.utils.Req;
 import de.rfunk.hochschulify.utils.Utils;
 import de.rfunk.hochschulify.pojo.Entry;
 import java.util.ArrayList;
@@ -30,7 +36,7 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
 
 
     // ID of dummy course for development
-    public static final String COURSE_ID = "5694f9550beaa63b4ef4e3d5";
+    public static final String COURSE_ID = "5694c6c88eb4cf9967bae56c";
 
     public static final String SERVER_URL = Utils.SERVER_URL;
     public static final String COURSE_PATH = Utils.COURSE_PATH;
@@ -62,63 +68,36 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
     public void setThreads() {
         // Set up request
         // Thread ID is sent in the URL, no body required
-        final JSONObject reqBody = new JSONObject();
         String url = SERVER_URL + COURSE_PATH + "/" + COURSE_ID;
 
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, reqBody, new Response.Listener<JSONObject>() {
+        Req req = new Req(this, url);
+        req.get(new Req.Res() {
+
             @Override
-            public void onResponse(JSONObject response) {
-                // Pares response from service
-                System.out.println(response);
-
+            public void onSuccess(JSONObject res) {
                 try {
-                    JSONObject rUniversity = response.getJSONObject("university");
-
-                    String rUniName = rUniversity.getString("name");
-                    String rCourseName = response.getString("name");
-                    JSONArray entries = response.getJSONArray("entries");
-
+                    Course course = Parse.course(res);
+                    JSONArray entries = res.getJSONArray("entries");
                     for (int i = 0; i < entries.length(); i++) {
-                        JSONObject iEntry = entries.getJSONObject(i);
-                        JSONObject iUser = iEntry.getJSONObject("user");
-                        String author = iUser.getString("name");
-                        String title = iEntry.getString("title");
-                        String text = iEntry.getString("text");
-                        String id = iEntry.getString("_id");
-                        String link = iEntry.getJSONObject("link").getString("self");
-                        int subCount = 3;
-
-                        System.out.println(author);
-                        System.out.println(title);
-                        System.out.println(text);
-
-                        Entry xEntry = new Entry(title, text, author, subCount, link, id);
-                        mEntries.add(xEntry);
+                        JSONObject jsonEntry = entries.getJSONObject(i);
+                        Entry entry = Parse.entry(jsonEntry);
+                        mEntries.add(entry);
                     }
 
-                    // Set up Toolbar
-                    toolbar.setTitle(rCourseName);
-                    toolbar.setSubtitle(rUniName);
+                    toolbar.setTitle(course.getName());
+                    toolbar.setSubtitle(course.getUniversity().getName());
                     setSupportActionBar(toolbar);
-
                     setUpRecyclerView();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
-
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                // TODO: Error handling
+            public void onError(VolleyError error) {
+                // TODO: Maybe Errorhandling?
             }
         });
-
-        // Add Request to queue
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(req);
     }
 
     @Override

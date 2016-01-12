@@ -75,7 +75,7 @@ public class CourseOverviewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         title.setText(entry.getTitle());
         body.setText(entry.getText());
         comments.setText(entry.getSubCount().toString());
-        author.setText(entry.getAuthor());
+        author.setText(entry.getAuthor().getName());
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const EntrySchema = new mongoose.Schema({
   title: String,
   text: String,
+  createdAt: Date,
   type: {
     type: String,
     enum: ["ERFAHRUNG", "ALUMNIBERICHT", "ANDERS"],
@@ -27,6 +28,12 @@ const EntrySchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Entry"
 	}
+});
+
+// Set date automatic when creating new Entry
+EntrySchema.pre("save", function(done) {
+  this.createdAt = new Date();
+  done();
 });
 
 // Virtuals for HATEOAS

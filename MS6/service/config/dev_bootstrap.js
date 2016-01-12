@@ -134,6 +134,7 @@ module.exports = () => {
       if(dummyEntry) return dummyEntry;
 
       defaultEntry.user = defaultUser._id;
+      defaultEntry.course = defaultCourse._id;
 
       return defaultEntry.save()
       .then(

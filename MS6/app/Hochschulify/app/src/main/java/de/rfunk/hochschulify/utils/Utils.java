@@ -26,6 +26,7 @@ public class Utils {
     public static final String LOGIN_USERNAME_KEY = "__USERNAME__";
     public static final String LOGIN_PASSWORD_KEY = "__PASSWORD__";
     public static final String LOGIN_AUTHTOKEN_KEY = "__AUTHTOKEN__";
+    public static final String ACCOUNTTYPE_KEY = "__ACCOUNTTYPE__";
 
 
     /**

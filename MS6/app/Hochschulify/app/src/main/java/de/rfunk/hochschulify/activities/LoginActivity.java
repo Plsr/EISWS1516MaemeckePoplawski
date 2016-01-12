@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         identification = (EditText)findViewById(R.id.loginIdentification);
         password = (EditText)findViewById(R.id.loginPassword);
 
-        String identificationString = identification.getText().toString();
+        final String identificationString = identification.getText().toString();
         String passwordString = password.getText().toString();
 
         // If both fields are populated, begin validation
@@ -106,33 +106,39 @@ public class LoginActivity extends AppCompatActivity {
             identificationLayout.setErrorEnabled(false);
             passwordLayout.setErrorEnabled(false);
 
-            String url = Utils.SERVER_URL + Utils.AUTH_PATH + "/" + identificationString;
+            String url = Utils.SERVER_URL + Utils.AUTH_PATH;
+
+            JSONObject body = new JSONObject();
+            body.put("email", identificationString);
+            body.put("password", passwordString);
 
             Req userAuth = new Req(LoginActivity.this, url);
-            Map<String, String> requestHeaders = new HashMap<String, String>();
-            requestHeaders.put("x-auth-user", loginCredentials);
-            requestHeaders.put("x-auth-token", authToken);
-            userAuth.getWithHeader(requestHeaders, new Req.Res() {
+            userAuth.post(body, new Req.Res() {
                 @Override
                 public void onSuccess(JSONObject res) {
                     System.out.println("YAY");
                     System.out.println(res);
-                    if(res.has("status")) {
-                        System.out.println("Well, that dind't work too well.");
-                    } else {
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(intent);
+                    if (res.has("auth_token")) {
+                        try {
+                            Utils.saveToSharedPrefs(LoginActivity.this, Utils.LOGIN_USERNAME_KEY, identificationString);
+                            Utils.saveToSharedPrefs(LoginActivity.this, Utils.LOGIN_AUTHTOKEN_KEY, res.getString("auth_token"));
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-
-
                 }
 
                 @Override
                 public void onError(VolleyError error) {
                     System.out.println("OH NOES");
+                    System.out.println(error.networkResponse.data.toString());
+
 
                 }
             });
+        }
 
         // If the identification field is empty, display an error
         if(Utils.isEmptyString(identificationString)) {

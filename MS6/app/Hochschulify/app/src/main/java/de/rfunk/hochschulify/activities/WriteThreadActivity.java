@@ -80,6 +80,8 @@ public class WriteThreadActivity extends AppCompatActivity {
                     Entry mEntry = new Entry();
                     mEntry.setTitle(mTitle);
                     mEntry.setText(mText);
+                    mEntry.setType(mType);
+
 
                     System.out.println(mTitle);
                     System.out.println(mText);

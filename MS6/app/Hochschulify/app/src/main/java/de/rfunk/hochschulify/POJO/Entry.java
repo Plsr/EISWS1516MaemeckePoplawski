@@ -11,8 +11,9 @@ public class Entry {
     private String mLink;
     private String mId;
     private String mType;
+    private String mCourse;
 
-    public Entry(String title, String text, User author, String type, int subCount, String link, String id) {
+    public Entry(String title, String text, User author, String type, int subCount, String link, String id, String course) {
         mTitle = title;
         mText = text;
         mAuthor = author;
@@ -20,6 +21,7 @@ public class Entry {
         mLink = link;
         mId = id;
         mType = type;
+        mCourse = course;
     }
 
 
@@ -31,7 +33,16 @@ public class Entry {
         mLink = "";
         mId = "";
         mType = "";
+        mCourse = "";
 
+    }
+
+    public String getCourse() {
+        return mCourse;
+    }
+
+    public void setCourse(String mCourse) {
+        this.mCourse = mCourse;
     }
 
     public String getType() {

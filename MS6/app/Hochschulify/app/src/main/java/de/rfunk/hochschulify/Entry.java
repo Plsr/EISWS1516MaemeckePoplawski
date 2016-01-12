@@ -7,9 +7,9 @@ public class Entry {
     private String mTitle;
     private String mText;
     private String mAuthor;
-    private Integer mSubCount;
+    private int mSubCount;
 
-    public Entry(String title, String text, String author, Integer subCount) {
+    public Entry(String title, String text, String author, int subCount) {
         mTitle = title;
         mText = text;
         mAuthor = author;
@@ -44,7 +44,7 @@ public class Entry {
         return mSubCount;
     }
 
-    public void setSubCount(Integer subCount) {
+    public void setSubCount(int subCount) {
         mSubCount = subCount;
     }
 }

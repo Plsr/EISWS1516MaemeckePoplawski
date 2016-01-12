@@ -48,13 +48,12 @@ export function userGet(req, res, next) {
     )
 }
 
-// Create a user authentication by a user ID and password
+// Create a user authentication by a user email and password
 export function userAuthCreate(req, res, next) {
 
   // Validate request
-  req.checkBody("userid", "Malformed userid")
-    .notEmpty().withMessage("userid is required")
-    .isMongoId();
+  req.checkBody("email")
+    .notEmpty().isEmail().withMessage("Email is required as a valid email address");
   req.checkBody("password", "Password is required")
     .notEmpty();
   let errors = req.validationErrors();
@@ -62,7 +61,7 @@ export function userAuthCreate(req, res, next) {
 
   // Find a user by its ID and check if passwords match.
   // If passwords match, save an auth_token and send it back
-  User.findOne({ _id: req.body.userid })
+  User.findOne({ email: req.body.email })
     .select("+password")
     .exec()
     .then(

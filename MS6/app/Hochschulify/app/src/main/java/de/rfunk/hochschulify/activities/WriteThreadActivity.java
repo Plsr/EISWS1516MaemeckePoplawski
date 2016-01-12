@@ -1,5 +1,6 @@
 package de.rfunk.hochschulify.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,8 +9,17 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.android.volley.VolleyError;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import de.rfunk.hochschulify.R;
 import de.rfunk.hochschulify.pojo.Entry;
+import de.rfunk.hochschulify.utils.Req;
 import de.rfunk.hochschulify.utils.Utils;
 
 
@@ -88,13 +98,52 @@ public class WriteThreadActivity extends AppCompatActivity {
                     System.out.println(mType);
                     System.out.println(mCourse);
 
+                    sendThread(mEntry);
                 }
             }
         });
     }
 
-    private void sendThread() {
+    private void sendThread(Entry entry) {
+        String DEFAULT = "__DEFAULT__";
+        String url = Utils.SERVER_URL + Utils.ENTRY_PATH;
+        Map<String, String> reqHeaders = new HashMap<String, String>();
 
+        // Set up Header
+        String userAuth = Utils.getFromSharedPrefs(this, Utils.LOGIN_USERNAME_KEY, DEFAULT);
+        String authToken = Utils.getFromSharedPrefs(this, Utils.LOGIN_AUTHTOKEN_KEY, DEFAULT);
+        System.out.println(userAuth);
+        System.out.println(authToken);
+
+        reqHeaders.put("x-auth-user", userAuth);
+        reqHeaders.put("x-auth-token", authToken);
+
+        System.out.println(reqHeaders.get("x-auth-user"));
+        System.out.println(reqHeaders.get("x-auth-token"));
+
+        //Set up Body
+        JSONObject reqBody = new JSONObject();
+        try {
+            reqBody.put("title", entry.getTitle());
+            reqBody.put("text", entry.getText());
+            reqBody.put("type", entry.getType());
+            reqBody.put("course", entry.getCourse());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Req req = new Req(this, url);
+        req.postWithHeader(reqBody, reqHeaders, new Req.Res() {
+            @Override
+            public void onSuccess(JSONObject res) {
+                System.out.println("WOOOOH");
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        });
     }
 
 

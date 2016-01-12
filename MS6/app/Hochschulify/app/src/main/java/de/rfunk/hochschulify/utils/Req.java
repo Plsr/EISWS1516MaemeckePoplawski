@@ -109,7 +109,9 @@ public class Req {
             }
         }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                System.out.println("Header in POST: " + headers.get("x-auth-user"));
+                System.out.println("Header in POST: " + headers.get("x-auth-token"));
                 return headers;
             }
         };

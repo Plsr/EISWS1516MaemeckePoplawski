@@ -69,7 +69,7 @@
     <string name="post_type">Art des Threads</string>
 
     <string-array name="post_types">
-        <item>ERFAHRUNGSBERICHT</item>
+        <item>ERFAHRUNG</item>
         <item>ALUMNIBERICHT</item>
         <item>ANDERS</item>
     </string-array>

@@ -24,17 +24,19 @@ public class CourseOverviewActivity extends AppCompatActivity {
     public static final String SERVER_URL = Utils.SERVER_URL;
     public static final String COURSE_PATH = Utils.COURSE_PATH;
 
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_overview);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setThreads();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Medieninformatik");
-        toolbar.setSubtitle("TH Köln");
-        setSupportActionBar(toolbar);
+
+
 
         findViewById(R.id.card1).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +66,21 @@ public class CourseOverviewActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 // Pares response from service
                 System.out.println(response);
+
+                try {
+                    JSONObject rUniversity = response.getJSONObject("university");
+
+                    String rUniName = rUniversity.getString("name");
+                    String rCourseName = response.getString("name");
+
+                    // Set up Toolbar
+                    toolbar.setTitle(rCourseName);
+                    toolbar.setSubtitle(rUniName);
+                    setSupportActionBar(toolbar);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
 
 
             }

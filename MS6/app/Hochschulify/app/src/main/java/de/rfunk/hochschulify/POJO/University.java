@@ -11,6 +11,12 @@ public class University {
 
     public University(String name) {
         mName = name;
+        mGeoPos = new GeoPos();
+    }
+
+    public University() {
+        mName = "";
+        mGeoPos = new GeoPos();
     }
 
     public University(String name, GeoPos geoPos) {

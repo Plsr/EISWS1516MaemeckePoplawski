@@ -18,6 +18,13 @@ public class User {
         mLink = link;
     }
 
+    public User() {
+        mName = "";
+        mId = "";
+        mVerified = false;
+        mLink = "";
+    }
+
     public String getName() {
         return mName;
     }

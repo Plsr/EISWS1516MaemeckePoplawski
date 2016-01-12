@@ -6,27 +6,32 @@ package de.rfunk.hochschulify.pojo;
  * TODO: Add a class header comment
  */
 public class GeoPos {
-    private float mLat;
-    private float mLong;
+    private double mLat;
+    private double mLong;
 
-    public GeoPos(float lat, float aLong) {
+    public GeoPos(double lat, double aLong) {
         mLat = lat;
         mLong = aLong;
     }
 
-    public float getLat() {
+    public GeoPos() {
+        mLat = 0;
+        mLong = 0;
+    }
+
+    public double getLat() {
         return mLat;
     }
 
-    public void setLat(float lat) {
+    public void setLat(double lat) {
         mLat = lat;
     }
 
-    public float getLong() {
+    public double getLong() {
         return mLong;
     }
 
-    public void setLong(float aLong) {
+    public void setLong(double aLong) {
         mLong = aLong;
     }
 }

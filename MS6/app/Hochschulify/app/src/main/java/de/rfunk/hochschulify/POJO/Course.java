@@ -9,16 +9,33 @@ public class Course {
     private String mName;
     private University mUniversity;
     private String mLink;
+    private String mId;
 
-    public Course(String name, University university, String link) {
+    public Course(String name, University university, String link, String id) {
         mName = name;
         mLink = link;
         mUniversity = university;
+        mId = id;
     }
 
     public Course(String name, University university) {
         mName = name;
         mUniversity = university;
+    }
+
+    public String getId() {
+        return mId;
+    }
+
+    public void setId(String id) {
+        mId = id;
+    }
+
+    public Course() {
+        mName = "";
+        mUniversity = new University();
+        mLink = "";
+        mId = "";
     }
 
     public String getName() {

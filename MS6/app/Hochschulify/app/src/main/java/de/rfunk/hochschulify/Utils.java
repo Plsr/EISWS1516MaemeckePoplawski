@@ -17,6 +17,7 @@ public class Utils {
     public static final String AUTH_PATH = "/auth";
     public static final String ENTRY_PATH = "/entries";
     public static final String USER_PATH = "/users";
+    public static final String COURSE_PATH = "/courses";
 
     public static final String USERID_IDENTIFIER = "userid";
     public static final String PASSWORD_IDENTIFIER = "password";

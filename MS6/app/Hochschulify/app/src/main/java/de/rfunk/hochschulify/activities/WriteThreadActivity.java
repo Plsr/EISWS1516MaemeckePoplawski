@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.utils.Utils;
 
 
 public class WriteThreadActivity extends AppCompatActivity {
@@ -22,10 +23,16 @@ public class WriteThreadActivity extends AppCompatActivity {
     String mType;
     String mCourse;
 
+    Bundle mExtras;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_thread);
+
+        // Receive extras from intent
+        mExtras = getIntent().getExtras();
+        mCourse = mExtras.getString("COURSE_ID");
 
         // Set up toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -44,26 +51,43 @@ public class WriteThreadActivity extends AppCompatActivity {
             });
         }
 
-
+        // Set up Spinner
         mSpinner = (Spinner) findViewById(R.id.type_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.post_types, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
 
+        // Get EditText Views
         mThreadTitle = (EditText) findViewById(R.id.thread_title);
         mThreadText = (EditText) findViewById(R.id.thread_input);
 
+        // Set onClickListener for Send Button
         findViewById(R.id.button_send).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mTitle = mThreadTitle.getText().toString();
                 mText = mThreadText.getText().toString();
                 mType = mSpinner.getSelectedItem().toString();
-                
-                //TODO: Get course
-                //TODO: Check if title and body have content
+
+                if(Utils.isEmptyString(mTitle)) {
+                    System.out.println("Title is empty");
+                    //TODO: Display Error Message on title input
+                } else if(Utils.isEmptyString(mText)) {
+                    System.out.println("Text is empty");
+                    //TODO: Display Error Message on text input
+                } else {
+                    System.out.println(mTitle);
+                    System.out.println(mText);
+                    System.out.println(mType);
+                    System.out.println(mCourse);
+
+                }
             }
         });
+    }
+
+    private void sendThread() {
+
     }
 
 

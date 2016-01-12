@@ -36,7 +36,7 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
 
 
     // ID of dummy course for development
-    public static final String COURSE_ID = "5694c6c88eb4cf9967bae56c";
+    public static final String COURSE_ID = "5694f9550beaa63b4ef4e3d5";
 
     public static final String SERVER_URL = Utils.SERVER_URL;
     public static final String COURSE_PATH = Utils.COURSE_PATH;
@@ -45,6 +45,7 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Entry> mEntries = new ArrayList<Entry>();
+    private Course mCourse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +60,12 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
         findViewById(R.id.button_new).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent writeIntent = new Intent(CourseOverviewActivity.this, WriteThreadActivity.class);
-                startActivity(writeIntent);
+
+                if(mCourse != null) {
+                    Intent writeIntent = new Intent(CourseOverviewActivity.this, WriteThreadActivity.class);
+                    writeIntent.putExtra("COURSE_ID", mCourse.getId());
+                    startActivity(writeIntent);
+                }
             }
         });
     }
@@ -76,7 +81,7 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
             @Override
             public void onSuccess(JSONObject res) {
                 try {
-                    Course course = Parse.course(res);
+                    mCourse = Parse.course(res);
                     JSONArray entries = res.getJSONArray("entries");
                     for (int i = 0; i < entries.length(); i++) {
                         JSONObject jsonEntry = entries.getJSONObject(i);
@@ -84,8 +89,8 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
                         mEntries.add(entry);
                     }
 
-                    toolbar.setTitle(course.getName());
-                    toolbar.setSubtitle(course.getUniversity().getName());
+                    toolbar.setTitle(mCourse.getName());
+                    toolbar.setSubtitle(mCourse.getUniversity().getName());
                     setSupportActionBar(toolbar);
                     setUpRecyclerView();
                 } catch (JSONException e) {

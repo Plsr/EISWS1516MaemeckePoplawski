@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                     System.out.println(res);
                     if (res.has("auth_token")) {
                         try {
-                            Utils.saveToSharedPrefs(LoginActivity.this, Utils.LOGIN_USERNAME_KEY, identificationString);
+                            Utils.saveToSharedPrefs(LoginActivity.this, Utils.LOGIN_USERNAME_KEY, res.getString("_id"));
                             Utils.saveToSharedPrefs(LoginActivity.this, Utils.LOGIN_AUTHTOKEN_KEY, res.getString("auth_token"));
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);

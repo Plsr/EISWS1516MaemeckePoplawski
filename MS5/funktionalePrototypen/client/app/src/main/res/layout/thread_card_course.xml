@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A CardView that contains a TextView -->
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="2dp"
+    android:layout_marginTop="@dimen/activity_padding"
+    android:layout_marginLeft="@dimen/activity_padding"
+    android:layout_marginRight="@dimen/activity_padding">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/thread_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/card_headline_font_size"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:text="@string/thread_title"/>
+
+        <TextView
+            android:id="@+id/thread_excerpt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/thread_excerpt"
+            android:layout_below="@id/thread_title"/>
+
+        <TextView
+            android:id="@+id/comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_padding"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/thread_excerpt"
+            android:text="@string/thread_comments"/>
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_padding"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/thread_excerpt"
+            android:text="@string/thread_author"/>
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

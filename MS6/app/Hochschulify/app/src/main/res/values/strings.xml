@@ -23,6 +23,9 @@
     <string name="course_name">Medieninformatik</string>
     <string name="uni_name">TH Köln</string>
     <string name="thread_delete">Löschen</string>
+    <string name="title_label">Titel</string>
+    <string name="content_label">Dein Beitrag</string>
+    <string name="label_send">Abschicken</string>
 
     <string name="action_profile">Profil</string>
     <string name="action_thread">Meine Beiträge</string>

@@ -6,14 +6,13 @@
     android:orientation="vertical"
     tools:context=".activities.CourseOverviewActivity">
 
-    <include layout="@layout/toolbar" android:id="@+id/toolbar"/>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cardList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="?attr/actionBarSize"/>
+        android:layout_marginTop="?attr/actionBarSize"/>
 
+    <include layout="@layout/toolbar" android:id="@+id/toolbar"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/button_new"

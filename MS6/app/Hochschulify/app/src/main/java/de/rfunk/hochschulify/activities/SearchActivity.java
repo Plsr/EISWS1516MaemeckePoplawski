@@ -83,7 +83,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: Pre-fill mResults
+        mResults = new ArrayList<>();
 
         mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getListFromResults());
         mListView.setAdapter(mArrayAdapter);

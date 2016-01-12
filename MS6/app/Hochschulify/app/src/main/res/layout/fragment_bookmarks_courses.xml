@@ -7,13 +7,9 @@
     android:padding="@dimen/activity_padding"
     tools:context=".fragments.BookmarksThreadsFragment">
 
-    <include layout="@layout/course_card" android:id="@+id/course1" />
-    <include layout="@layout/course_card" android:id="@+id/course2" />
-    <include layout="@layout/course_card" android:id="@+id/course3" />
-    <include layout="@layout/course_card" android:id="@+id/course4" />
-    <include layout="@layout/course_card" android:id="@+id/course5" />
-    <include layout="@layout/course_card" android:id="@+id/course6" />
-    <include layout="@layout/course_card" android:id="@+id/course7" />
-    <include layout="@layout/course_card" android:id="@+id/course8" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/bookmarkCourseList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

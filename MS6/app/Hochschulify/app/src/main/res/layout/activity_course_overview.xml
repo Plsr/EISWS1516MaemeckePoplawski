@@ -6,30 +6,20 @@
     android:orientation="vertical"
     tools:context="de.rfunk.hochschulify.CourseOverviewActivity">
 
+    <include layout="@layout/toolbar" android:id="@+id/toolbar"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cardList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:paddingTop="?attr/actionBarSize"/>
 
-    <include layout="@layout/toolbar" android:id="@+id/toolbar"/>
-
-    <LinearLayout
-        android:id="@+id/card_wrapper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginTop="66dp" >
-    <include layout="@layout/thread_card_course" android:id="@+id/card1" />
-    <include layout="@layout/thread_card_course" android:id="@+id/card2" />
-    <include layout="@layout/thread_card_course" android:id="@+id/card3" />
-    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/button_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/card_wrapper"
+        android:layout_below="@id/cardList"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:clickable="true"

@@ -8,12 +8,25 @@ public class Entry {
     private String mText;
     private String mAuthor;
     private int mSubCount;
+    private String mId;
 
-    public Entry(String title, String text, String author, int subCount) {
+
+
+    public Entry(String title, String text, String author, int subCount, String id) {
         mTitle = title;
         mText = text;
         mAuthor = author;
         mSubCount = subCount;
+        mId = id;
+
+    }
+
+    public String getId() {
+        return mId;
+    }
+
+    public void setId(String mId) {
+        this.mId = mId;
     }
 
     public String getTitle() {

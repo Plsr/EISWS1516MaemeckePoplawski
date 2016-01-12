@@ -19,12 +19,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CourseOverviewActivity extends AppCompatActivity implements CourseOverviewAdapter.EntryAdapterInterface {
 
     // ID of dummy course for development
-    public static final String COURSE_ID = "568ea023d98c388206afee74";
+    public static final String COURSE_ID = "5694f9550beaa63b4ef4e3d5";
 
     public static final String SERVER_URL = Utils.SERVER_URL;
     public static final String COURSE_PATH = Utils.COURSE_PATH;
@@ -32,7 +33,7 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
     Toolbar toolbar;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<Entry> mEntries;
+    private List<Entry> mEntries = new ArrayList<Entry>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,27 +42,8 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.cardList);
-        recyclerView.setHasFixedSize(true); //Needed?
-        mLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(mLayoutManager);
-
-        mAdapter = new CourseOverviewAdapter(this, mEntries, this);
-        recyclerView.setAdapter(mAdapter);
-
-
         setThreads();
 
-
-
-
-        findViewById(R.id.card1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CourseOverviewActivity.this, SingleThreadActivity.class);
-                startActivity(intent);
-            }
-        });
 
         findViewById(R.id.button_new).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,17 +76,26 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
                     for (int i = 0; i < entries.length(); i++) {
                         JSONObject iEntry = entries.getJSONObject(i);
                         JSONObject iUser = iEntry.getJSONObject("user");
-                        JSONArray subEntries = iEntry.getJSONArray("subentries");
                         String author = iUser.getString("name");
                         String title = iEntry.getString("title");
                         String text = iEntry.getString("text");
-                        int subCount = subEntries.length();
+                        String id = iEntry.getString("_id");
+                        int subCount = 3;
+
+                        System.out.println(author);
+                        System.out.println(title);
+                        System.out.println(text);
+
+                        Entry xEntry = new Entry(title, text, author, subCount, id);
+                        mEntries.add(xEntry);
                     }
 
                     // Set up Toolbar
                     toolbar.setTitle(rCourseName);
                     toolbar.setSubtitle(rUniName);
                     setSupportActionBar(toolbar);
+
+                    setUpRecyclerView();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -127,5 +118,19 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
     @Override
     public void onItemClick(int position) {
         //TODO: Do stuff
+        Intent intent = new Intent(CourseOverviewActivity.this, SingleThreadActivity.class);
+        intent.putExtra("ID", mEntries.get(position).getId());
+        startActivity(intent);
+
+    }
+
+    public void setUpRecyclerView() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.cardList);
+        recyclerView.setHasFixedSize(true); //Needed?
+        mLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter = new CourseOverviewAdapter(this, mEntries, this);
+        recyclerView.setAdapter(mAdapter);
     }
 }

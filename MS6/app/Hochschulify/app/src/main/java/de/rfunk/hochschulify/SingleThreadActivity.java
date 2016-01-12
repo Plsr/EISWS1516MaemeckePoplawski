@@ -41,13 +41,21 @@ public class SingleThreadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_thread);
 
+        Bundle intentExtras = getIntent().getExtras();
+        String mThreadId = intentExtras.getString("ID");
+        System.out.println(mThreadId);
+
         // Assign concrete views to variables
         threadTitleView = (TextView) findViewById(R.id.thread_title);
         threadBodyView = (TextView) findViewById(R.id.thread_body);
         threadAuthorView = (TextView) findViewById(R.id.author);
 
         try {
-            setEntry(THREAD_ID, threadTitleView, threadBodyView, threadAuthorView);
+            if(Utils.isEmptyString(mThreadId)) {
+                setEntry(THREAD_ID, threadTitleView, threadBodyView, threadAuthorView);
+            } else {
+                setEntry(mThreadId, threadTitleView, threadBodyView, threadAuthorView);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

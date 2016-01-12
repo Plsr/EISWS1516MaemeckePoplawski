@@ -1,6 +1,7 @@
 package de.rfunk.hochschulify;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class CourseOverviewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView threadBody;
         TextView threadComments;
         TextView threadAuthor;
+        CardView cardView;
 
 
         public ViewHolderEntry(View itemView) {
@@ -46,6 +48,7 @@ public class CourseOverviewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             threadBody = (TextView) itemView.findViewById(R.id.thread_excerpt);
             threadComments = (TextView) itemView.findViewById(R.id.comments);
             threadAuthor = (TextView) itemView.findViewById(R.id.author);
+            cardView = (CardView) itemView.findViewById(R.id.card_view);
             itemView.setTag(this);
         }
     }
@@ -58,17 +61,25 @@ public class CourseOverviewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final Entry entry = mEntries.get(position);
         TextView title = ((ViewHolderEntry) holder).threadTitle;
         TextView body = ((ViewHolderEntry) holder).threadBody;
         TextView comments = ((ViewHolderEntry) holder).threadComments;
         TextView author = ((ViewHolderEntry) holder).threadAuthor;
+        CardView cardView = ((ViewHolderEntry) holder).cardView;
 
         title.setText(entry.getTitle());
         body.setText(entry.getText());
-        comments.setText(entry.getSubCount());
+        comments.setText(entry.getSubCount().toString());
         author.setText(entry.getAuthor());
+
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mInterface.onItemClick(position);
+            }
+        });
     }
 
     @Override

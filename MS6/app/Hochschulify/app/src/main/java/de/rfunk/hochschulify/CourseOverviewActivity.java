@@ -15,10 +15,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CourseOverviewActivity extends AppCompatActivity {
+import java.util.List;
+
+public class CourseOverviewActivity extends AppCompatActivity implements CourseOverviewAdapter.EntryAdapterInterface {
 
     // ID of dummy course for development
     public static final String COURSE_ID = "568ea023d98c388206afee74";
@@ -27,6 +30,9 @@ public class CourseOverviewActivity extends AppCompatActivity {
     public static final String COURSE_PATH = Utils.COURSE_PATH;
 
     Toolbar toolbar;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private List<Entry> mEntries;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +43,11 @@ public class CourseOverviewActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.cardList);
         recyclerView.setHasFixedSize(true); //Needed?
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        mLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLayoutManager);
 
+        mAdapter = new CourseOverviewAdapter(this, mEntries, this);
+        recyclerView.setAdapter(mAdapter);
 
 
         setThreads();
@@ -82,6 +89,17 @@ public class CourseOverviewActivity extends AppCompatActivity {
 
                     String rUniName = rUniversity.getString("name");
                     String rCourseName = response.getString("name");
+                    JSONArray entries = response.getJSONArray("entries");
+
+                    for (int i = 0; i < entries.length(); i++) {
+                        JSONObject iEntry = entries.getJSONObject(i);
+                        JSONObject iUser = iEntry.getJSONObject("user");
+                        JSONArray subEntries = iEntry.getJSONArray("subentries");
+                        String author = iUser.getString("name");
+                        String title = iEntry.getString("title");
+                        String text = iEntry.getString("text");
+                        int subCount = subEntries.length();
+                    }
 
                     // Set up Toolbar
                     toolbar.setTitle(rCourseName);
@@ -106,4 +124,8 @@ public class CourseOverviewActivity extends AppCompatActivity {
         queue.add(req);
     }
 
+    @Override
+    public void onItemClick(int position) {
+        //TODO: Do stuff
+    }
 }

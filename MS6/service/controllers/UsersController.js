@@ -91,7 +91,10 @@ export function userAuthCreate(req, res, next) {
     .then(
       user => {
         // Send auth_token back
-        return res.json({ auth_token: user.auth_token });
+        return res.json({
+          auth_token: user.auth_token,
+          _id: user._id
+        });
       },
       err => {
         return next(err);

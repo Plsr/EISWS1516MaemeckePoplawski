@@ -3,6 +3,8 @@ package de.rfunk.hochschulify;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -32,6 +34,14 @@ public class CourseOverviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course_overview);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.cardList);
+        recyclerView.setHasFixedSize(true); //Needed?
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+
 
         setThreads();
 

@@ -1,7 +1,6 @@
-package de.rfunk.hochschulify;
+package de.rfunk.hochschulify.fragments;
 
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,10 +9,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.rfunk.hochschulify.R;
 
 
 /**

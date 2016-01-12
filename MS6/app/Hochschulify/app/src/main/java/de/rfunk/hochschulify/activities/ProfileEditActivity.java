@@ -1,4 +1,4 @@
-package de.rfunk.hochschulify;
+package de.rfunk.hochschulify.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,19 +9,22 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-public class WriteThreadActivity extends AppCompatActivity {
+import de.rfunk.hochschulify.R;
+
+public class ProfileEditActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_write_thread);
+        setContentView(R.layout.activity_profile_edit);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Thread schreiben");
+        toolbar.setTitle("Profil bearbeiten");
         setSupportActionBar(toolbar);
 
-        Spinner spinner = (Spinner) findViewById(R.id.type_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.post_types, android.R.layout.simple_spinner_item);
+
+        Spinner spinner = (Spinner) findViewById(R.id.profile_type_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.profile_types, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }

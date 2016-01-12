@@ -1,4 +1,4 @@
-package de.rfunk.hochschulify;
+package de.rfunk.hochschulify.fragments;
 
 
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import de.rfunk.hochschulify.CourseOverviewActivity;
 import de.rfunk.hochschulify.R;
 
 /**

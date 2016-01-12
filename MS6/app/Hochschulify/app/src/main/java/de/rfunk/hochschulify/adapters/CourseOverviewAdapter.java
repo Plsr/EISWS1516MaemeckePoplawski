@@ -1,4 +1,4 @@
-package de.rfunk.hochschulify;
+package de.rfunk.hochschulify.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

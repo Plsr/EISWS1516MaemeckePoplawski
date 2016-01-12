@@ -1,6 +1,5 @@
-package de.rfunk.hochschulify;
+package de.rfunk.hochschulify.activities;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -17,6 +16,11 @@ import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.rfunk.hochschulify.NotificationsFragment;
+import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.fragments.BookmarksCoursesFragment;
+import de.rfunk.hochschulify.fragments.BookmarksThreadsFragment;
 
 public class HomeActivity extends AppCompatActivity {
 

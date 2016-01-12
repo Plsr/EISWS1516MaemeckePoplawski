@@ -1,4 +1,4 @@
-package de.rfunk.hochschulify;
+package de.rfunk.hochschulify.POJO;
 
 /**
  * Created by Timo Maemecke (@timomeh) on 12/01/16.

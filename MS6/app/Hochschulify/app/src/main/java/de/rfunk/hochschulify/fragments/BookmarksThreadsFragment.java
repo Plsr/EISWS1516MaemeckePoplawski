@@ -1,4 +1,4 @@
-package de.rfunk.hochschulify;
+package de.rfunk.hochschulify.fragments;
 
 
 import android.content.Intent;
@@ -14,6 +14,9 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.SingleThreadActivity;
 
 
 /**

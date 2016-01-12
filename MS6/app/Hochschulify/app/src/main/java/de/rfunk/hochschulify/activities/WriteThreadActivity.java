@@ -1,4 +1,4 @@
-package de.rfunk.hochschulify;
+package de.rfunk.hochschulify.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,31 +6,26 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
-public class WriteCommentActivity extends AppCompatActivity {
+import de.rfunk.hochschulify.R;
 
-    TextView answerTo;
-
-    String parentAuthor;
+public class WriteThreadActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_write_comment);
-
-        Bundle parentViewExtras = getIntent().getExtras();
-        parentAuthor = parentViewExtras.getString("parentAuthor");
-
+        setContentView(R.layout.activity_write_thread);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Antwort schreiben");
+        toolbar.setTitle("Thread schreiben");
         setSupportActionBar(toolbar);
 
-        answerTo = (TextView) findViewById(R.id.answer_to);
-        answerTo.setText("Antwort an " + parentAuthor + ":");
-
-
+        Spinner spinner = (Spinner) findViewById(R.id.type_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.post_types, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 
     @Override

@@ -20,7 +20,11 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.utils.Req;
 import de.rfunk.hochschulify.utils.Utils;
 
 public class LoginActivity extends AppCompatActivity {
@@ -102,46 +106,33 @@ public class LoginActivity extends AppCompatActivity {
             identificationLayout.setErrorEnabled(false);
             passwordLayout.setErrorEnabled(false);
 
-            // Set up JSON Request
-            JSONObject reqBody = new JSONObject();
-            String url = SERVER_URL + AUTH_PATH;
+            String url = Utils.SERVER_URL + Utils.AUTH_PATH + "/" + identificationString;
 
-            // Using static strings for keys
-            // Also, the userid is hard coded for now
-            reqBody.put(Utils.USERID_IDENTIFIER, USERID);
-            reqBody.put(Utils.PASSWORD_IDENTIFIER, passwordString);
-
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, reqBody, new Response.Listener<JSONObject>(){
+            Req userAuth = new Req(LoginActivity.this, url);
+            Map<String, String> requestHeaders = new HashMap<String, String>();
+            requestHeaders.put("x-auth-user", loginCredentials);
+            requestHeaders.put("x-auth-token", authToken);
+            userAuth.getWithHeader(requestHeaders, new Req.Res() {
                 @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        // On success, save token and UserID to shared preferences
-                        String token = response.get("auth_token").toString();
-                        Utils.saveToSharedPrefs(LoginActivity.this, Utils.LOGIN_AUTHTOKEN_KEY, token);
-                        Utils.saveToSharedPrefs(LoginActivity.this, Utils.LOGIN_USERNAME_KEY, USERID);
-
-                        // Proceed to home activity
+                public void onSuccess(JSONObject res) {
+                    System.out.println("YAY");
+                    System.out.println(res);
+                    if(res.has("status")) {
+                        System.out.println("Well, that dind't work too well.");
+                    } else {
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
+
+
                 }
-            },  new Response.ErrorListener() {
+
                 @Override
-                public void onErrorResponse(VolleyError error) {
-                    // Display errors on both labels since we don't know what exactly was wrong
-                    String errWrongIdentification = "Username oder email falsch";
-                    String errWrongPassword = "Passwort falsch";
-                    displayErrorLabelOnTextInputLayout(identificationLayout, errWrongIdentification);
-                    displayErrorLabelOnTextInputLayout(passwordLayout, errWrongPassword);
+                public void onError(VolleyError error) {
+                    System.out.println("OH NOES");
+
                 }
             });
-
-            // Add Request to queue
-            RequestQueue queue = Volley.newRequestQueue(this);
-            queue.add(req);
-        }
 
         // If the identification field is empty, display an error
         if(Utils.isEmptyString(identificationString)) {

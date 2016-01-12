@@ -56,6 +56,29 @@ public class Req {
         queue.add(request);
     }
 
+    public void getWithHeader(final Map<String, String> headers, final Req.Res res) {
+        final JSONObject reqBody = new JSONObject();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, mURL, reqBody, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                res.onSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                res.onError(error);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return headers;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        queue.add(request);
+    }
+
     public void post(JSONObject reqBody, final Req.Res res) {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, mURL, reqBody, new Response.Listener<JSONObject>() {
             @Override

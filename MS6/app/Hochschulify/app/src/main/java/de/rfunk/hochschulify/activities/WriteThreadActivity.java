@@ -81,7 +81,7 @@ public class WriteThreadActivity extends AppCompatActivity {
                     mEntry.setTitle(mTitle);
                     mEntry.setText(mText);
                     mEntry.setType(mType);
-
+                    mEntry.setCourse(mCourse);
 
                     System.out.println(mTitle);
                     System.out.println(mText);

@@ -31,5 +31,30 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
+// Virtuals for HATEOAS
+
+UserSchema.virtual("link.self").get(function () {
+  return `${__config.host}/users/${this._id}`;
+});
+
+UserSchema.virtual("id").get(function () {
+  return undefined;
+});
+
+UserSchema.set("toJSON", {
+  virtuals: true,
+  versionKey: false, // auto select("-__v")
+  transform: function (doc, ret, options) {
+    delete ret.id; // delete virtual `id`, use `_id`
+  }
+});
+UserSchema.set("toObject", {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret, options) {
+    delete ret.id; // delete virtual `id`, use `_id`
+  }
+});
+
 // Register the UserSchema as a model called "User"
 mongoose.model("User", UserSchema);

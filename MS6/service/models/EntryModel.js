@@ -29,5 +29,30 @@ const EntrySchema = new mongoose.Schema({
 	}
 });
 
+// Virtuals for HATEOAS
+
+EntrySchema.virtual("link.self").get(function () {
+  return `${__config.host}/entries/${this._id}`;
+});
+
+EntrySchema.virtual("link.list").get(function () {
+  return `${__config.host}/courses/${this.course}`;
+});
+
+EntrySchema.set("toJSON", {
+  virtuals: true,
+  versionKey: false, // auto select("-__v")
+  transform: function (doc, ret, options) {
+    delete ret.id; // delete virtual `id`, use `_id`
+  }
+});
+EntrySchema.set("toObject", {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret, options) {
+    delete ret.id; // delete virtual `id`, use `_id`
+  }
+});
+
 // Register the EntrySchema as a model called "Entry"
 mongoose.model("Entry", EntrySchema);

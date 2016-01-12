@@ -1,4 +1,4 @@
-package de.rfunk.hochschulify;
+package de.rfunk.hochschulify.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -18,11 +18,16 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.adapters.CourseOverviewAdapter;
+import de.rfunk.hochschulify.utils.Utils;
+import de.rfunk.hochschulify.pojo.Entry;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CourseOverviewActivity extends AppCompatActivity implements CourseOverviewAdapter.EntryAdapterInterface {
+
+
 
     // ID of dummy course for development
     public static final String COURSE_ID = "5694f9550beaa63b4ef4e3d5";
@@ -80,13 +85,14 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
                         String title = iEntry.getString("title");
                         String text = iEntry.getString("text");
                         String id = iEntry.getString("_id");
+                        String link = iEntry.getJSONObject("link").getString("self");
                         int subCount = 3;
 
                         System.out.println(author);
                         System.out.println(title);
                         System.out.println(text);
 
-                        Entry xEntry = new Entry(title, text, author, subCount, id);
+                        Entry xEntry = new Entry(title, text, author, subCount, link, id);
                         mEntries.add(xEntry);
                     }
 

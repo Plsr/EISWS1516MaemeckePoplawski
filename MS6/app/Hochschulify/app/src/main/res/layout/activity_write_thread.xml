@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.rfunk.hochschulify.WriteThreadActivity">
+    tools:context=".activities.WriteThreadActivity">
 
     <include layout="@layout/toolbar" android:id="@+id/toolbar" />
 

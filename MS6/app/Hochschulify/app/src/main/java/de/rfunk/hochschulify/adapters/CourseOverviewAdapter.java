@@ -1,4 +1,4 @@
-package de.rfunk.hochschulify;
+package de.rfunk.hochschulify.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.List;
+
+import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.pojo.Entry;
 
 /**
  * Created by Cheese on 12/01/16.

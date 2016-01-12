@@ -1,9 +1,12 @@
-package de.rfunk.hochschulify;
+package de.rfunk.hochschulify.activities;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.utils.Utils;
 
 
 public class SplashscreenActivity extends AppCompatActivity {

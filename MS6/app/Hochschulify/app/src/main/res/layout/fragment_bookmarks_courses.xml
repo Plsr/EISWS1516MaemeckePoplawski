@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/activity_padding"
-    tools:context=".BookmarksThreadsFragment">
+    tools:context=".fragments.BookmarksThreadsFragment">
 
     <include layout="@layout/course_card" android:id="@+id/course1" />
     <include layout="@layout/course_card" android:id="@+id/course2" />

@@ -1,4 +1,4 @@
-package de.rfunk.hochschulify;
+package de.rfunk.hochschulify.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -1,4 +1,4 @@
-package de.rfunk.hochschulify;
+package de.rfunk.hochschulify.activities;
 
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -8,12 +8,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.utils.Utils;
 
 public class RegisterActivity extends AppCompatActivity {
 

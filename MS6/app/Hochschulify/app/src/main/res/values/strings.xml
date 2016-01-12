@@ -69,10 +69,9 @@
     <string name="post_type">Art des Threads</string>
 
     <string-array name="post_types">
-        <item>Diskussion</item>
-        <item>Frage</item>
-        <item>Erfahrunsbericht</item>
-        <item>Arbeitsbericht</item>
+        <item>ERFAHRUNGSBERICHT</item>
+        <item>ALUMNIBERICHT</item>
+        <item>ANDERS</item>
     </string-array>
 
 </resources>

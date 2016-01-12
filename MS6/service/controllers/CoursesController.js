@@ -22,7 +22,7 @@ export function courseList(req, res, next) {
 // List a single Course with its entries
 export function courseGet(req, res, next) {
   // Amout of results per page
-  let limitPerPage = 1;
+  let limitPerPage = 10;
 
   // Validate request
   req.checkParams("courseid")

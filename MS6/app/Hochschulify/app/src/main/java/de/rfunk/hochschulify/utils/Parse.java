@@ -32,6 +32,8 @@ public class Parse {
             }
             if (entry.has("_id"))
                 retEntry.setId(entry.getString("_id"));
+            if (entry.has("type"))
+                retEntry.setType(entry.getString("type"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

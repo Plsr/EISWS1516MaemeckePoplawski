@@ -10,15 +10,18 @@ public class Entry {
     private int mSubCount;
     private String mLink;
     private String mId;
+    private String mType;
 
-    public Entry(String title, String text, User author, int subCount, String link, String id) {
+    public Entry(String title, String text, User author, String type, int subCount, String link, String id) {
         mTitle = title;
         mText = text;
         mAuthor = author;
         mSubCount = subCount;
         mLink = link;
         mId = id;
+        mType = type;
     }
+
 
     public Entry() {
         mTitle = "";
@@ -27,6 +30,16 @@ public class Entry {
         mSubCount = 0;
         mLink = "";
         mId = "";
+        mType = "";
+
+    }
+
+    public String getType() {
+        return mType;
+    }
+
+    public void setType(String mType) {
+        this.mType = mType;
     }
 
     public String getId() {

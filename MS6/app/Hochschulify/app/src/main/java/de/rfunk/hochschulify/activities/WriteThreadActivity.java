@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.pojo.Entry;
 import de.rfunk.hochschulify.utils.Utils;
 
 
@@ -76,6 +77,10 @@ public class WriteThreadActivity extends AppCompatActivity {
                     System.out.println("Text is empty");
                     //TODO: Display Error Message on text input
                 } else {
+                    Entry mEntry = new Entry();
+                    mEntry.setTitle(mTitle);
+                    mEntry.setText(mText);
+
                     System.out.println(mTitle);
                     System.out.println(mText);
                     System.out.println(mType);

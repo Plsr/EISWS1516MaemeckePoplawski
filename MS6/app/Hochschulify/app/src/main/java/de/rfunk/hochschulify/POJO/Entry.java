@@ -1,4 +1,4 @@
-package de.rfunk.hochschulify.POJO;
+package de.rfunk.hochschulify.pojo;
 
 /**
  * Created by Timo Maemecke (@timomeh) on 12/01/16.
@@ -8,12 +8,14 @@ public class Entry {
     private String mText;
     private String mAuthor;
     private int mSubCount;
+    private String mLink;
 
-    public Entry(String title, String text, String author, int subCount) {
+    public Entry(String title, String text, String author, int subCount, String link) {
         mTitle = title;
         mText = text;
         mAuthor = author;
         mSubCount = subCount;
+        mLink = link;
     }
 
     public String getTitle() {
@@ -46,5 +48,13 @@ public class Entry {
 
     public void setSubCount(int subCount) {
         mSubCount = subCount;
+    }
+
+    public String getLink() {
+        return mLink;
+    }
+
+    public void setLink(String link) {
+        mLink = link;
     }
 }

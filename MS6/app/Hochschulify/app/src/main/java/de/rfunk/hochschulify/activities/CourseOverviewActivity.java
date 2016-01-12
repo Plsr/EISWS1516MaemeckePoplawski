@@ -19,7 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.rfunk.hochschulify.R;
-import de.rfunk.hochschulify.Utils;
+import de.rfunk.hochschulify.utils.Utils;
 
 public class CourseOverviewActivity extends AppCompatActivity {
 

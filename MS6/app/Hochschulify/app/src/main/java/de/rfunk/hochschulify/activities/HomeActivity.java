@@ -17,7 +17,7 @@ import android.widget.SearchView;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.rfunk.hochschulify.NotificationsFragment;
+import de.rfunk.hochschulify.fragments.NotificationsFragment;
 import de.rfunk.hochschulify.R;
 import de.rfunk.hochschulify.fragments.BookmarksCoursesFragment;
 import de.rfunk.hochschulify.fragments.BookmarksThreadsFragment;

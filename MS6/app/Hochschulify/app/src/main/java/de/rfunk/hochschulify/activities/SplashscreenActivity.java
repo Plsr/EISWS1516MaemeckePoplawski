@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import de.rfunk.hochschulify.R;
-import de.rfunk.hochschulify.Utils;
+import de.rfunk.hochschulify.utils.Utils;
 
 
 public class SplashscreenActivity extends AppCompatActivity {

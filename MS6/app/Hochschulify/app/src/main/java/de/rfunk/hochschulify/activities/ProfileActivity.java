@@ -23,7 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
     Toolbar toolbar;
     static final String DEFAULT_VALUE = "__DEFAULT__";
 
-    JSONObject mUSer;
+    JSONObject mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject res) {
                 System.out.println(res);
+                mUser = res;
             }
 
             @Override
@@ -69,7 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
         switch (id) {
             case R.id.action_edit:
                 Intent intent = new Intent(this, ProfileEditActivity.class);
-                intent.putExtra("user", mUSer.toString());
+                intent.putExtra("user", mUser.toString());
                 startActivity(intent);
                 return true;
             default:

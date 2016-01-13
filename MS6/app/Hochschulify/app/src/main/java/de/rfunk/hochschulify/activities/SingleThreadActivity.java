@@ -4,14 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +19,8 @@ public class SingleThreadActivity extends AppCompatActivity {
     // Static ThreadID for development build
     // This ID will change on DB reset, remember to change it accordingly
     public static final String THREAD_ID = "568ea39fd34ca81b07219f55";
+
+    private static final String TAG = SingleThreadActivity.class.getSimpleName();
 
     // Setting up service data
     public static final String SERVER_URL = Utils.SERVER_URL;
@@ -50,7 +47,7 @@ public class SingleThreadActivity extends AppCompatActivity {
         String jsonString = mIntentExtras.getString("entry");
 
         // Assign concrete views to variables
-        mThreadTitleView = (TextView) findViewById(R.id.thread_title);
+        mThreadTitleView = (TextView) findViewById(R.id.thread_title_input);
         mThreadBodyView = (TextView) findViewById(R.id.thread_body);
         mThreadAuthorView = (TextView) findViewById(R.id.author);
 
@@ -63,6 +60,8 @@ public class SingleThreadActivity extends AppCompatActivity {
                 mThreadTitleView.setText(mEntry.getString("title"));
                 mThreadBodyView.setText(mEntry.getString("text"));
                 mThreadAuthorView.setText(user.getString("name"));
+
+                Log.d(TAG, mEntry.toString());
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -96,6 +95,7 @@ public class SingleThreadActivity extends AppCompatActivity {
                 Intent intent = new Intent(SingleThreadActivity.this, WriteCommentActivity.class);
                 intent.putExtra("parentEntry", THREAD_ID);
                 intent.putExtra("parentAuthor", threadAuthor);
+                intent.putExtra("parent", mEntry.toString());
                 startActivity(intent);
             }
         });

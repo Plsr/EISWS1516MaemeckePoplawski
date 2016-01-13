@@ -8,6 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import de.rfunk.hochschulify.R;
 
 public class WriteCommentActivity extends AppCompatActivity {
@@ -15,14 +18,27 @@ public class WriteCommentActivity extends AppCompatActivity {
     TextView answerTo;
 
     String parentAuthor;
+    Bundle intentExtras;
+    JSONObject mParentEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_comment);
 
-        Bundle parentViewExtras = getIntent().getExtras();
-        parentAuthor = parentViewExtras.getString("parentAuthor");
+        intentExtras = getIntent().getExtras();
+        String jsonString = intentExtras.getString("parent");
+        try {
+            mParentEntry = new JSONObject(jsonString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            parentAuthor = mParentEntry.getJSONObject("user").getString("name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

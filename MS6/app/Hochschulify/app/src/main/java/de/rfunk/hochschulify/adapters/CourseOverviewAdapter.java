@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import de.rfunk.hochschulify.R;
@@ -47,7 +45,7 @@ public class CourseOverviewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public ViewHolderEntry(View itemView) {
             super(itemView);
 
-            threadTitle = (TextView) itemView.findViewById(R.id.thread_title);
+            threadTitle = (TextView) itemView.findViewById(R.id.thread_title_input);
             threadBody = (TextView) itemView.findViewById(R.id.thread_excerpt);
             threadComments = (TextView) itemView.findViewById(R.id.comments);
             threadAuthor = (TextView) itemView.findViewById(R.id.author);

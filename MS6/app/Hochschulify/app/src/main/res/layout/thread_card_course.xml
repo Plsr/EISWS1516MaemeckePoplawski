@@ -17,7 +17,7 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/thread_title"
+            android:id="@+id/thread_title_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/card_headline_font_size"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/thread_excerpt"
-            android:layout_below="@id/thread_title"/>
+            android:layout_below="@id/thread_title_input"/>
 
         <TextView
             android:id="@+id/comments"

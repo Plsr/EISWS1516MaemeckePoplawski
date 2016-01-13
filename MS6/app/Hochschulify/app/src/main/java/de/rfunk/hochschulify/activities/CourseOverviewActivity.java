@@ -52,6 +52,7 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Entry> mEntries = new ArrayList<Entry>();
+    private List<JSONObject> mJSONEntries = new ArrayList<JSONObject>();
     private Course mCourse;
     private String mCourseId;
     private Menu mMenu;
@@ -100,6 +101,8 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
                         JSONObject jsonEntry = entries.getJSONObject(i);
                         Entry entry = Parse.entry(jsonEntry);
                         mEntries.add(entry);
+                        mJSONEntries.add(jsonEntry);
+                        // TODO: Duplicated Arrays
                     }
 
                     toolbar.setTitle(mCourse.getName());
@@ -123,6 +126,7 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
         //TODO: Do stuff
         Intent intent = new Intent(CourseOverviewActivity.this, SingleThreadActivity.class);
         intent.putExtra("ID", mEntries.get(position).getId());
+        intent.putExtra("entry", mJSONEntries.get(position).toString());
         startActivity(intent);
 
     }

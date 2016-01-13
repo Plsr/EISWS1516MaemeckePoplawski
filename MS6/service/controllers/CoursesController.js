@@ -37,7 +37,7 @@ export function courseList(req, res, next) {
                   if (entry.recommendation) positive++;
                 });
                 course.recommendation = Math.round((positive / total) * 100) / 100;
-                if (!entries) course.recommendation = -1;
+                if (entries.length < 1) course.recommendation = -1;
                 _courses[key] = course;
                 loop();
               },

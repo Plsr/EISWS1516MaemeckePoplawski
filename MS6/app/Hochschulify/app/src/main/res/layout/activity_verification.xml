@@ -3,14 +3,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.rfunk.hochschulify.activities.VerificationActivity">
+    tools:context="de.rfunk.hochschulify.activities.VerificationActivity"
+    android:background="@color/colorPrimary">
 
     <include layout="@layout/toolbar" android:id="@+id/toolbar"/>
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkImageView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/check"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/pathText"
-        android:layout_below="@id/toolbar"/>
+        android:layout_below="@id/checkImageView"
+        android:text="Verifikation erfolgreich"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorWhite"
+        android:layout_marginLeft="@dimen/activity_margin"
+        android:layout_marginRight="@dimen/activity_margin"
+        android:textSize="@dimen/abc_text_size_title_material"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/yayButton"
+        android:layout_below="@id/pathText"
+        android:text="Yay!"
+        android:background="@color/colorAccent"
+        android:layout_marginLeft="@dimen/activity_margin"
+        android:layout_marginRight="@dimen/activity_margin"
+        android:layout_marginTop="32dp"/>
 
 </RelativeLayout>

@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -25,6 +26,7 @@ public class VerificationActivity extends AppCompatActivity {
 
     String mUserID;
     String mAuthToken;
+    JSONObject mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +47,7 @@ public class VerificationActivity extends AppCompatActivity {
             System.out.println(data);
             System.out.println(path);
 
-            TextView pathText = (TextView) findViewById(R.id.pathText);
-            pathText.setText("Path of the opened URL was " + path);
+
 
             String url = Utils.SERVER_URL + Utils.VERIFY_PATH + path;
             mUserID = Utils.getFromSharedPrefs(VerificationActivity.this, Utils.LOGIN_USERNAME_KEY, DEFAULT_VALUE);
@@ -63,6 +64,7 @@ public class VerificationActivity extends AppCompatActivity {
             req.getWithHeader(reqHeaders, new Req.Res() {
                 @Override
                 public void onSuccess(JSONObject res) {
+                    mUser = res;
                     Log.d(TAG, res.toString());
                 }
 
@@ -73,5 +75,14 @@ public class VerificationActivity extends AppCompatActivity {
             });
 
         }
+
+        findViewById(R.id.yayButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(VerificationActivity.this, ProfileActivity.class);
+                intent.putExtra("user", mUser.toString());
+                startActivity(intent);
+            }
+        });
     }
 }

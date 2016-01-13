@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">Hochschulify</string>
+    <string name="login_headline">Login</string>
+    <string name="loginIdentification_hint">eMail oder Benutzername</string>
+    <string name="inputPassword_hint">Passwort</string>
+    <string name="registerTextView_text">Du hast noch keinen Account? Jetzt registrieren.</string>
+    <string name="registerButton_Text">Registrieren</string>
+    <string name="registerMail_hint">eMail Adresse</string>
+    <string name="registerUsername_hint">Benutzername</string>
+
+    <string name="err_msg_identification">Falsche eMail oder Username</string>
+    <string name="err_msg_password">Falsches Passwort</string>
+    <string name="err_identification_empty">Bitte Username oder eMail eingaben</string>
+    <string name="err_password_empty">Bitte Passwort eingeben</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="recent_search_headline">Zuletzt gesucht</string>
+    <string name="thread_title">Der Titel eines Threads</string>
+    <string name="thread_comments">7 Kommentare</string>
+    <string name="thread_entfernen">Entfernen</string>
+    <string name="thread_rating">89%</string>
+    <string name="course_name">Medieninformatik</string>
+    <string name="uni_name">TH Köln</string>
+    <string name="thread_delete">Löschen</string>
+    <string name="title_label">Titel</string>
+    <string name="content_label">Dein Beitrag</string>
+    <string name="label_send">Abschicken</string>
+
+    <string name="action_profile">Profil</string>
+    <string name="action_thread">Meine Beiträge</string>
+
+    <string name="username_label">Username</string>
+    <string name="username">chrispop</string>
+    <string name="eMail_label">eMail Adresse</string>
+    <string name="eMail">chris@51seven.de</string>
+    <string name="password_label">Passwort</string>
+    <string name="profile_type_headline">Profilart</string>
+    <string name="profile_type">Studieninteressierter</string>
+
+    <string name="profile_delete">Profil Löschen</string>
+    <string name="save">Speichern</string>
+
+    <string-array name="profile_types">
+        <item>Studieninteressierter</item>
+        <item>Mitarbeiter</item>
+        <item>Alumni</item>
+        <item>Student</item>
+    </string-array>
+
+    <string name="thread_author">Autor: Bob Ross</string>
+    <string name="thread_excerpt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec enim
+        mauris, varius et luctus sed, pharetra eget magna. Praesent hendrerit leo in tellus dapibus posuere.
+        Ut at dolor non augue egestas convallis ut non quam. Cras aliquam, arcu non dictum tempor,
+        nibh diam ultricies arcu...</string>
+
+    <string name="thread_content">How you run your app depends on two things: whether you have a real
+        device running Android and whether youre using Android Studio. This lesson shows you how to
+        install and run your app on a real device and on the Android emulator, and in both cases with
+        either Android Studio or the command line tools.Open a command-line and navigate to the root of
+        your project directory. Use Gradle to build your project in debug mode, invoke the assembleDebug
+        build task using the Gradle wrapper script (gradlew assembleRelease). This creates your debug
+        .apk file inside the module build/ directory, named MyFirstApp-debug.apk.</string>
+
+    <string name="answer">Antworten</string>
+    <string name="comment">How you run your app depends on two things: whether you have a real
+        device running Android and whether youre using Android Studio.</string>
+
+    <string name="post_type">Art des Threads</string>
+
+    <string-array name="post_types">
+        <item>ERFAHRUNG</item>
+        <item>ALUMNIBERICHT</item>
+        <item>ANDERS</item>
+    </string-array>
+
+</resources>

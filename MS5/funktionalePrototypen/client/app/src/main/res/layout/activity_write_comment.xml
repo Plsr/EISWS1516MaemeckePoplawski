@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.WriteCommentActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar" android:id="@+id/toolbar" />
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Antwort auf Bob Ross"
+            android:textStyle="bold"
+            android:id="@+id/answer_to"
+            android:layout_marginTop="@dimen/activity_padding"
+            android:layout_marginLeft="@dimen/activity_padding"
+            android:layout_marginRight="@dimen/activity_padding"/>
+
+
+        <EditText
+            android:id="@+id/thread_input"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/answer_to"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbars="vertical"
+            android:maxLines="4"
+            android:lines="4"
+            android:layout_marginLeft="@dimen/activity_padding"
+            android:layout_marginTop="@dimen/activity_padding"
+            android:layout_marginRight="@dimen/activity_padding"
+            android:background="@color/colorWhite"
+            android:text="Write something"
+            android:padding="8dp"
+            />
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="asdjklhasdkjhasd"/>
+</LinearLayout>

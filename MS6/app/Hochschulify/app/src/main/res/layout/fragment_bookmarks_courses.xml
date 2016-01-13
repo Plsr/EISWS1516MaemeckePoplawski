@@ -10,6 +10,49 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/bookmarkCourseList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:id="@+id/nothing">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Noch keine Studiengänge gespeichert."
+            android:layout_gravity="center"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="Studiengänge suchen"
+            android:id="@+id/searchButton"
+            android:background="@color/colorAccent"
+            android:layout_gravity="center"/>
+
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:id="@+id/loading">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateOnly="true"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:id="@+id/progressBar"/>
+
+    </FrameLayout>
+
 
 </LinearLayout>

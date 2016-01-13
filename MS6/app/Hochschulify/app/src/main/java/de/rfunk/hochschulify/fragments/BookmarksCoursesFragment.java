@@ -8,9 +8,13 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 
 import com.android.volley.VolleyError;
 
@@ -25,6 +29,7 @@ import java.util.concurrent.Future;
 
 import de.rfunk.hochschulify.activities.CourseOverviewActivity;
 import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.activities.SearchActivity;
 import de.rfunk.hochschulify.adapters.CourseBookmarkAdapter;
 import de.rfunk.hochschulify.adapters.CourseOverviewAdapter;
 import de.rfunk.hochschulify.pojo.Course;
@@ -40,8 +45,12 @@ public class BookmarksCoursesFragment extends Fragment implements CourseBookmark
     Set<String> mIdSet;
     List<Course> mCourseList;
     Iterator<String> mIterator;
+    private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private FrameLayout mNothingThere;
+    private FrameLayout mLoadingIndicator;
+    private Button mButton;
 
 
     public BookmarksCoursesFragment() {
@@ -53,18 +62,26 @@ public class BookmarksCoursesFragment extends Fragment implements CourseBookmark
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bookmarks_courses, container, false);
+        View inflated = inflater.inflate(R.layout.fragment_bookmarks_courses, container, false);
+        mRecyclerView = (RecyclerView) inflated.findViewById(R.id.bookmarkCourseList);
+        mLoadingIndicator = (FrameLayout) inflated.findViewById(R.id.loading);
+        mNothingThere = (FrameLayout) inflated.findViewById(R.id.nothing);
+        mButton = (Button) inflated.findViewById(R.id.searchButton);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent searchIntent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(searchIntent);
+            }
+        });
+
+        return inflated;
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mIdSet = getBookmarkedCourses();
-        mIterator = mIdSet.iterator();
-        mCourseList = new ArrayList<>();
-        if (mIterator.hasNext()) asyncLoad(mIterator.next());
-
+    public void onResume() {
+        super.onResume();
+        load();
     }
 
     public Set<String> getBookmarkedCourses() {
@@ -98,13 +115,28 @@ public class BookmarksCoursesFragment extends Fragment implements CourseBookmark
     }
 
     public void asyncLoadIsFinished() {
-        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.bookmarkCourseList);
-        recyclerView.setHasFixedSize(true); //Needed? Answer: Yes, I think so.
+        mLoadingIndicator.setVisibility(View.GONE);
+        if (mCourseList.size() > 0) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mNothingThere.setVisibility(View.GONE);
+        } else {
+            mRecyclerView.setVisibility(View.GONE);
+            mNothingThere.setVisibility(View.VISIBLE);
+        }
+        mRecyclerView.setHasFixedSize(true); //Needed? Answer: Yes, I think so.
         mLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new CourseBookmarkAdapter(getActivity(), mCourseList, this);
-        recyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    public void fetchBookmarkedCourses() {
+        mIdSet = getBookmarkedCourses();
+        mIterator = mIdSet.iterator();
+        mCourseList = new ArrayList<>();
+        if (mIterator.hasNext()) asyncLoad(mIterator.next());
+        else asyncLoadIsFinished();
     }
 
     @Override
@@ -112,5 +144,11 @@ public class BookmarksCoursesFragment extends Fragment implements CourseBookmark
         Intent intent = new Intent(getActivity(), CourseOverviewActivity.class);
         intent.putExtra("ID", mCourseList.get(position).getId());
         startActivity(intent);
+    }
+
+    public void load() {
+        mLoadingIndicator.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.GONE);
+        fetchBookmarkedCourses();
     }
 }

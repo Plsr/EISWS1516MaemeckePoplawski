@@ -26,6 +26,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.pojo.User;
+import de.rfunk.hochschulify.utils.Parse;
 import de.rfunk.hochschulify.utils.Req;
 import de.rfunk.hochschulify.utils.Utils;
 
@@ -34,7 +36,8 @@ public class ProfileActivity extends AppCompatActivity {
     Toolbar toolbar;
     static final String DEFAULT_VALUE = "__DEFAULT__";
 
-    JSONObject mUser;
+    User mUser;
+    JSONObject mUserJSON;
     JSONArray mTlds;
     Button mVerifyButton;
     String mUserID;
@@ -82,8 +85,11 @@ public class ProfileActivity extends AppCompatActivity {
         userReq.getWithHeader(reqHeaders, new Req.Res() {
             @Override
             public void onSuccess(JSONObject res) {
-                System.out.println(res);
-                mUser = res;
+                mUserJSON = res;
+                mUser = Parse.user(res);
+
+                if (mUser.isVerified())
+                    mVerifyButton.setVisibility(View.GONE);
             }
 
             @Override
@@ -91,6 +97,8 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+
+
 
         mVerifyButton.setOnClickListener(mVerifyOnClick);
 
@@ -109,7 +117,7 @@ public class ProfileActivity extends AppCompatActivity {
         switch (id) {
             case R.id.action_edit:
                 Intent intent = new Intent(this, ProfileEditActivity.class);
-                intent.putExtra("user", mUser.toString());
+                intent.putExtra("user", mUserJSON.toString());
                 startActivity(intent);
                 return true;
             default:
@@ -137,7 +145,7 @@ public class ProfileActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     // Hier Email checken und Request abschicken
                     try {
-                        if(checkTLD(email.getText().toString())) {
+                        if (checkTLD(email.getText().toString())) {
                             // Send request to verify
                             String verifyUrl = Utils.SERVER_URL + Utils.VERIFY_PATH;
 

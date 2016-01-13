@@ -1,5 +1,6 @@
 package de.rfunk.hochschulify.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 
@@ -87,16 +89,12 @@ public class WriteThreadActivity extends AppCompatActivity {
                     System.out.println("Text is empty");
                     //TODO: Display Error Message on text input
                 } else {
+                    // Set up entry
                     Entry mEntry = new Entry();
                     mEntry.setTitle(mTitle);
                     mEntry.setText(mText);
                     mEntry.setType(mType);
                     mEntry.setCourse(mCourse);
-
-                    System.out.println(mTitle);
-                    System.out.println(mText);
-                    System.out.println(mType);
-                    System.out.println(mCourse);
 
                     sendThread(mEntry);
                 }
@@ -104,6 +102,13 @@ public class WriteThreadActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     * Function sends a given thread to the service.
+     * Note that the function does not check if the entry is valid before sending it.
+     *
+     * @param entry Entry to be send to the service
+     */
     private void sendThread(Entry entry) {
         String DEFAULT = "__DEFAULT__";
         String url = Utils.SERVER_URL + Utils.ENTRY_PATH;
@@ -112,16 +117,10 @@ public class WriteThreadActivity extends AppCompatActivity {
         // Set up Header
         String userAuth = Utils.getFromSharedPrefs(this, Utils.LOGIN_USERNAME_KEY, DEFAULT);
         String authToken = Utils.getFromSharedPrefs(this, Utils.LOGIN_AUTHTOKEN_KEY, DEFAULT);
-        System.out.println(userAuth);
-        System.out.println(authToken);
-
         reqHeaders.put("x-auth-user", userAuth);
         reqHeaders.put("x-auth-token", authToken);
 
-        System.out.println(reqHeaders.get("x-auth-user"));
-        System.out.println(reqHeaders.get("x-auth-token"));
-
-        //Set up Body
+        // Set up Body
         JSONObject reqBody = new JSONObject();
         try {
             reqBody.put("title", entry.getTitle());
@@ -132,19 +131,29 @@ public class WriteThreadActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        // Set up request
         Req req = new Req(this, url);
         req.postWithHeader(reqBody, reqHeaders, new Req.Res() {
             @Override
             public void onSuccess(JSONObject res) {
-                System.out.println("WOOOOH");
+                // Display Toast
+                Context context = getApplicationContext();
+                CharSequence toastText = "Erfolgreich gepostet";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, toastText, duration);
+                toast.show();
+
+                // Open SingleThreadActivity with created entry
+                Intent intent = new Intent(WriteThreadActivity.this, SingleThreadActivity.class);
+                intent.putExtra("entry", res.toString());
+                startActivity(intent);
             }
 
             @Override
             public void onError(VolleyError error) {
-
+                // TODO: Error handling
             }
         });
     }
-
 
 }

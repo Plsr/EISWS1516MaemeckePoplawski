@@ -88,8 +88,8 @@ public class ProfileActivity extends AppCompatActivity {
                 mUserJSON = res;
                 mUser = Parse.user(res);
 
-                if (mUser.isVerified())
-                    mVerifyButton.setVisibility(View.GONE);
+                if (!mUser.isVerified())
+                    mVerifyButton.setVisibility(View.VISIBLE);
             }
 
             @Override

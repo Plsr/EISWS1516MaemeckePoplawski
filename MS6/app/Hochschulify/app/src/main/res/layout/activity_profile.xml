@@ -132,6 +132,7 @@
         android:layout_margin="@dimen/activity_padding"
         android:text="Als Student verifizieren"
         android:id="@+id/buttonVerify"
+        android:visibility="gone"
         android:layout_above="@id/button2"
         android:background="@color/colorPrimary"
         android:textColor="@color/colorWhite"/>

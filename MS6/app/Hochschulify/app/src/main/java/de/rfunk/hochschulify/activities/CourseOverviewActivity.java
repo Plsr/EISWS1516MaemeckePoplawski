@@ -204,4 +204,6 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
             mMenu.findItem(R.id.action_unbookmark).setVisible(true);
         }
     }
+
+
 }

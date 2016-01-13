@@ -4,11 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -34,12 +38,19 @@ public class WriteThreadActivity extends AppCompatActivity {
     EditText mThreadTitle;
     EditText mThreadText;
     Spinner mSpinner;
+    ImageView thumbsUp;
+    ImageView thumbsDown;
 
     String mTitle;
     String mText;
     String mType;
     String mCourse;
+    String[] mSpinnerContent;
     JSONObject mUser;
+
+
+
+    Boolean recommended = true;
 
     Bundle mExtras;
 
@@ -51,6 +62,31 @@ public class WriteThreadActivity extends AppCompatActivity {
         // Receive extras from intent
         mExtras = getIntent().getExtras();
         mCourse = mExtras.getString("COURSE_ID");
+
+        thumbsUp = (ImageView) findViewById(R.id.thumbs_up);
+        thumbsDown = (ImageView) findViewById(R.id.thumbs_down);
+
+        thumbsUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!getRecommended()) {
+                    setRecommended(true);
+                    thumbsUp.setImageResource(R.drawable.thumbs_up_active);
+                    thumbsDown.setImageResource(R.drawable.thumbs_down);
+                }
+            }
+        });
+
+        thumbsDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getRecommended()) {
+                    setRecommended(false);
+                    thumbsDown.setImageResource(R.drawable.thumbs_down_active);
+                    thumbsUp.setImageResource(R.drawable.thumbs_up);
+                }
+            }
+        });
 
         try {
             mUser = Utils.getCurrentUser(this, DEFAULT_VALUE);
@@ -76,11 +112,40 @@ public class WriteThreadActivity extends AppCompatActivity {
             });
         }
 
+
+
         // Set up Spinner
         mSpinner = (Spinner) findViewById(R.id.type_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.post_types, android.R.layout.simple_spinner_item);
+        try {
+            mSpinnerContent = setUpSpinnerContentsForType(mUser.getString("type"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (mSpinnerContent == null) {
+            mSpinnerContent = new String[]{"ANDERS"};
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mSpinnerContent);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
+
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                Log.d(TAG, mSpinner.getSelectedItem().toString());
+                String curSelection = mSpinner.getSelectedItem().toString();
+                LinearLayout recommendLayout = (LinearLayout) findViewById(R.id.recommendLayout);
+                if (curSelection.equals("ERFAHRUNG")) {
+                    recommendLayout.setVisibility(View.VISIBLE);
+                } else {
+                    recommendLayout.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
 
         // Get EditText Views
         mThreadTitle = (EditText) findViewById(R.id.thread_title);
@@ -107,6 +172,7 @@ public class WriteThreadActivity extends AppCompatActivity {
                     mEntry.setText(mText);
                     mEntry.setType(mType);
                     mEntry.setCourse(mCourse);
+                    mEntry.setRecommendation(recommended);
 
                     sendThread(mEntry);
                 }
@@ -139,6 +205,7 @@ public class WriteThreadActivity extends AppCompatActivity {
             reqBody.put("text", entry.getText());
             reqBody.put("type", entry.getType());
             reqBody.put("course", entry.getCourse());
+            reqBody.put("recommendation", entry.isRecommendation());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -166,6 +233,28 @@ public class WriteThreadActivity extends AppCompatActivity {
                 // TODO: Error handling
             }
         });
+    }
+
+    public String[] setUpSpinnerContentsForType(String type) {
+        if (type.equals("STUDENT")) {
+            return new String[]{"ERFAHRUNG", "ANDERS"};
+        }
+        if (type.equals("ALUMNI")) {
+            return new String[]{"ALUMNIBERICHT", "ANDERS"};
+        }
+        if (type.equals("INTERESSENT")) {
+            return new String[]{"ANDERS"};
+        }
+        return new String[0];
+    }
+
+
+    public Boolean getRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(Boolean recommended) {
+        this.recommended = recommended;
     }
 
 }

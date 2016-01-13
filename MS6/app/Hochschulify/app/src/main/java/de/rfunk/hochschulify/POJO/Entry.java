@@ -13,6 +13,10 @@ public class Entry {
     private String mType;
     private String mCourse;
 
+
+
+    private boolean mRecommendation;
+
     public Entry(String title, String text, User author, String type, int subCount, String link, String id, String course) {
         mTitle = title;
         mText = text;
@@ -34,6 +38,7 @@ public class Entry {
         mId = "";
         mType = "";
         mCourse = "";
+        mRecommendation = true;
 
     }
 
@@ -99,5 +104,13 @@ public class Entry {
 
     public void setLink(String link) {
         mLink = link;
+    }
+
+    public boolean isRecommendation() {
+        return mRecommendation;
+    }
+
+    public void setRecommendation(boolean recommendation) {
+        mRecommendation = recommendation;
     }
 }

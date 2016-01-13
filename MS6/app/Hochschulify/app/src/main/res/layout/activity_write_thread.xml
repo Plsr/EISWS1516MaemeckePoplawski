@@ -88,7 +88,8 @@
         android:id="@+id/recommendLayout"
         android:orientation="horizontal"
         android:layout_below="@id/thread_input"
-        android:layout_margin="@dimen/activity_margin">
+        android:layout_margin="@dimen/activity_margin"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -98,13 +99,15 @@
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/thumbs_up"
+            android:id="@+id/thumbs_up"
+            android:src="@drawable/thumbs_up_active"
             android:layout_marginLeft="@dimen/activity_margin"
             />
 
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:id="@+id/thumbs_down"
             android:src="@drawable/thumbs_down"
             android:layout_marginLeft="32dp"/>
     </LinearLayout>

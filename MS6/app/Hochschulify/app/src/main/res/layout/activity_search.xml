@@ -15,26 +15,10 @@
         android:id="@+id/searchView"
         android:iconifiedByDefault="false" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/recent_search_headline"
-        android:id="@+id/textView"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="@dimen/activity_padding"
-        android:layout_marginRight="@dimen/activity_padding"/>
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="381dp"
-        android:layout_marginLeft="@dimen/activity_padding"
-        android:layout_marginRight="@dimen/activity_padding"
-        android:id="@+id/listView"
-        android:layout_marginTop="16dp"
-        android:divider="@color/button_material_light"
-        android:dividerHeight="1dp"
-        android:drawSelectorOnTop="false"
-        android:headerDividersEnabled="false" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/courseResults"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp" />
 
 </LinearLayout>

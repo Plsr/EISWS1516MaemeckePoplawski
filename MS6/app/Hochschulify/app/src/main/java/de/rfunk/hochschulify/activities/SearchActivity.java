@@ -3,6 +3,8 @@ package de.rfunk.hochschulify.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -21,19 +23,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.adapters.CourseBookmarkAdapter;
 import de.rfunk.hochschulify.pojo.Course;
 import de.rfunk.hochschulify.utils.Parse;
 import de.rfunk.hochschulify.utils.Req;
 import de.rfunk.hochschulify.utils.Utils;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements CourseBookmarkAdapter.CourseAdapterInterface {
 
-    ListView mListView;
+    RecyclerView mRecyclerView;
     Toolbar toolbar;
     SearchView searchView;
     private List<Course> mCourses;
     private List<Course> mResults;
-    private ArrayAdapter<String> mArrayAdapter;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +46,13 @@ public class SearchActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         searchView = (SearchView) findViewById(R.id.searchView);
-        mListView = (ListView)findViewById(R.id.listView);
+        mRecyclerView = (RecyclerView)findViewById(R.id.courseResults);
         toolbar.setTitle("Suche");
         setSupportActionBar(toolbar);
+
+        mRecyclerView.setHasFixedSize(true); //Needed? Answer: Yes, I think so.
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -84,17 +92,6 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         mResults = new ArrayList<>();
-
-        mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getListFromResults());
-        mListView.setAdapter(mArrayAdapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(SearchActivity.this, CourseOverviewActivity.class);
-                intent.putExtra("ID", mResults.get(position).getId());
-                startActivity(intent);
-            }
-        });
     }
 
     private void searchFor(String query) {
@@ -105,8 +102,9 @@ public class SearchActivity extends AppCompatActivity {
                 mResults.add(course);
             }
         }
-        mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getListFromResults());
-        mListView.setAdapter(mArrayAdapter);
+
+        mAdapter = new CourseBookmarkAdapter(this, mResults, this, false);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private List<String> getListFromResults() {
@@ -115,5 +113,12 @@ public class SearchActivity extends AppCompatActivity {
             list.add(mResults.get(i).getName());
         }
         return list;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(SearchActivity.this, CourseOverviewActivity.class);
+        intent.putExtra("ID", mResults.get(position).getId());
+        startActivity(intent);
     }
 }

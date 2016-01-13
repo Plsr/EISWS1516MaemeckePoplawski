@@ -5,6 +5,28 @@ import { ValidationError, HTTPError } from "../helpers/Errors";
 const Course = mongoose.model("Course");
 const Entry = mongoose.model("Entry");
 
+// Find all entries with type "ERFAHRUNG" of this particular course
+function getCourseWithRecommentation(course, callback) {
+  let positive = 0;
+  let total = 0;
+
+  return Entry.find({ course: course._id, type: "ERFAHRUNG" })
+    .select("-subentries")
+    .exec()
+    .then(
+      entries => {
+        entries.forEach(entry => {
+          total++;
+          if (entry.recommendation) positive++;
+        });
+        course.recommendation = Math.round((positive / total) * 100) / 100;
+        if (entries.length < 1) course.recommendation = -1;
+        callback(null, course);
+      },
+      err => { callback(err); }
+    );
+}
+
 export function courseList(req, res, next) {
   // Find all courses, get their entries with type "ERFAHRUNG", calculate
   // their average recommendation and inject it into the returned course object
@@ -20,30 +42,19 @@ export function courseList(req, res, next) {
         // New array for results
         let _courses = new Array(courses.length);
         return async.forEachOf(courses, (course, key, loop) => {
-          // Making it mutable
+          // Making `course` mutable and get a new course with recommendation
+          // injected.
           course = course.toObject();
-
-          let positive = 0;
-          let total = 0;
-
-          // Find all entries with type "ERFAHRUNG" of this particular course
-          return Entry.find({ course: course._id, type: "ERFAHRUNG" })
-            .select("-subentries")
-            .exec()
-            .then(
-              entries => {
-                entries.forEach(entry => {
-                  total++;
-                  if (entry.recommendation) positive++;
-                });
-                course.recommendation = Math.round((positive / total) * 100) / 100;
-                if (entries.length < 1) course.recommendation = -1;
-                _courses[key] = course;
-                loop();
-              },
-              err => { loop(err); }
-            );
+          return getCourseWithRecommentation(course, (err, injCourse) => {
+            if (err) {
+              loop(err);
+            } else {
+              _courses[key] = injCourse;
+              loop();
+            }
+          });
         }, (err) => {
+          console.log("here");
           if (err) return next(err);
           return res.json({ courses: _courses });
         });
@@ -111,7 +122,13 @@ export function courseGet(req, res, next) {
             if (count > skip + limitPerPage)
               _course.link.next = `${__config.host}/courses/${course._id}?page=${page+1}`;
 
-            return res.json(_course);
+            // Fill course with recommendation
+            getCourseWithRecommentation(_course, (err, injCourse) => {
+              if (err) throw err;
+              _course = injCourse;
+
+              return res.json(_course);
+            });
           });
         });
     })

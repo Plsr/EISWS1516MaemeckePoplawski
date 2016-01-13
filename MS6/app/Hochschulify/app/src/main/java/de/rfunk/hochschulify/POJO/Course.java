@@ -10,12 +10,14 @@ public class Course {
     private University mUniversity;
     private String mLink;
     private String mId;
+    private double mRecommendation;
 
-    public Course(String name, University university, String link, String id) {
+    public Course(String name, University university, String link, String id, double recommendation) {
         mName = name;
         mLink = link;
         mUniversity = university;
         mId = id;
+        mRecommendation = recommendation;
     }
 
     public Course(String name, University university) {
@@ -36,6 +38,15 @@ public class Course {
         mUniversity = new University();
         mLink = "";
         mId = "";
+        mRecommendation = 0;
+    }
+
+    public double getRecommendation() {
+        return mRecommendation;
+    }
+
+    public void setRecommendation(double recommendation) {
+        mRecommendation = recommendation;
     }
 
     public String getName() {

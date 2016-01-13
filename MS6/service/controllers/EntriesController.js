@@ -47,7 +47,9 @@ export function entryCreate(req, res, next) {
   entry.save()
     .then(
       savedEntry => {
-        return Entry.findOne({ _id: savedEntry._id }).exec()
+        return Entry.findOne({ _id: savedEntry._id })
+        .populate("user")
+        .exec()
           .then(
             newEntry => (newEntry),
             err => { throw err; }

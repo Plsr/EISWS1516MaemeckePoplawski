@@ -22,10 +22,16 @@ export function entryCreate(req, res, next) {
   req.checkBody("parententry")
     .optional().isMongoId();
 
+  if (req.body.type === "ERFAHRUNG") {
+    req.checkBody("recommendation").isBoolean()
+      .withMessage("When using type ERFAHRUNG, you have to send a boolean value for key `recommendation`");
+  }
+
   let errors = req.validationErrors();
   if (errors) return next(new ValidationError(errors));
 
   req.sanitizeBody("title").trim();
+  req.sanitizeBody("recommendation").toBoolean();
 
   // Check if there is a parententry given
   // if not, set it to null to make the clients life easier
@@ -41,6 +47,10 @@ export function entryCreate(req, res, next) {
     course: req.body.course,
     parententry: parent // Is optional, what happens if it's not there? undefined?
   });
+
+  if (req.body.recommendation !== undefined) {
+    entry.recommendation = req.body.recommendation;
+  }
 
   // Save entry, get the filtered document from the databse and send it back
   // to the user.

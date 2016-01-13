@@ -62,7 +62,7 @@ export function userAuthCreate(req, res, next) {
   // Find a user by its ID and check if passwords match.
   // If passwords match, save an auth_token and send it back
   User.findOne({ email: req.body.email })
-    .select("+password")
+    .select("+password +email")
     .exec()
     .then(
       user => {
@@ -90,11 +90,10 @@ export function userAuthCreate(req, res, next) {
     })
     .then(
       user => {
-        // Send auth_token back
-        return res.json({
-          auth_token: user.auth_token,
-          _id: user._id
-        });
+        let _user = user.toObject();
+        delete _user.password;
+        // Send user with auth_token back
+        return res.json(_user);
       },
       err => {
         return next(err);

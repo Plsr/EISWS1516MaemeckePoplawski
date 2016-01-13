@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Patterns;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Class with general helper methods.
  *
@@ -29,6 +32,7 @@ public class Utils {
     public static final String LOGIN_PASSWORD_KEY = "__PASSWORD__";
     public static final String LOGIN_AUTHTOKEN_KEY = "__AUTHTOKEN__";
     public static final String ACCOUNTTYPE_KEY = "__ACCOUNTTYPE__";
+    public static final String USER_KEY = "__USER__";
 
 
     /**
@@ -79,6 +83,29 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
             return defaultValue;
+        }
+    }
+
+    /**
+     * Gets the current user from the shared preferences.
+     *
+     * @param context Context of the calling method
+     * @param defaultValue defaultValue specified by the caller
+     * @return A JSONObject containing the current user
+     * @throws JSONException
+     */
+    public static JSONObject getCurrentUser(Context context, String defaultValue) throws JSONException {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        try {
+            String jsonString = sharedPrefs.getString(USER_KEY, defaultValue);
+            if(!(jsonString.equals(defaultValue))) {
+                return new JSONObject(jsonString);
+            } else {
+                return new JSONObject(defaultValue);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JSONObject(defaultValue);
         }
     }
 

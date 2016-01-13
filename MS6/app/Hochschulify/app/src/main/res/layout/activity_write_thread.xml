@@ -82,6 +82,33 @@
         android:padding="8dp"
         />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/recommendLayout"
+        android:orientation="horizontal"
+        android:layout_below="@id/thread_input"
+        android:layout_margin="@dimen/activity_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Empfehlung:"/>
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/thumbs_up"
+            android:layout_marginLeft="@dimen/activity_margin"
+            />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/thumbs_down"
+            android:layout_marginLeft="32dp"/>
+    </LinearLayout>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -89,7 +116,7 @@
         android:layout_marginRight="@dimen/activity_margin"
         android:text="@string/label_send"
         android:id="@+id/button_send"
-        android:layout_below="@+id/thread_input"
+        android:layout_below="@+id/recommendLayout"
         android:layout_marginTop="@dimen/activity_margin"
         android:background="@color/colorAccent"
         android:layout_alignParentStart="true" />

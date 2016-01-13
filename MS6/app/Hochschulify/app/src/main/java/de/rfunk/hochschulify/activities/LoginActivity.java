@@ -122,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             Utils.saveToSharedPrefs(LoginActivity.this, Utils.LOGIN_USERNAME_KEY, res.getString("_id"));
                             Utils.saveToSharedPrefs(LoginActivity.this, Utils.LOGIN_AUTHTOKEN_KEY, res.getString("auth_token"));
+                            Utils.saveToSharedPrefs(LoginActivity.this, Utils.USER_KEY, res.toString());
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
                         } catch (JSONException e) {

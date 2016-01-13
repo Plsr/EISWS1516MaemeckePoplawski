@@ -28,19 +28,30 @@ public class CourseBookmarkAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private Context mContext;
     private List<Course> mCourses;
     private CourseAdapterInterface mListener;
+    private static boolean mShowRemove;
 
 
     public CourseBookmarkAdapter(Context context, List<Course> courses, CourseAdapterInterface listener) {
         mContext = context;
         mCourses = courses;
         mListener = listener;
+        mShowRemove = true;
+    }
+
+    public CourseBookmarkAdapter(Context context, List<Course> courses, CourseAdapterInterface listener, boolean showRemove) {
+        mContext = context;
+        mCourses = courses;
+        mListener = listener;
+        mShowRemove = showRemove;
     }
 
     public static class ViewHolderEntry extends RecyclerView.ViewHolder {
 
         TextView courseTitle;
         TextView universityName;
+        TextView rating;
         CardView cardView;
+        TextView remove;
 
 
         public ViewHolderEntry(View itemView) {
@@ -49,6 +60,11 @@ public class CourseBookmarkAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             courseTitle = (TextView) itemView.findViewById(R.id.course_title);
             universityName = (TextView) itemView.findViewById(R.id.university_name);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
+            remove = (TextView) itemView.findViewById(R.id.remove);
+            rating = (TextView) itemView.findViewById(R.id.rating);
+
+            if (!mShowRemove) remove.setVisibility(View.GONE);
+
             itemView.setTag(this);
         }
     }
@@ -66,9 +82,16 @@ public class CourseBookmarkAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView title = ((ViewHolderEntry) holder).courseTitle;
         TextView uniname = ((ViewHolderEntry) holder).universityName;
         CardView cardView = ((ViewHolderEntry) holder).cardView;
+        TextView rating = ((ViewHolderEntry) holder).rating;
 
         title.setText(course.getName());
         uniname.setText(course.getUniversity().getName());
+        if (course.getRecommendation() > -1) {
+            rating.setText(((int) (course.getRecommendation() * 100)) + "%");
+        } else {
+            rating.setText("–");
+            rating.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
+        }
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override

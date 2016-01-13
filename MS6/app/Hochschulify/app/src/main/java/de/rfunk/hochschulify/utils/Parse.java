@@ -71,6 +71,8 @@ public class Parse {
                 retCourse.setId(course.getString("_id"));
             if (course.has("university"))
                 retCourse.setUniversity(university(course.getJSONObject("university")));
+            if (course.has("recommendation"))
+                retCourse.setRecommendation(course.getDouble("recommendation"));
             if (course.has("link")) {
                 JSONObject link = course.getJSONObject("link");
                 if (link.has("self"))

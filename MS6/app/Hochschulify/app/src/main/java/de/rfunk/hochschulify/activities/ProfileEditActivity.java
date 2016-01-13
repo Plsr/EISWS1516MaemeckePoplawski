@@ -29,9 +29,9 @@ public class ProfileEditActivity extends AppCompatActivity {
 
 
         Spinner spinner = (Spinner) findViewById(R.id.profile_type_spinner);
-        int arrayType = R.array.profile_types_normal;
+        int arrayType = R.array.profile_types_verified;
 
-        /*
+
         Bundle args = getIntent().getExtras();
         User user = new User();
         try {
@@ -39,10 +39,10 @@ public class ProfileEditActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (user.isVerified()) {
-            arrayType = R.array.profile_types_verified;
+        if (!user.isVerified()) {
+            arrayType = R.array.profile_types_normal;
         }
-        */
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, arrayType, android.R.layout.simple_spinner_item);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

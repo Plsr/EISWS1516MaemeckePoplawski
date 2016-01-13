@@ -29,7 +29,7 @@ public class ProfileEditActivity extends AppCompatActivity {
 
 
         Spinner spinner = (Spinner) findViewById(R.id.profile_type_spinner);
-        int arrayType = R.array.profile_types_verified;
+        int arrayType = R.array.profile_types_normal;
 
 
         Bundle args = getIntent().getExtras();
@@ -39,8 +39,8 @@ public class ProfileEditActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (!user.isVerified()) {
-            arrayType = R.array.profile_types_normal;
+        if (user.isVerified()) {
+            arrayType = R.array.profile_types_verified;
         }
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, arrayType, android.R.layout.simple_spinner_item);

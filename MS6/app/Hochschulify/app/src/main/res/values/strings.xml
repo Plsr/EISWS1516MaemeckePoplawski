@@ -41,11 +41,17 @@
     <string name="profile_delete">Profil Löschen</string>
     <string name="save">Speichern</string>
 
-    <string-array name="profile_types">
+    <string-array name="profile_types_verified">
         <item>Studieninteressierter</item>
         <item>Mitarbeiter</item>
         <item>Alumni</item>
         <item>Student</item>
+    </string-array>
+
+    <string-array name="profile_types_normal">
+        <item>Studieninteressierter</item>
+        <item>Mitarbeiter</item>
+        <item>Alumni</item>
     </string-array>
 
     <string name="thread_author">Autor: Bob Ross</string>

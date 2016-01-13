@@ -9,7 +9,12 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.pojo.User;
+import de.rfunk.hochschulify.utils.Parse;
 
 public class ProfileEditActivity extends AppCompatActivity {
 
@@ -24,7 +29,22 @@ public class ProfileEditActivity extends AppCompatActivity {
 
 
         Spinner spinner = (Spinner) findViewById(R.id.profile_type_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.profile_types, android.R.layout.simple_spinner_item);
+        int arrayType = R.array.profile_types_normal;
+
+        /*
+        Bundle args = getIntent().getExtras();
+        User user = new User();
+        try {
+            user = Parse.user(new JSONObject(args.getString("user")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (user.isVerified()) {
+            arrayType = R.array.profile_types_verified;
+        }
+        */
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, arrayType, android.R.layout.simple_spinner_item);
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }

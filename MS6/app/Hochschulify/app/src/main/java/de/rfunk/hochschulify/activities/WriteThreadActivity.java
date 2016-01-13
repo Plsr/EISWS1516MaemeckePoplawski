@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -27,6 +28,9 @@ import de.rfunk.hochschulify.utils.Utils;
 
 public class WriteThreadActivity extends AppCompatActivity {
 
+    private static final String DEFAULT_VALUE = "__DEFAULT__";
+    private static final String TAG = WriteThreadActivity.class.getSimpleName();
+
     EditText mThreadTitle;
     EditText mThreadText;
     Spinner mSpinner;
@@ -35,6 +39,7 @@ public class WriteThreadActivity extends AppCompatActivity {
     String mText;
     String mType;
     String mCourse;
+    JSONObject mUser;
 
     Bundle mExtras;
 
@@ -46,6 +51,13 @@ public class WriteThreadActivity extends AppCompatActivity {
         // Receive extras from intent
         mExtras = getIntent().getExtras();
         mCourse = mExtras.getString("COURSE_ID");
+
+        try {
+            mUser = Utils.getCurrentUser(this, DEFAULT_VALUE);
+            Log.d(TAG, mUser.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         // Set up toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

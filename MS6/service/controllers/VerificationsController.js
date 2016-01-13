@@ -99,7 +99,7 @@ export function verificationGet(req, res, next) {
         req.auth_user.verified = true;
         return User.findOneAndUpdate(
           { _id: req.auth_user._id },
-          { $set: { verified: true } },
+          { $set: { verified: true, type: "STUDENT" } },
           { new: true }
         );
       }

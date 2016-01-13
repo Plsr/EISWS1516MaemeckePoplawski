@@ -70,7 +70,7 @@ public class Req {
             }
         }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            public Map<String, String> getHeaders() throws AuthFailureError {
                 return headers;
             }
         };

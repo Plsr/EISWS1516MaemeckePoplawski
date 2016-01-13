@@ -53,7 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onSuccess(JSONObject res) {
                 try {
                     Log.d("FICKIFICK", res.toString());
-                    mTlds = new JSONArray(res.getJSONArray("tlds"));
+                    mTlds = res.getJSONArray("tlds");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -109,7 +109,7 @@ public class ProfileActivity extends AppCompatActivity {
         switch (id) {
             case R.id.action_edit:
                 Intent intent = new Intent(this, ProfileEditActivity.class);
-                intent.putExtra("user", mUserID.toString());
+                intent.putExtra("user", mUser.toString());
                 startActivity(intent);
                 return true;
             default:

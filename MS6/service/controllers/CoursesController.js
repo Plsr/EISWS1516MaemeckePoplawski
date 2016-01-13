@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
+import async from "async";
 import { ValidationError, HTTPError } from "../helpers/Errors";
 
 const Course = mongoose.model("Course");
 const Entry = mongoose.model("Entry");
 
 export function courseList(req, res, next) {
-  // Find all courses and list them without their entries
+  // Find all courses, get their entries with type "ERFAHRUNG", calculate
+  // their average recommendation and inject it into the returned course object
   Course.find()
     .select("-entries")
     .populate({
@@ -14,7 +16,38 @@ export function courseList(req, res, next) {
     })
     .exec()
     .then(
-      courses => (res.json({ courses: courses })),
+      courses => {
+        // New array for results
+        let _courses = new Array(courses.length);
+        return async.forEachOf(courses, (course, key, loop) => {
+          // Making it mutable
+          course = course.toObject();
+
+          let positive = 0;
+          let total = 0;
+
+          // Find all entries with type "ERFAHRUNG" of this particular course
+          return Entry.find({ course: course._id, type: "ERFAHRUNG" })
+            .select("-subentries")
+            .exec()
+            .then(
+              entries => {
+                entries.forEach(entry => {
+                  total++;
+                  if (entry.recommendation) positive++;
+                });
+                course.recommendation = Math.round((positive / total) * 100) / 100;
+                if (!entries) course.recommendation = -1;
+                _courses[key] = course;
+                loop();
+              },
+              err => { loop(err); }
+            );
+        }, (err) => {
+          if (err) return next(err);
+          return res.json({ courses: _courses });
+        });
+      },
       err => (next(err))
     );
 }

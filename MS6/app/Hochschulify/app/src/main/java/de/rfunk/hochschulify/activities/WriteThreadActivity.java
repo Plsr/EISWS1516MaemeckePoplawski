@@ -205,7 +205,10 @@ public class WriteThreadActivity extends AppCompatActivity {
             reqBody.put("text", entry.getText());
             reqBody.put("type", entry.getType());
             reqBody.put("course", entry.getCourse());
-            reqBody.put("recommendation", entry.isRecommendation());
+
+            if (entry.getType().equals("ERFAHRUNG")) {
+                reqBody.put("recommendation", entry.isRecommendation());
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

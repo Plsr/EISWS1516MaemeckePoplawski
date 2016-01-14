@@ -101,7 +101,9 @@ public class CourseOverviewActivity extends AppCompatActivity implements CourseO
                         JSONObject jsonEntry = entries.getJSONObject(i);
                         Entry entry = Parse.entry(jsonEntry);
                         mEntries.add(entry);
+                        jsonEntry.put("course", mCourseId);
                         mJSONEntries.add(jsonEntry);
+
                         // TODO: Duplicated Arrays
                     }
 

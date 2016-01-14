@@ -48,8 +48,12 @@ public class WriteCommentActivity extends AppCompatActivity {
 
         intentExtras = getIntent().getExtras();
         String jsonString = intentExtras.getString("parent");
+
+        Log.d(TAG, jsonString);
+
         try {
             mParentEntry = new JSONObject(jsonString);
+            Log.d(TAG, mParentEntry.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

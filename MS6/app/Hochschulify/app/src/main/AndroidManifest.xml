@@ -23,22 +23,26 @@
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="com.example.gcm" />
+                <action android:name="com.google.android.c2dm.intent.GCM_RECEIVED_ACTION" />
+                <category android:name="de.rfunk.hochschulify" />
             </intent-filter>
         </receiver>
         <service
-            android:name="com.example.MyGcmListenerService"
+            android:name="de.rfunk.hochschulify.services.HochschulifyListenerService"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
         <service
-            android:name="com.example.MyInstanceIDListenerService"
+            android:name="de.rfunk.hochschulify.services.HochschulifyInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
+        </service>
+        <service android:name=".services.RegistrationIntentService"
+                 android:exported="false">
         </service>
 
         <activity android:name=".activities.LoginActivity"></activity>

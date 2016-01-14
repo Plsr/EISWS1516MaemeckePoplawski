@@ -34,6 +34,9 @@ public class Utils {
     public static final String ACCOUNTTYPE_KEY = "__ACCOUNTTYPE__";
     public static final String USER_KEY = "__USER__";
 
+    public static final String SENT_TOKEN_TO_SERVER = "__SENT_TOKEN_TO_SERVER__";
+    public static final String REGISTRATION_COMPLETE = "__REGISTRATION_COMPLETE__";
+
 
     /**
      * Saves a key-value-pair to the default shared preferences.

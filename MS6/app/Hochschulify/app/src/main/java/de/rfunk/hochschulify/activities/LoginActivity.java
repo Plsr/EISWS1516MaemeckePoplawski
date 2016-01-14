@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.services.RegistrationIntentService;
 import de.rfunk.hochschulify.utils.Req;
 import de.rfunk.hochschulify.utils.Utils;
 

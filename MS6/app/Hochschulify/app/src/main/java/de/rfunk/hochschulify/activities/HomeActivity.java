@@ -1,6 +1,10 @@
 package de.rfunk.hochschulify.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +26,8 @@ import de.rfunk.hochschulify.fragments.NotificationsFragment;
 import de.rfunk.hochschulify.R;
 import de.rfunk.hochschulify.fragments.BookmarksCoursesFragment;
 import de.rfunk.hochschulify.fragments.BookmarksThreadsFragment;
+import de.rfunk.hochschulify.services.RegistrationIntentService;
+import de.rfunk.hochschulify.utils.Utils;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -28,6 +35,8 @@ public class HomeActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private SearchView searchView;
+
+    BroadcastReceiver mRegistrationBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,24 @@ public class HomeActivity extends AppCompatActivity {
 
         tabLayout= (TabLayout)findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        Intent intent = new Intent(this, RegistrationIntentService.class);
+        startService(intent);
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
+                boolean sentToken = sharedPrefs.getBoolean(Utils.SENT_TOKEN_TO_SERVER, false);
+
+                if (sentToken) {
+                    Log.d("HomeActivity", "YAY");
+                } else {
+                    Log.d("HomeActivity", "OH NOES");
+                }
+            }
+        };
+
     }
 
     private void setupViewPager(ViewPager  viewPager) {

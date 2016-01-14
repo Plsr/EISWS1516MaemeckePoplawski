@@ -1,5 +1,6 @@
 package de.rfunk.hochschulify.activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.services.RegistrationIntentService;
 import de.rfunk.hochschulify.utils.Req;
 import de.rfunk.hochschulify.utils.Utils;
 
@@ -63,6 +65,7 @@ public class SplashscreenActivity extends AppCompatActivity {
                             } else {
                                 Intent intent = new Intent(SplashscreenActivity.this, HomeActivity.class);
                                 startActivity(intent);
+
                             }
 
 

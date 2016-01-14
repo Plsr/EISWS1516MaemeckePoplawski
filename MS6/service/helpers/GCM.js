@@ -2,7 +2,7 @@ import { GCM } from "gcm";
 
 var gcm = new GCM(__config.gcm_api_key);
 
-export function sendGCM(toUser, fromUser, entry) {
+export function sendGCM(toUser, fromUser, parentEntry, newEntry) {
   // Only send if user is registered with gcm in app
   if (!toUser.device_id) return;
 
@@ -11,8 +11,9 @@ export function sendGCM(toUser, fromUser, entry) {
 
   let message = {
     registration_id: toUser.device_id,
-    "data.entry": entry._id + "",
-    "data.fromuser": fromUser._id + ""
+    "data.parententry": parentEntry._id + "",
+    "data.fromuser": fromUser._id + "",
+    "data.newentry": newEntry._id + ""
   };
 
   gcm.send(message, (err, messageId) => {

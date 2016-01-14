@@ -54,7 +54,6 @@ export function courseList(req, res, next) {
             }
           });
         }, (err) => {
-          console.log("here");
           if (err) return next(err);
           return res.json({ courses: _courses });
         });

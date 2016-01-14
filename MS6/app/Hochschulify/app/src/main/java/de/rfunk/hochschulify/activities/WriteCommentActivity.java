@@ -156,6 +156,9 @@ public class WriteCommentActivity extends AppCompatActivity {
 
                 // Open SingleThreadActivity with created entry
                 Intent intent = new Intent(WriteCommentActivity.this, SingleThreadActivity.class);
+
+                Log.d(TAG, res.toString());
+
                 intent.putExtra("entry", res.toString());
                 startActivity(intent);
             }

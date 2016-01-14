@@ -12,6 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.pojo.Entry;
+import de.rfunk.hochschulify.utils.Parse;
 import de.rfunk.hochschulify.utils.Utils;
 
 public class SingleThreadActivity extends AppCompatActivity {
@@ -34,7 +36,8 @@ public class SingleThreadActivity extends AppCompatActivity {
     String threadAuthor;
 
     Bundle mIntentExtras;
-    JSONObject mEntry;
+    JSONObject mEntryJSON;
+    Entry mEntry;
 
 
     @Override
@@ -55,14 +58,20 @@ public class SingleThreadActivity extends AppCompatActivity {
         // set it
         if(!(Utils.isEmptyString(jsonString))) {
             try {
-                mEntry = new JSONObject(jsonString);
-                JSONObject user = mEntry.getJSONObject("user");
-                mThreadTitleView.setText(mEntry.getString("title"));
-                mThreadBodyView.setText(mEntry.getString("text"));
-                mThreadAuthorView.setText(user.getString("name"));
+                mEntryJSON = new JSONObject(jsonString);
+                JSONObject user = mEntryJSON.getJSONObject("user");
+                mEntry = Parse.entry(mEntryJSON);
 
-                Log.d(TAG, mEntry.toString());
+                // Remove title text view from layout if there is no title
+                if(mEntry.getTitle().equals("")) {
+                    mThreadTitleView.setVisibility(View.GONE);
+                } else {
+                    mThreadTitleView.setText(mEntry.getTitle());
+                }
 
+                // Set other content
+                mThreadBodyView.setText(mEntry.getText());
+                mThreadAuthorView.setText(mEntry.getAuthor().getName());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -95,7 +104,7 @@ public class SingleThreadActivity extends AppCompatActivity {
                 Intent intent = new Intent(SingleThreadActivity.this, WriteCommentActivity.class);
                 intent.putExtra("parentEntry", THREAD_ID);
                 intent.putExtra("parentAuthor", threadAuthor);
-                intent.putExtra("parent", mEntry.toString());
+                intent.putExtra("parent", mEntryJSON.toString());
                 startActivity(intent);
             }
         });

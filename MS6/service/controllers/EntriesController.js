@@ -85,7 +85,10 @@ export function entryCreate(req, res, next) {
         // If there is a parent, push the EntryID into the parent entry
         // and send gcm message, if parent's user's device has registered
         return Entry.findOne({ _id: parent })
-          .populate("user")
+          .populate({
+            path: "user",
+            select: "+device_id"
+          })
           .exec()
           .then(
             _parent => {

@@ -48,7 +48,8 @@ public class HochschulifyListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         Log.d(TAG, data.toString());
-        String entryID = data.getString("entry");
+        String entryID = data.getString("parententry");
+        String newEntryID = data.getString("newentry");
         String userID = data.getString("fromuser");
 
         String userUrl = SERVER_URL + USER_PATH + "/" + userID;

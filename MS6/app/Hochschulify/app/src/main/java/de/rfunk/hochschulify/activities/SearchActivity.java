@@ -1,6 +1,9 @@
 package de.rfunk.hochschulify.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -20,7 +24,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import de.rfunk.hochschulify.R;
 import de.rfunk.hochschulify.adapters.CourseBookmarkAdapter;
@@ -34,6 +47,7 @@ public class SearchActivity extends AppCompatActivity implements CourseBookmarkA
     RecyclerView mRecyclerView;
     Toolbar toolbar;
     SearchView searchView;
+    private ImageButton mGeoSearchButton;
     private List<Course> mCourses;
     private List<Course> mResults;
     private RecyclerView.Adapter mAdapter;
@@ -47,12 +61,15 @@ public class SearchActivity extends AppCompatActivity implements CourseBookmarkA
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         searchView = (SearchView) findViewById(R.id.searchView);
         mRecyclerView = (RecyclerView)findViewById(R.id.courseResults);
+        mGeoSearchButton = (ImageButton) findViewById(R.id.geoSearch);
         toolbar.setTitle("Suche");
         setSupportActionBar(toolbar);
 
         mRecyclerView.setHasFixedSize(true); //Needed? Answer: Yes, I think so.
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mGeoSearchButton.setOnClickListener(mGeoSearchClickListener);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -103,8 +120,7 @@ public class SearchActivity extends AppCompatActivity implements CourseBookmarkA
             }
         }
 
-        mAdapter = new CourseBookmarkAdapter(this, mResults, this, false);
-        mRecyclerView.setAdapter(mAdapter);
+        fillList();
     }
 
     private List<String> getListFromResults() {
@@ -120,5 +136,81 @@ public class SearchActivity extends AppCompatActivity implements CourseBookmarkA
         Intent intent = new Intent(SearchActivity.this, CourseOverviewActivity.class);
         intent.putExtra("ID", mResults.get(position).getId());
         startActivity(intent);
+    }
+
+    private View.OnClickListener mGeoSearchClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            LocationManager locationManager =
+                    (LocationManager) SearchActivity.this.getSystemService(Context.LOCATION_SERVICE);
+            Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            if (lastKnownLocation != null) {
+
+                HashMap<String, Course> courseMap = new HashMap<>();
+                HashMap<String, Float> distanceMap = new HashMap<>();
+
+                float maxDistanceInMeters = 35000;
+
+                // Filter Results by maxDistance
+                for (Course course : mCourses) {
+                    Location loc = new Location(course.getName());
+                    loc.setLatitude(course.getUniversity().getGeoPos().getLat());
+                    loc.setLongitude(course.getUniversity().getGeoPos().getLong());
+                    Float distance = loc.distanceTo(lastKnownLocation);
+                    Log.d("TIMOTIMO", distance + "");
+                    if (distance < maxDistanceInMeters) {
+                        courseMap.put(course.getId(), course);
+                        distanceMap.put(course.getId(), distance);
+                    }
+                }
+
+                // Sort results by distance
+                List<Course> sortedResults = new ArrayList<>();
+                SortedSet<Float> distances = new TreeSet<>(distanceMap.values());
+                distanceMap = sortByValues(distanceMap);
+
+                mResults = new ArrayList<>();
+                for (String id : distanceMap.keySet()) {
+                    mResults.add(courseMap.get(id));
+                }
+
+            }
+
+            else {
+                mResults = new ArrayList<>();
+                Course noCourse = new Course();
+                noCourse.setName("Keine GeoPos gefunden");
+                mResults.add(noCourse);
+            }
+
+            fillList();
+        }
+    };
+
+    // from http://beginnersbook.com/2013/12/how-to-sort-hashmap-in-java-by-keys-and-values/
+    private static HashMap sortByValues(HashMap map) {
+        List list = new LinkedList(map.entrySet());
+        // Defined Custom Comparator here
+        Collections.sort(list, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                return ((Comparable) ((Map.Entry) (o1)).getValue())
+                        .compareTo(((Map.Entry) (o2)).getValue());
+            }
+        });
+
+        // Here I am copying the sorted list in HashMap
+        // using LinkedHashMap to preserve the insertion order
+        HashMap sortedHashMap = new LinkedHashMap();
+        for (Iterator it = list.iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
+            sortedHashMap.put(entry.getKey(), entry.getValue());
+        }
+        return sortedHashMap;
+    }
+
+    private void fillList() {
+        mAdapter = new CourseBookmarkAdapter(this, mResults, this, false);
+        mRecyclerView.setAdapter(mAdapter);
     }
 }

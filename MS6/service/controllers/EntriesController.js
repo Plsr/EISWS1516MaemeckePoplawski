@@ -10,16 +10,14 @@ export function entryCreate(req, res, next) {
   var postTypes = ["ERFAHRUNG", "ALUMNIBERICHT", "ANDERS"];
 
   // Validate request
-  req.checkBody("title")
-    .notEmpty().withMessage("Title is required");
   req.checkBody("text")
     .notEmpty().withMessage("Text is required");
   req.checkBody("type")
     .notEmpty().withMessage("Post Type is required")
     .isIn(postTypes).withMessage("Post Type not valid");
   req.checkBody("course")
-    .notEmpty().withMessage("Course is required")
-    .isMongoId();
+    .notEmpty()
+    .isMongoId().widthMessage("Course is required with a valid id");
   req.checkBody("parententry")
     .optional().isMongoId();
 

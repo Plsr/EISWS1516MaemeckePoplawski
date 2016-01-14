@@ -12,6 +12,7 @@ public class Entry {
     private String mId;
     private String mType;
     private String mCourse;
+    private String mParentEntry;
 
 
 
@@ -39,6 +40,7 @@ public class Entry {
         mType = "";
         mCourse = "";
         mRecommendation = true;
+        mParentEntry = "";
 
     }
 
@@ -112,5 +114,13 @@ public class Entry {
 
     public void setRecommendation(boolean recommendation) {
         mRecommendation = recommendation;
+    }
+
+    public String getParentEntry() {
+        return mParentEntry;
+    }
+
+    public void setParentEntry(String parentEntry) {
+        mParentEntry = parentEntry;
     }
 }

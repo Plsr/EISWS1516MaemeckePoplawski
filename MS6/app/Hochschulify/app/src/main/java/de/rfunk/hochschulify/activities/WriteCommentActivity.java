@@ -135,6 +135,7 @@ public class WriteCommentActivity extends AppCompatActivity {
             reqBody.put("type", entry.getType());
             reqBody.put("course", entry.getCourse());
             reqBody.put("parententry", entry.getParentEntry());
+            
 
             Log.d(TAG, reqBody.toString());
         } catch (JSONException e) {

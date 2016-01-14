@@ -11,11 +11,11 @@ export function sendGCM(toUser, fromUser, entry) {
 
   let message = {
     registration_id: toUser.device_id,
-    "data.entryid": entry._id,
-    "data.fromuserid": fromUser._id
+    "data.entry": entry._id + "",
+    "data.fromuser": fromUser._id + ""
   };
 
-  gmc.send(message, (err, messageId) => {
+  gcm.send(message, (err, messageId) => {
     if (err) return console.log("Failed to send to gcm:", err);
     else console.log(`Sent gcm to ${toUser.name} with id ${toUser._id}`);
   });

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { sendGCM } from "../helpers/GCM";
 import { ValidationError, HTTPError } from "../helpers/Errors";
 
 const Entry = mongoose.model("Entry");
@@ -9,16 +10,14 @@ export function entryCreate(req, res, next) {
   var postTypes = ["ERFAHRUNG", "ALUMNIBERICHT", "ANDERS"];
 
   // Validate request
-  req.checkBody("title")
-    .notEmpty().withMessage("Title is required");
   req.checkBody("text")
     .notEmpty().withMessage("Text is required");
   req.checkBody("type")
     .notEmpty().withMessage("Post Type is required")
     .isIn(postTypes).withMessage("Post Type not valid");
   req.checkBody("course")
-    .notEmpty().withMessage("Course is required")
-    .isMongoId();
+    .notEmpty()
+    .isMongoId().widthMessage("Course is required with a valid id");
   req.checkBody("parententry")
     .optional().isMongoId();
 
@@ -84,12 +83,20 @@ export function entryCreate(req, res, next) {
         }
 
         // If there is a parent, push the EntryID into the parent entry
+        // and send gcm message, if parent's user's device has registered
         return Entry.findOne({ _id: parent })
+          .populate("user")
           .exec()
           .then(
             _parent => {
               _parent.subentries.push(newEntry);
               _parent.save();
+
+              // Kick off gcm without interrupting the chain
+              if (_parent.user.device_id) {
+                sendGCM(_parent.user, req.auth_user, _parent);
+              }
+
               return newEntry;
             },
             err => { throw err; }

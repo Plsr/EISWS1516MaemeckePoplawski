@@ -28,6 +28,11 @@ const UserSchema = new mongoose.Schema({
   auth_token: {
     type: String,
     select: false
+  },
+  device_id: {
+    type: String,
+    select: false,
+    default: ""
   }
 });
 

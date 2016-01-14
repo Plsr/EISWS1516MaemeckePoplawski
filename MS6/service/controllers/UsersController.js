@@ -62,7 +62,7 @@ export function userAuthCreate(req, res, next) {
   // Find a user by its ID and check if passwords match.
   // If passwords match, save an auth_token and send it back
   User.findOne({ email: req.body.email })
-    .select("+password +email")
+    .select("+password +email +device_id")
     .exec()
     .then(
       user => {
@@ -121,7 +121,7 @@ export function userAuth(req, res, next) {
   //   1. save the user in our req and
   //   2. call the next handler
   User.findOne({ _id: userid, auth_token: token })
-    .select("+password +email +auth_token")
+    .select("+password +email +auth_token +device_id")
     .exec()
     .then(
       user => {
@@ -179,12 +179,13 @@ export function userUpdate(req, res, next) {
   user.name = body.name || user.name;
   user.password = body.password || user.password;
   user.email = body.email || user.email;
+  user.device_id = body.device_id || user.device_id;
 
   // Save the user and output it
   user.save()
     .then(
       savedUser => {
-        return User.findOne({ _id: user._id }).select("+email")
+        return User.findOne({ _id: user._id }).select("+email +device_id")
           .then(
             outputUser => (outputUser),
             err => { throw err; }
@@ -234,7 +235,7 @@ export function userCreate(req, res, next) {
   user.save()
     .then(
       savedUser => {
-        return User.findOne({ _id: savedUser._id }).select("+email")
+        return User.findOne({ _id: savedUser._id }).select("+email +device_id")
           .then(
             newUser => (newUser),
             err => { throw err; }

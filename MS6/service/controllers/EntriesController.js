@@ -17,7 +17,7 @@ export function entryCreate(req, res, next) {
     .isIn(postTypes).withMessage("Post Type not valid");
   req.checkBody("course")
     .notEmpty()
-    .isMongoId().widthMessage("Course is required with a valid id");
+    .isMongoId().withMessage("Course is required with a valid id");
   req.checkBody("parententry")
     .optional().isMongoId();
 

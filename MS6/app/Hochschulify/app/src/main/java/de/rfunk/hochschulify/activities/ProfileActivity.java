@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -174,6 +175,7 @@ public class ProfileActivity extends AppCompatActivity {
             builder.setView(dialogView);
 
             final EditText email = (EditText) dialogView.findViewById(R.id.email);
+            final TextInputLayout emailInputLayout = (TextInputLayout) dialogView.findViewById(R.id.email_input_layout);
 
             //Set behaviour for positive button
             builder.setPositiveButton("Absenden", new DialogInterface.OnClickListener() {
@@ -208,6 +210,10 @@ public class ProfileActivity extends AppCompatActivity {
                                     // TODO: error handling
                                 }
                             });
+                        } else {
+                            // TODO: Display error message
+                            String emptyError = "Bitte eMail adresse eingeben";
+                            emailInputLayout.setError(emptyError);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

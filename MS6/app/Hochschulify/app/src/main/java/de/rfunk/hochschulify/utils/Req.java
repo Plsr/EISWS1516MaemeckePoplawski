@@ -28,6 +28,7 @@ import de.rfunk.hochschulify.pojo.Entry;
 public class Req {
 
     private static final String DEFAULT_VALUE = "__DEFAULT__";
+    private static final String TAG = Req.class.getSimpleName();
 
     private String mURL;
     private Context mContext;
@@ -40,6 +41,28 @@ public class Req {
     public interface Res {
         void onSuccess(JSONObject res);
         void onError(VolleyError error);
+    }
+
+    /**
+     * Retrieves userID and authToken from shared preferences and writes them in
+     * a Map to be used in requests
+     *
+     * @return authHeaders if found, null otherwise
+     */
+    private Map<String, String> getAuthHeaders() {
+
+        final Map<String, String> authHeaders = new HashMap<String, String>();
+        // Set up authHeaders
+        String userAuth = Utils.getFromSharedPrefs(mContext, Utils.LOGIN_USERNAME_KEY, DEFAULT_VALUE);
+        String authToken = Utils.getFromSharedPrefs(mContext, Utils.LOGIN_AUTHTOKEN_KEY, DEFAULT_VALUE);
+        authHeaders.put("x-auth-user", userAuth);
+        authHeaders.put("x-auth-token", authToken);
+
+        if (userAuth.equals(DEFAULT_VALUE) || authToken.equals(DEFAULT_VALUE)) {
+            return null;
+        } else {
+            return authHeaders;
+        }
     }
 
     public void get(final Req.Res res) {
@@ -76,6 +99,30 @@ public class Req {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 return headers;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        queue.add(request);
+    }
+
+    public void getWithAuth(final Req.Res res) {
+        final Map<String, String> reqHeaders = getAuthHeaders();
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, mURL, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                res.onSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                res.onError(error);
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return reqHeaders;
             }
         };
 

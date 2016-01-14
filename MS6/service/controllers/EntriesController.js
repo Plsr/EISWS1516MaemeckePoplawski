@@ -97,7 +97,7 @@ export function entryCreate(req, res, next) {
 
               // Kick off gcm without interrupting the chain
               if (_parent.user.device_id) {
-                sendGCM(_parent.user, req.auth_user, _parent);
+                sendGCM(_parent.user, req.auth_user, _parent, newEntry);
               }
 
               return newEntry;

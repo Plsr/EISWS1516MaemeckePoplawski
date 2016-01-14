@@ -7,7 +7,7 @@ export function sendGCM(toUser, fromUser, entry) {
   if (!toUser.device_id) return;
 
   // Stop if user tries to send to himself
-  if (toUser.device_id === fromUser.device_id) return;
+  // if (toUser.device_id === fromUser.device_id) return;
 
   let message = {
     registration_id: toUser.device_id,

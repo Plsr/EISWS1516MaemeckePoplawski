@@ -33,23 +33,46 @@
             android:text="@string/thread_excerpt"
             android:layout_below="@id/thread_title_input"/>
 
-        <TextView
-            android:id="@+id/comments"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_padding"
-            android:layout_alignParentLeft="true"
             android:layout_below="@id/thread_excerpt"
-            android:text="@string/thread_comments"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_padding"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/thread_excerpt"
-            android:text="@string/thread_author"/>
+            <TextView
+                android:id="@+id/comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_padding"
+                android:text="@string/thread_comments"/>
 
+            <!-- This is a little hack to allow the author to be aligned to the right
+                 of the LinearLayout -->
+            <View android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:id="@+id/verifiedIndicator"
+                android:src="@drawable/check"
+                android:background="@color/colorPrimary"
+                android:gravity="center|end"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="2dp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_padding"
+                android:text="@string/thread_author"
+                android:gravity="end"/>
+
+
+        </LinearLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

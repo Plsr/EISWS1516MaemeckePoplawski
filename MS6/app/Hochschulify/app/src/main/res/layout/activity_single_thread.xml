@@ -46,14 +46,33 @@
                         android:textColor="@color/colorBlack"
                         android:text="@string/thread_title" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/linearLayoutAuthor"
+                        android:layout_below="@id/thread_title_input">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:id="@+id/verifiedIndicatorSingle"
+                        android:src="@drawable/check"
+                        android:background="@color/colorPrimary"
+                        android:layout_below="@id/thread_title_input"
+                        android:layout_gravity="bottom"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="2dp"
+                        android:visibility="gone"/>
+
                     <TextView
                         android:id="@+id/author"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:layout_alignParentLeft="true"
                         android:layout_below="@id/thread_title_input"
                         android:text="@string/thread_author"/>
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/thread_body"
@@ -61,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/thread_content"
-                        android:layout_below="@id/author"
+                        android:layout_below="@id/linearLayoutAuthor"
                         android:textColor="@color/primary_text_default_material_light"
                         android:textSize="16sp"/>
 

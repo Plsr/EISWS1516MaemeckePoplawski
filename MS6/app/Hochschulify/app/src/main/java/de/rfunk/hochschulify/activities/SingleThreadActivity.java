@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -50,6 +51,7 @@ public class SingleThreadActivity extends AppCompatActivity implements CommentsA
     TextView mThreadAuthorView;
     TextView mCommentsCount;
     RecyclerView mRecyclerView;
+    ImageView mVerifiedIndicatorSingle;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
 
@@ -77,6 +79,7 @@ public class SingleThreadActivity extends AppCompatActivity implements CommentsA
         mThreadBodyView = (TextView) findViewById(R.id.thread_body);
         mThreadAuthorView = (TextView) findViewById(R.id.author);
         mCommentsCount = (TextView) findViewById(R.id.comments_headline);
+        mVerifiedIndicatorSingle = (ImageView) findViewById(R.id.verifiedIndicatorSingle);
 
         // Receive first level entry from extras and
         // set it
@@ -101,6 +104,11 @@ public class SingleThreadActivity extends AppCompatActivity implements CommentsA
                 // Set other content
                 mThreadBodyView.setText(mEntry.getText());
                 mThreadAuthorView.setText(mEntry.getAuthor().getName());
+
+            if (mEntry.getAuthor().isVerified()) {
+                mVerifiedIndicatorSingle.setVisibility(View.VISIBLE);
+            }
+
 
         }
 

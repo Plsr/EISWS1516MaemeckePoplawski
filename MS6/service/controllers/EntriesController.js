@@ -132,21 +132,38 @@ export function entryGet(req, res, next) {
     .populate({
       path: "user"
     })
-    .populate({ // Populate the subentries chain 5 sublevels deep
-      path: "subentries",
-      populate: {
+    .populate([
+      {
         path: "subentries",
-        populate: {
-          path: "subentries",
-          populate: {
+        populate: [
+          {
             path: "subentries",
-            populate: {
-              path: "subentries",
-            }
+            populate: [
+              {
+                path: "subentries",
+                populate: [
+                  {
+                    path: "subentries"
+                  },
+                  {
+                    path: "user"
+                  }
+                ]
+              },
+              {
+                path: "user"
+              }
+            ]
+          },
+          {
+            path: "user"
           }
-        }
+        ]
+      },
+      {
+        path: "user"
       }
-    })
+    ])
     .exec()
     .then(
       entry => {

@@ -46,6 +46,7 @@ public class SingleThreadActivity extends AppCompatActivity implements CommentsA
     TextView mThreadTitleView;
     TextView mThreadBodyView;
     TextView mThreadAuthorView;
+    TextView mCommentsCount;
     RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
@@ -73,6 +74,7 @@ public class SingleThreadActivity extends AppCompatActivity implements CommentsA
         mThreadTitleView = (TextView) findViewById(R.id.thread_title_input);
         mThreadBodyView = (TextView) findViewById(R.id.thread_body);
         mThreadAuthorView = (TextView) findViewById(R.id.author);
+        mCommentsCount = (TextView) findViewById(R.id.comments_headline);
 
         // Receive first level entry from extras and
         // set it
@@ -158,11 +160,12 @@ public class SingleThreadActivity extends AppCompatActivity implements CommentsA
                         mSubEntriesList.add(tmpEntry);
                     }
 
+                    mCommentsCount.setText("Kommentare (" + mSubEntriesList.size() + ")");
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
                 setUpRecyclerView();
 
 

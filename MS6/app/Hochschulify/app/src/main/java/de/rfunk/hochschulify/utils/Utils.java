@@ -16,7 +16,7 @@ import org.json.JSONObject;
 public class Utils {
 
     // Server URL, stored here for global usage
-    public static final String SERVER_URL = "http://192.168.0.10:3000";
+    public static final String SERVER_URL = "http://10.0.3.2:3000";
     public static final String AUTH_PATH = "/auth";
     public static final String ENTRY_PATH = "/entries";
     public static final String USER_PATH = "/users";

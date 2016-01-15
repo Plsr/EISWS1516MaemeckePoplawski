@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class CourseOverviewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView threadComments;
         TextView threadAuthor;
         CardView cardView;
+        ImageView verifiedIndicator;
 
 
         public ViewHolderEntry(View itemView) {
@@ -50,6 +52,7 @@ public class CourseOverviewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             threadComments = (TextView) itemView.findViewById(R.id.comments);
             threadAuthor = (TextView) itemView.findViewById(R.id.author);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
+            verifiedIndicator = (ImageView) itemView.findViewById(R.id.verifiedIndicator);
             itemView.setTag(this);
         }
     }
@@ -69,11 +72,16 @@ public class CourseOverviewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView comments = ((ViewHolderEntry) holder).threadComments;
         TextView author = ((ViewHolderEntry) holder).threadAuthor;
         CardView cardView = ((ViewHolderEntry) holder).cardView;
+        ImageView verifiedIndicator = ((ViewHolderEntry) holder).verifiedIndicator;
 
         title.setText(entry.getTitle());
         body.setText(entry.getText());
         comments.setText(entry.getSubCount().toString());
         author.setText(entry.getAuthor().getName());
+
+        if (entry.getAuthor().isVerified()) {
+            verifiedIndicator.setVisibility(View.VISIBLE);
+        }
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -26,7 +26,9 @@ db()
   })
   .then(() => {
     // Bootstrap development data (such as test user, ...)
-    require("./config/dev_bootstrap")();
+    // Uncomment this `require` and comment the `return` for database bootstrapping
+    // require("./config/dev_bootstrap")();
+    return;
   })
   .catch((e) => {
     console.log("[!] Error while starting: %s".red, e);

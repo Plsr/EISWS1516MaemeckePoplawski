@@ -32,6 +32,8 @@ import de.rfunk.hochschulify.utils.Utils;
 
 public class SingleThreadActivity extends AppCompatActivity implements CommentsAdapter.CommentsAdapterInterface {
 
+    // TODO: Documentation
+
     // Static ThreadID for development build
     // This ID will change on DB reset, remember to change it accordingly
     public static final String THREAD_ID = "568ea39fd34ca81b07219f55";
@@ -180,6 +182,7 @@ public class SingleThreadActivity extends AppCompatActivity implements CommentsA
 
 
     public void setUpRecyclerView() {
+        // TODO: Display info if there are no comments
         Log.d(TAG, "setupRecView");
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.commentsList);
         Log.d(TAG, recyclerView.toString());

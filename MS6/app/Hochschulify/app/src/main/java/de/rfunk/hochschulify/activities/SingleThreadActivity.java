@@ -158,10 +158,12 @@ public class SingleThreadActivity extends AppCompatActivity implements CommentsA
                         mSubEntriesList.add(tmpEntry);
                     }
 
-                    //setUpRecyclerView();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                setUpRecyclerView();
 
 
             }
@@ -173,8 +175,9 @@ public class SingleThreadActivity extends AppCompatActivity implements CommentsA
         });
     }
 
-    /*
+
     public void setUpRecyclerView() {
+        Log.d(TAG, "setupRecView");
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.commentsList);
         Log.d(TAG, recyclerView.toString());
         recyclerView.setHasFixedSize(true); //Needed? Answer: Yes, I think so.
@@ -184,7 +187,7 @@ public class SingleThreadActivity extends AppCompatActivity implements CommentsA
 
         mAdapter = new CommentsAdapter(this, mSubEntriesList, this);
         recyclerView.setAdapter(mAdapter);
-    } */
+    }
 
     @Override
     public void onItemClick(int position) {

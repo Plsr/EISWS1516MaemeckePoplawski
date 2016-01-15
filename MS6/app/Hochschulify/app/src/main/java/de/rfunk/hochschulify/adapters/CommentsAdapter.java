@@ -45,7 +45,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public ViewHolderEntry(View itemView) {
             super(itemView);
 
-            entryText = (TextView) itemView.findViewById(R.id.text);
+            entryText = (TextView) itemView.findViewById(R.id.content);
             entryAuthor = (TextView) itemView.findViewById(R.id.author);
             answer = (TextView) itemView.findViewById(R.id.answer);
 

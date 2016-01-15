@@ -23,9 +23,12 @@ import de.rfunk.hochschulify.pojo.Entry;
 /**
  * Created by Timo Maemecke (@timomeh) on 12/01/16.
  * <p/>
- * TODO: Add a class header comment
+ * Helper class for making requests
  */
 public class Req {
+
+    // TODO: change all [method]WithHeaders to [method]WithOut since we don't need to send
+    // other headers than our x-auth-... headers.
 
     private static final String DEFAULT_VALUE = "__DEFAULT__";
     private static final String TAG = Req.class.getSimpleName();
@@ -65,6 +68,7 @@ public class Req {
         }
     }
 
+    // Make a get Request and call the passed response object
     public void get(final Req.Res res) {
         final JSONObject reqBody = new JSONObject();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, mURL, reqBody, new Response.Listener<JSONObject>() {

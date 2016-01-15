@@ -2,6 +2,7 @@ package de.rfunk.hochschulify.pojo;
 
 /**
  * Created by Timo Maemecke (@timomeh) on 12/01/16.
+ * Plain old Java object for entries
  */
 public class Entry {
     private String mTitle;

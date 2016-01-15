@@ -26,6 +26,10 @@ import de.rfunk.hochschulify.utils.Utils;
  * Created by Cheese on 14/01/16.
  */
 public class HochschulifyListenerService extends GcmListenerService {
+
+    // From Google's GCM Android Setup Examples
+    // https://github.com/googlesamples/google-services/blob/e5b330d5af115e4bf62f88b3025fdbe388c0ac7a/android/gcm/app/src/main/java/gcm/play/android/samples/com/gcmquickstart/MyGcmListenerService.java
+
     private static final String TAG = HochschulifyListenerService.class.getSimpleName();
 
     private static final String SERVER_URL = Utils.SERVER_URL;
@@ -55,20 +59,24 @@ public class HochschulifyListenerService extends GcmListenerService {
         String userUrl = SERVER_URL + USER_PATH + "/" + userID;
         final String entryURL = SERVER_URL + ENTRY_PATH + "/" + entryID;
 
+        // LIGHT PING:
+        // Push-Message only contains ids. Get more payload by requesting the server
+
+        // From the received push-message, fetch the user (who answered on an entry)
+        // in order to show a nice notification text
         Req userReq = new Req(this, userUrl);
         userReq.getWithAuth(new Req.Res() {
             @Override
             public void onSuccess(JSONObject res) {
-                Log.d(TAG, res.toString());
                 mUser = res;
 
+                // From the received push-message, fetch the entry (parent) in order
+                // to show a nice notification text
                 Req entryReq = new Req(HochschulifyListenerService.this, entryURL);
                 entryReq.get(new Req.Res() {
                     @Override
                     public void onSuccess(JSONObject res) {
-                        Log.d(TAG, res.toString());
                         mEntry = res;
-
                         sendNotification();
                     }
 
@@ -85,20 +93,14 @@ public class HochschulifyListenerService extends GcmListenerService {
             }
         });
 
-
-
-
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Entry ID: " + entryID);
         Log.d(TAG, "User ID: " + userID);
 
-
-
-
-
         // [END_EXCLUDE]
     }
 
+    // Build the notification and send it (show it to the user)
     private void sendNotification()  {
         Intent intent = new Intent(this, SingleThreadActivity.class);
         intent.putExtra("entry", mEntry.toString());
@@ -133,6 +135,9 @@ public class HochschulifyListenerService extends GcmListenerService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        // Generate a somewhat random ID for the notification
+        int notifyId = (int) Math.random() * 10;
+
+        notificationManager.notify(notifyId, notificationBuilder.build());
     }
 }

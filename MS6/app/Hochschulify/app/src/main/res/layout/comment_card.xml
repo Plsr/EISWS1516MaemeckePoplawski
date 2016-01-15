@@ -19,21 +19,38 @@
         android:padding="8dp">
 
 
-        <TextView
-            android:id="@+id/author"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/card_headline_font_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorBlack"
-            android:text="Steve Jobs"/>
+            android:id="@+id/linearLayoutCommentAuthor">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:id="@+id/verifiedIndicatorComment"
+                android:layout_height="16dp"
+                android:src="@drawable/check"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="8dp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/card_headline_font_size"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:text="Steve Jobs"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/card_headline_font_size"
-            android:layout_below="@id/author"
+            android:layout_below="@id/linearLayoutCommentAuthor"
             android:textColor="@color/colorBlack"
             android:text="@string/comment"/>
 

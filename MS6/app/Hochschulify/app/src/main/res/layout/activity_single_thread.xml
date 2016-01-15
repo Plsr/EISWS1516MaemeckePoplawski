@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SingleThreadActivity">
+    tools:context=".activities.SingleThreadActivity"
+            android:fillViewport="false">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -91,19 +92,22 @@
             android:layout_below="@+id/linearLayout"
             android:layout_alignParentStart="true" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/comments_headline"
-            android:orientation="vertical"
-            android:id="@+id/comment_wrapper"
-            android:layout_marginLeft="@dimen/activity_padding"
-            android:layout_marginRight="@dimen/activity_padding"
-            android:layout_marginTop="@dimen/activity_padding">
+        <!-- <android.support.v7.widget.RecyclerView
+             android:id="@+id/commentsList"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/comments_headline"/>
 
-            <include layout="@layout/comment_card_root" android:id="@+id/rooot" />
-            <include layout="@layout/comment_card_level1" android:id="@+id/level1" />
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/comments_headline"
+             android:orientation="vertical"
+             android:id="@+id/comment_wrapper"
+             android:layout_marginLeft="@dimen/activity_padding"
+             android:layout_marginRight="@dimen/activity_padding"
+             android:layout_marginTop="@dimen/activity_padding">
 
-        </LinearLayout>
+         </LinearLayout> -->
     </RelativeLayout>
 </ScrollView>

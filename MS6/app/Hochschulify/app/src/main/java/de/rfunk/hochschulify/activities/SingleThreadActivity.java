@@ -3,20 +3,34 @@ package de.rfunk.hochschulify.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.rfunk.hochschulify.R;
+import de.rfunk.hochschulify.adapters.CommentsAdapter;
+import de.rfunk.hochschulify.adapters.CourseBookmarkAdapter;
+import de.rfunk.hochschulify.adapters.CourseOverviewAdapter;
 import de.rfunk.hochschulify.pojo.Entry;
 import de.rfunk.hochschulify.utils.Parse;
+import de.rfunk.hochschulify.utils.Req;
 import de.rfunk.hochschulify.utils.Utils;
 
-public class SingleThreadActivity extends AppCompatActivity {
+public class SingleThreadActivity extends AppCompatActivity implements CommentsAdapter.CommentsAdapterInterface {
 
     // Static ThreadID for development build
     // This ID will change on DB reset, remember to change it accordingly
@@ -32,8 +46,12 @@ public class SingleThreadActivity extends AppCompatActivity {
     TextView mThreadTitleView;
     TextView mThreadBodyView;
     TextView mThreadAuthorView;
+    RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.Adapter mAdapter;
 
     String threadAuthor;
+    List<Entry> mSubEntriesList = new ArrayList<Entry>();
 
     Bundle mIntentExtras;
     JSONObject mEntryJSON;
@@ -44,6 +62,8 @@ public class SingleThreadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_thread);
+
+        Log.d(TAG, "Called");
 
         // Receive intent extras
         mIntentExtras = getIntent().getExtras();
@@ -57,9 +77,14 @@ public class SingleThreadActivity extends AppCompatActivity {
         // Receive first level entry from extras and
         // set it
         if(!(Utils.isEmptyString(jsonString))) {
+
             try {
                 mEntryJSON = new JSONObject(jsonString);
                 JSONObject user = mEntryJSON.getJSONObject("user");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
                 mEntry = Parse.entry(mEntryJSON);
 
                 // Remove title text view from layout if there is no title
@@ -72,9 +97,7 @@ public class SingleThreadActivity extends AppCompatActivity {
                 // Set other content
                 mThreadBodyView.setText(mEntry.getText());
                 mThreadAuthorView.setText(mEntry.getAuthor().getName());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
         }
 
 
@@ -111,5 +134,60 @@ public class SingleThreadActivity extends AppCompatActivity {
 
         // TODO: Display loading indicator
         // TODO: Display comments
+
+        getSubentries(mEntry.getId());
+    }
+
+    private void getSubentries(String entryID) {
+        Log.d(TAG, "getSubentries called");
+        String url = Utils.SERVER_URL + Utils.ENTRY_PATH + "/" + entryID;
+        Req req = new Req(this, url);
+        req.get(new Req.Res() {
+            @Override
+            public void onSuccess(JSONObject res) {
+                Log.d(TAG + " response", res.toString());
+                try {
+                    JSONArray subentries = res.getJSONArray("subentries");
+                    Log.d(TAG + " subentries", subentries.toString());
+                    for (int i = 0; i < subentries.length(); i++) {
+                        JSONObject jsonEntry = subentries.getJSONObject(i);
+                        Log.d(TAG + " single subentry", subentries.getJSONObject(i).toString());
+                        Entry tmpEntry = Parse.entry(jsonEntry);
+                        Log.d(TAG + " entry object", tmpEntry.toString());
+                        Log.d(TAG + " entry object text", tmpEntry.getText());
+                        mSubEntriesList.add(tmpEntry);
+                    }
+
+                    //setUpRecyclerView();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        });
+    }
+
+    /*
+    public void setUpRecyclerView() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.commentsList);
+        Log.d(TAG, recyclerView.toString());
+        recyclerView.setHasFixedSize(true); //Needed? Answer: Yes, I think so.
+        mLayoutManager = new LinearLayoutManager(this);
+        Log.d(TAG, mLayoutManager.toString());
+        recyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter = new CommentsAdapter(this, mSubEntriesList, this);
+        recyclerView.setAdapter(mAdapter);
+    } */
+
+    @Override
+    public void onItemClick(int position) {
+
     }
 }

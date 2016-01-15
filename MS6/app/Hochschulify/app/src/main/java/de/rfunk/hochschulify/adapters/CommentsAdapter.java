@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView entryText;
         TextView entryAuthor;
         TextView answer;
+        ImageView verifyIcon;
 
 
 
@@ -48,6 +50,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             entryText = (TextView) itemView.findViewById(R.id.content);
             entryAuthor = (TextView) itemView.findViewById(R.id.author);
             answer = (TextView) itemView.findViewById(R.id.answer);
+            verifyIcon = (ImageView) itemView.findViewById(R.id.verifiedIndicatorComment);
 
 
             itemView.setTag(this);
@@ -67,10 +70,15 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView text = ((ViewHolderEntry) holder).entryText;
         TextView author = ((ViewHolderEntry) holder).entryAuthor;
         TextView answer = ((ViewHolderEntry) holder).answer;
+        ImageView verificationIcon = ((ViewHolderEntry) holder).verifyIcon;
 
 
         text.setText(entry.getText());
         author.setText(entry.getAuthor().getName());
+
+        if (entry.getAuthor().isVerified()) {
+            verificationIcon.setVisibility(View.VISIBLE);
+        }
 
 
         answer.setOnClickListener(new View.OnClickListener() {

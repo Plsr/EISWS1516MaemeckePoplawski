@@ -1,0 +1,3 @@
+{"_id":{"$oid":"5696c9b0e25290c91382011b"},"auth_token":"K3ulMtIyUmkh7kQRIf3YpE1FjHKKPZ9I","device_id":"","email":"interessent@tld.de","name":"Carsten HatInteresse","password":"test","type":"INTERESSENT","verified":false}
+{"_id":{"$oid":"569949bc92cbb247e408159b"},"auth_token":"qfVxNBqLHJlqLESZapVvwi67Q1YvjNWz","device_id":"fkCq5xb9T2s:APA91bFajBfPyL_oJ-7s6fJz-NQ5MUYdUsnQvb4egA_wutfDsBXKkRaKX8B3tN13dN_JVI4nke2AeEIfaTDVlvZnyhjV0W_nBGNA_MfHjwHsXup6vjM9hf2Oj3gWdzekBRdKu8uezDqh","email":"student@tld.de","name":"Sandra Stud","password":"test","type":"STUDENT","verified":true}
+{"_id":{"$oid":"56995b9a92cbb247e408159d"},"auth_token":"8uTZS7hlqFJTACNCgDsW0VynHj6Yrugj","device_id":"","email":"david@tld.de","name":"David Bowie","password":"test","type":"STUDENT","verified":true}

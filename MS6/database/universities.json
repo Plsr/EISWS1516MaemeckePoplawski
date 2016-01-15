@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5696c9b0e25290c91382011d"},"name":"TH Köln Campus Gummersbach","position":{"lat":51.023474,"long":7.564873}}
+{"_id":{"$oid":"569947a292cbb247e4081591"},"name":"Universität Siegen","position":{"lat":50.91082,"long":8.0273}}
+{"_id":{"$oid":"569947e492cbb247e4081592"},"name":"HTW Berlin","position":{"lat":52.49222,"long":13.5265}}
+{"_id":{"$oid":"5699480c92cbb247e4081593"},"name":"TH Köln","position":{"lat":50.91992,"long":6.9672806}}

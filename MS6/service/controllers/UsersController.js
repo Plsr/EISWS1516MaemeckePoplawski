@@ -3,6 +3,7 @@ import randomstring from "randomstring";
 import { ValidationError, HTTPError } from "../helpers/Errors";
 
 const User = mongoose.model("User");
+const Entry = mongoose.model("Entry");
 
 // Get a user by its id
 export function userGet(req, res, next) {
@@ -31,8 +32,25 @@ export function userGet(req, res, next) {
         if (!user)
           throw new HTTPError(404, `User with ID ${req.params.userid} not found`);
 
-        // User found => send it back.
-        res.json(user);
+        let _user = user.toObject();
+
+        // If we need to get entries, find and show them
+        if (req.query.entries !== undefined) {
+          return Entry.find({ parententry: null, user: user._id })
+            .select("-parententry -subentries")
+            .sort("-createdAt")
+            .exec()
+            .then(
+              entries => {
+                _user.entries = entries;
+                res.json(_user);
+              },
+              err => { throw err; }
+            )
+        } else {
+          // User found => send it back.
+          res.json(_user);
+        }
       },
 
       // Reject callback

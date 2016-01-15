@@ -41,6 +41,9 @@ import de.rfunk.hochschulify.utils.Utils;
 
 public class RegistrationIntentService extends IntentService {
 
+    // From Google's GCM Android Setup Examples
+    // https://github.com/googlesamples/google-services/blob/e5b330d5af115e4bf62f88b3025fdbe388c0ac7a/android/gcm/app/src/main/java/gcm/play/android/samples/com/gcmquickstart/RegistrationIntentService.java
+
     private static final String TAG = RegistrationIntentService.class.getSimpleName();
     private static final String[] TOPICS = {"global"};
 
@@ -104,6 +107,9 @@ public class RegistrationIntentService extends IntentService {
         String url = Utils.SERVER_URL + Utils.USER_PATH + "/" + userID;
         Req req = new Req(this, url);
 
+        // Commment for Hochschulify:
+        // Send a PUT to /users/:userid and update the users device_id (token)
+        // so the server knows where to send notifications.
         JSONObject reqBody = new JSONObject();
         reqBody.put("device_id", token);
         req.putWithAuth(reqBody, new Req.Res() {

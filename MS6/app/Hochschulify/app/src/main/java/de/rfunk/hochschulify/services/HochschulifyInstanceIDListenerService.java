@@ -26,6 +26,10 @@ import com.google.android.gms.iid.InstanceIDListenerService;
 
 public class HochschulifyInstanceIDListenerService extends InstanceIDListenerService {
 
+    // From Google's GCM Android Setup Examples
+    // https://github.com/googlesamples/google-services/blob/e5b330d5af115e4bf62f88b3025fdbe388c0ac7a/android/gcm/app/src/main/java/gcm/play/android/samples/com/gcmquickstart/MyInstanceIDListenerService.java
+    // Modified slightly for our Activities
+
     private static final String TAG = HochschulifyInstanceIDListenerService.class.getSimpleName();
 
     /**

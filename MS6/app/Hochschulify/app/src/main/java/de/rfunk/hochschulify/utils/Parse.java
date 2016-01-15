@@ -12,11 +12,18 @@ import de.rfunk.hochschulify.pojo.User;
 /**
  * Created by Timo Maemecke (@timomeh) on 12/01/16.
  * <p/>
- * TODO: Add a class header comment
+ * Helper class to parse JSONObjects to POJOS
  */
 public class Parse {
 
+    /*
+    Everything in here is coded the same way. Just entry is commented.
+     */
+
     public static final Entry entry(JSONObject entry) {
+        // Create a new Entry-POJO, check if the JSONObject has the specified keys
+        // and set them to the POJO.
+        // Then return it.
         Entry retEntry = new Entry();
         try {
             if (entry.has("title"))

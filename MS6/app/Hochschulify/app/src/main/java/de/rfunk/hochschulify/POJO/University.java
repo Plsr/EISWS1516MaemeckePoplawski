@@ -3,7 +3,7 @@ package de.rfunk.hochschulify.pojo;
 /**
  * Created by Timo Maemecke (@timomeh) on 12/01/16.
  * <p/>
- * TODO: Add a class header comment
+ * Plain old Java object for a university
  */
 public class University {
     private String mName;

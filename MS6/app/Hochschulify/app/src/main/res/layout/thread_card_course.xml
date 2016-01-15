@@ -16,14 +16,32 @@
         android:layout_height="wrap_content"
         android:padding="8dp">
 
-        <TextView
-            android:id="@+id/thread_title_input"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/card_headline_font_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorBlack"
-            android:text="@string/thread_title"/>
+            android:orientation="horizontal"
+            android:id="@+id/courseTitleLayout">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:scaleType="centerInside"
+                android:layout_gravity="center"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/thumbs_up_active"
+                android:id="@+id/thumb"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/thread_title_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/card_headline_font_size"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:text="@string/thread_title"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/thread_excerpt"
@@ -31,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/thread_excerpt"
-            android:layout_below="@id/thread_title_input"/>
+            android:layout_below="@id/courseTitleLayout"/>
 
         <LinearLayout
             android:layout_width="fill_parent"

@@ -14,6 +14,7 @@ public class Entry {
     private String mType;
     private String mCourse;
     private String mParentEntry;
+    private boolean mHasRecommendation;
 
 
 
@@ -42,7 +43,15 @@ public class Entry {
         mCourse = "";
         mRecommendation = true;
         mParentEntry = "";
+        mHasRecommendation = false;
+    }
 
+    public boolean hasRecommendation() {
+        return mHasRecommendation;
+    }
+
+    public void setHasRecommendation(boolean hasRecommendation) {
+        mHasRecommendation = hasRecommendation;
     }
 
     public String getCourse() {

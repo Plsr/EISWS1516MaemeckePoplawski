@@ -42,6 +42,7 @@ public class CourseOverviewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView threadAuthor;
         CardView cardView;
         ImageView verifiedIndicator;
+        ImageView thumb;
 
 
         public ViewHolderEntry(View itemView) {
@@ -53,6 +54,7 @@ public class CourseOverviewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             threadAuthor = (TextView) itemView.findViewById(R.id.author);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
             verifiedIndicator = (ImageView) itemView.findViewById(R.id.verifiedIndicator);
+            thumb = (ImageView) itemView.findViewById(R.id.thumb);
             itemView.setTag(this);
         }
     }
@@ -73,6 +75,7 @@ public class CourseOverviewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView author = ((ViewHolderEntry) holder).threadAuthor;
         CardView cardView = ((ViewHolderEntry) holder).cardView;
         ImageView verifiedIndicator = ((ViewHolderEntry) holder).verifiedIndicator;
+        ImageView thumb = ((ViewHolderEntry) holder).thumb;
 
         title.setText(entry.getTitle());
         body.setText(entry.getText());
@@ -81,6 +84,11 @@ public class CourseOverviewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         if (entry.getAuthor().isVerified()) {
             verifiedIndicator.setVisibility(View.VISIBLE);
+        }
+
+        if (entry.hasRecommendation()) {
+            if (entry.isRecommendation() == false) thumb.setImageDrawable(mContext.getDrawable(R.drawable.thumbs_down_active));
+            thumb.setVisibility(View.VISIBLE);
         }
 
         cardView.setOnClickListener(new View.OnClickListener() {

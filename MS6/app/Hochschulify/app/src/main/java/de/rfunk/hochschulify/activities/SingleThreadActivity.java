@@ -52,6 +52,7 @@ public class SingleThreadActivity extends AppCompatActivity implements CommentsA
     TextView mCommentsCount;
     RecyclerView mRecyclerView;
     ImageView mVerifiedIndicatorSingle;
+    ImageView mThumb;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
 
@@ -80,6 +81,7 @@ public class SingleThreadActivity extends AppCompatActivity implements CommentsA
         mThreadAuthorView = (TextView) findViewById(R.id.author);
         mCommentsCount = (TextView) findViewById(R.id.comments_headline);
         mVerifiedIndicatorSingle = (ImageView) findViewById(R.id.verifiedIndicatorSingle);
+        mThumb = (ImageView) findViewById(R.id.thumb);
 
         // Receive first level entry from extras and
         // set it
@@ -104,6 +106,11 @@ public class SingleThreadActivity extends AppCompatActivity implements CommentsA
                 // Set other content
                 mThreadBodyView.setText(mEntry.getText());
                 mThreadAuthorView.setText(mEntry.getAuthor().getName());
+
+                if (mEntry.hasRecommendation()) {
+                    if (mEntry.isRecommendation() == false) mThumb.setImageDrawable(getDrawable(R.drawable.thumbs_down_active));
+                    mThumb.setVisibility(View.VISIBLE);
+                }
 
             if (mEntry.getAuthor().isVerified()) {
                 mVerifiedIndicatorSingle.setVisibility(View.VISIBLE);

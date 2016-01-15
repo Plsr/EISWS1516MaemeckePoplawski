@@ -37,6 +37,10 @@ public class Parse {
                 if (link.has("self"))
                     retEntry.setLink(link.getString("self"));
             }
+            if (entry.has("recommendation")) {
+                retEntry.setHasRecommendation(true);
+                retEntry.setRecommendation(entry.getBoolean("recommendation"));
+            }
             if (entry.has("_id"))
                 retEntry.setId(entry.getString("_id"));
             if (entry.has("type"))
